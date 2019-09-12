@@ -1,0 +1,18 @@
+use meetuppdb;
+
+CREATE TABLE user (
+	id int not null,
+    email VARCHAR(50) unique,
+	name VARCHAR(50),
+    image varchar(200),
+    lat double default null,
+    lon double default null,
+    radius int default 5000,
+    notifications bool default true,
+    primary key (id)
+);
+
+insert into user (id, email, name, image) values (1, 'email@email.hu', 'Sandor Retek', 'https://platform-lookaside.fbsbx.com/platform/profilepic/?asid=2678787078840528&height=50&width=50&ext=1570870401&hash=AeQ2QWXSKsofVg5N');
+        
+insert into user (id, email, name, image) values (2, 'dani@email.hu', 'Dani Retek', 'https://platform-lookaside.fbsbx.com/platform/profilepic/?asid=2678787078840528&height=50&width=50&ext=1570870401&hash=AeQ2QWXSKsofVg5N');
+

@@ -1,0 +1,186 @@
+
+===> Endpoints:
+
+= = = (( Login/Logout ))
+
+POST /login/facebook
+ - logs in user after fb login (TODO)
+ - if user not exists register
+ - sends user token to backend
+ - param: name, pass
+
+POST /register
+ - registers user
+ - body: username, fullname, email, passw
+
+POST /login
+
+POST /logout
+ - logs out user
+
+
+= = = (( Search ))
+
+GET /users/{keyword}
+ - returns whose name matches the keyword
+ - if no keyword, returns all users
+ - friends first
+
+GET /users/{id}
+ - returns user by id
+
+
+= = = (( Update User ))   
+
+PUT /user/location
+ - updates user's location
+ - body: Location
+
+PUT /user/settings
+ - updates user's settings
+ - body: Settings
+
+
+= = = (( Friends ))
+
+GET /user/friends
+ - returns all friends of user
+ - sorted by distance
+
+GET /user/nearbyFriends
+ - returns all friends of user within user's radius
+ - sorted by distance
+
+DELETE /user/friend/{userId}
+ - deletes friend 
+
+GET /user/friendStatus/{userId}
+ - checks friend status of user
+ - returns: RequestStatus
+
+
+= = = (( Locations ))
+
+DELETE /user/request/{userId}
+ - deletes location request from user
+
+GET /user/locationStatus/{userId}
+ - checks location status of user
+ - returns: RequestStatus
+
+
+= = = (( Nearby Notifs ))
+
+GET /user/notifications
+ - updates 'who-is-nearby' notifications (tracks who is close)
+    - adds friends who are within radius
+    - deletes friends who are not within radius
+    - deletes location-permissions if they timed out
+ - if we have location permission then no notification
+ - returns 'who-is-nearby' notifications
+
+DELETE /user/notification/{notificationId}
+ - deletes specific 'who-is-nearby' notification
+
+
+= = = (( Friend Requests ))
+
+POST /user/friendRequest/{toUser}
+ - adds new friend request
+
+GET /user/friendRequests
+ - gets all friend requests of user
+
+POST /user/acceptFriend/{friendRequestId}
+ - accepts and deletes specific friend request of user
+
+DELETE /user/cancelFriend/{friendRequestId}
+ - cancels and deletes specific friend request of user
+
+
+= = = (( Location Requests ))
+
+POST /user/locationRequest/{toUser}
+ - adds new location request
+
+GET /user/locationRequests
+ - gets all location requests of user
+
+POST /user/acceptLocation/{locationRequestId}
+ - accepts and deletes specific friend request of user
+
+DELETE /user/cancelLocation/{locationRequestId}
+ - cancels and deletes specific friend request of user
+
+= = = 
+
+
+
+===> Updating engpoints:
+PUT /user/location
+GET /user/notifications
+
+===> Status codes:
+
+200: OK
+400: Bad Request
+401: Unauthorized
+404: Not Found
+
+
+===> Entitások:
+
+*User:
+ - username
+ - password(TODO - fb)
+ - name
+ - email
+ - location
+ - settings
+ - image
+ - ?distance
+
+*Notification:
+ - name
+ - time
+ - toUserId
+
+*Request
+ - name
+ - fromUserId
+ - toUserId
+ - time
+
+<-FriendRequest
+
+<-LocationRequest
+
+
+===> Osztályok:
+
+Location:
+ - lat
+ - lon
+ - time
+
+Settings:
+ - radius
+ - notifications
+
+RequestStatus:
+ - yes, no, on-the-way
+
+
+===> Kapcsolatok
+
+Friends:
+ - fromUserId
+ - toUserId
+ - time
+
+Locations:
+ - fromUserId
+ - toUserId
+ - time
+
+ 
