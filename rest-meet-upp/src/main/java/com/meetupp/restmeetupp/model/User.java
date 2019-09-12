@@ -1,7 +1,5 @@
 package com.meetupp.restmeetupp.model;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
 import javax.persistence.*;
 
 
