@@ -4,6 +4,7 @@ import com.meetupp.restmeetupp.security.JwtAuthenticationEntryPoint;
 import com.meetupp.restmeetupp.security.JwtAuthenticationProvider;
 import com.meetupp.restmeetupp.security.JwtAuthenticationTokenFilter;
 import com.meetupp.restmeetupp.security.JwtSuccessHandler;
+import com.meetupp.restmeetupp.util.Consts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -47,7 +48,7 @@ public class JwtSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.csrf().disable()
-                .authorizeRequests().antMatchers("/user/**").authenticated()
+                .authorizeRequests().antMatchers(Consts.Jwt.AUTH_ROUTE_PATTERN).authenticated()
                 .and()
                 .exceptionHandling().authenticationEntryPoint(entryPoint)
                 .and()

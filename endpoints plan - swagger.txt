@@ -3,27 +3,30 @@
 
 = = = (( Login/Logout ))
 
-POST /users/login/facebook
+POST /login/facebook
  - logs in user after fb login (TODO)
  - if user not exists register
  - sends user token to backend
  - param: name, pass
 
 
-POST /users/test/login
+POST /login/test/{email}
 
 
 = = = (( Search ))
 
-GET /users/all
+GET /user/current
+ - returns logged in user
+
+GET /user/all
  - lists all users
 
-GET /users/search/{keyword}
+GET /user/search/{keyword}
  - returns whose name matches the keyword
  - if no keyword, returns all users
  - friends first
 
-GET /users/{id}
+GET /user/{id}
  - returns user by id
 
 

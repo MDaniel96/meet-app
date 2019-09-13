@@ -1,6 +1,7 @@
-package com.meetupp.restmeetupp.security;
+package com.meetupp.restmeetupp.service;
 
 import com.meetupp.restmeetupp.security.model.JwtUser;
+import com.meetupp.restmeetupp.util.Consts;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class JwtGenerator {
 
-    private String secretKey = "morvai";
+    private String secretKey = Consts.Jwt.SECRET_KEY;
 
     public String generate(JwtUser jwtUser) {
 

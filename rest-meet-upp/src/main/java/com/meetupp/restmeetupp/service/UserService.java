@@ -2,6 +2,7 @@ package com.meetupp.restmeetupp.service;
 
 import com.meetupp.restmeetupp.model.User;
 import com.meetupp.restmeetupp.repository.UserRepository;
+import com.meetupp.restmeetupp.util.Consts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,5 +36,16 @@ public class UserService {
 
     public User findByEmail(String email) {
         return userRepository.findByEmail(email);
+    }
+
+    public void registerUser(User user) {
+        setUpToDefaults(user);
+        userRepository.save(user);
+    }
+
+    private void setUpToDefaults(User user) {
+        user.setRadius(Consts.User.RADIUS);
+        user.setNotifications(Consts.User.NOTIFICATIONS);
+
     }
 }

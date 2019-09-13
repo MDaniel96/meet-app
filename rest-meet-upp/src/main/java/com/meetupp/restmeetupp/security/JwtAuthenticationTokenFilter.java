@@ -1,6 +1,7 @@
 package com.meetupp.restmeetupp.security;
 
 import com.meetupp.restmeetupp.security.model.JwtAuthenticationToken;
+import com.meetupp.restmeetupp.util.Consts;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -15,7 +16,7 @@ import java.io.IOException;
 public class JwtAuthenticationTokenFilter extends AbstractAuthenticationProcessingFilter {
 
     public JwtAuthenticationTokenFilter() {
-        super("/user/**");
+        super(Consts.Jwt.AUTH_ROUTE_PATTERN);
     }
 
     @Override

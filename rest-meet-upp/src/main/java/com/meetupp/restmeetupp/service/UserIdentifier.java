@@ -15,6 +15,9 @@ public class UserIdentifier {
         this.userRepository = userRepository;
     }
 
+    /**
+     * Identifies a user from token
+     */
     public User identify(String token) {
         Long id = jwtValidator.validate(token.substring(7)).getId();
         return userRepository.findById(id);

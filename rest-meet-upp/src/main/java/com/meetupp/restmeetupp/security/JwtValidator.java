@@ -1,6 +1,7 @@
 package com.meetupp.restmeetupp.security;
 
 import com.meetupp.restmeetupp.security.model.JwtUser;
+import com.meetupp.restmeetupp.util.Consts;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.springframework.stereotype.Component;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class JwtValidator {
 
-    private String secret = "morvai";
+    private String secret = Consts.Jwt.SECRET_KEY;
 
     public JwtUser validate(String token) {
 
