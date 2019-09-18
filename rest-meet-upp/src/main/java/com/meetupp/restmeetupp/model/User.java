@@ -1,7 +1,9 @@
 package com.meetupp.restmeetupp.model;
 
-import javax.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name="user")
@@ -17,13 +19,23 @@ public class User {
 
     private String image;
 
-    private Integer lat;
+    @Embedded
+    private Location location;
 
-    private Integer lon;
+    @Embedded
+    private Setting setting;
 
-    private Integer radius;
+    @JsonIgnore
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+        name = "friends",
+        joinColumns = @JoinColumn(name = "user1Id"),
+        inverseJoinColumns = @JoinColumn(name = "user2Id"))
+    private Set<User> users;
 
-    private boolean notifications;
+    @JsonIgnore
+    @ManyToMany(mappedBy = "users")
+    private Set<User> friends;
 
 
     public Long getId() {
@@ -58,37 +70,9 @@ public class User {
         this.image = image;
     }
 
-    public Integer getLat() {
-        return lat;
-    }
+    public Location getLocation() { return this.location; }
 
-    public void setLat(Integer lat) {
-        this.lat = lat;
-    }
-
-    public Integer getLon() {
-        return lon;
-    }
-
-    public void setLon(Integer lon) {
-        this.lon = lon;
-    }
-
-    public Integer getRadius() {
-        return radius;
-    }
-
-    public void setRadius(Integer radius) {
-        this.radius = radius;
-    }
-
-    public boolean isNotifications() {
-        return notifications;
-    }
-
-    public void setNotifications(boolean notifications) {
-        this.notifications = notifications;
-    }
+    public void setLocation(Location location) { this.location = location; }
 
     public int getDistance() {
         return distance;
@@ -98,7 +82,25 @@ public class User {
         this.distance = distance;
     }
 
+    public Setting getSetting() { return this.setting; }
+
+    public void setSetting(Setting setting) { this.setting = setting; }
+
+    public Set<User> getUsers() { return users; }
+
+    public void setUsers(Set<User> users) { this.users = users; }
+
+    public Set<User> getFriends() { return friends; }
+
+    public void setFriends(Set<User> friends) { this.friends = friends; }
+
     @Transient
     private Integer distance;
+
+    @JsonIgnore
+    public Set<User> getAllFriends() {
+        this.friends.addAll(this.users);
+        return this.friends;
+    }
 
 }

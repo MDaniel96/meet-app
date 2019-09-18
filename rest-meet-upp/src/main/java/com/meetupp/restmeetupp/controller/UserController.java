@@ -1,29 +1,32 @@
 package com.meetupp.restmeetupp.controller;
 
+import com.meetupp.restmeetupp.model.Location;
+import com.meetupp.restmeetupp.model.Setting;
 import com.meetupp.restmeetupp.service.DistanceCalculator;
 import com.meetupp.restmeetupp.model.User;
 import com.meetupp.restmeetupp.service.UserIdentifier;
 import com.meetupp.restmeetupp.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.meetupp.restmeetupp.util.Consts;
+import com.meetupp.restmeetupp.util.Util;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping(Consts.EndpointBase.USER)
 public class UserController {
 
     private UserService userService;
     private DistanceCalculator distanceCalculator;
     private UserIdentifier userIdentifier;
+    private Util util;
 
-    public UserController(UserService userService, DistanceCalculator distanceCalculator, UserIdentifier userIdentifier) {
+    public UserController(UserService userService, DistanceCalculator distanceCalculator, UserIdentifier userIdentifier, Util util) {
         this.userService = userService;
         this.distanceCalculator = distanceCalculator;
         this.userIdentifier = userIdentifier;
+        this.util = util;
     }
 
     /**
@@ -32,11 +35,12 @@ public class UserController {
      */
     @GetMapping("/all")
     @ResponseBody
-    public ResponseEntity<Collection<User>> listAllUsers(@RequestHeader("Authorization") String token) {
+    public ResponseEntity<List<User>> listAllUsers(@RequestHeader("Authorization") String token) {
         List<User> users = userService.listAllUsers();
+        User fromUser = userIdentifier.identify(token);
 
         if (!users.isEmpty()) {
-            return ResponseEntity.ok(usersWithDistances(users, token));
+            return ResponseEntity.ok(util.usersWithDistances(users, fromUser));
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -49,11 +53,12 @@ public class UserController {
      */
     @GetMapping("/search/{keyword}")
     @ResponseBody
-    public ResponseEntity<Collection<User>> searchUsers(@PathVariable("keyword") String keyword, @RequestHeader("Authorization") String token) {
+    public ResponseEntity<List<User>> searchUsers(@PathVariable("keyword") String keyword, @RequestHeader("Authorization") String token) {
+        User fromUser = userIdentifier.identify(token);
         Set<User> users = userService.findAllByNameOrEmail(keyword);
 
         if (!users.isEmpty()) {
-            return ResponseEntity.ok(usersWithDistances(users, token));
+            return ResponseEntity.ok(util.usersWithDistances(new ArrayList<>(users), fromUser));
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -91,11 +96,37 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
+    /**
+     * Updates a user's location
+     * @param location Body object for which to update
+     * @param token gets user info from token
+     * @return updated user
+     */
+    @PutMapping("/location")
+    @ResponseBody
+    public ResponseEntity<User> updateUserLocation(@RequestBody Location location, @RequestHeader("Authorization") String token) {
+        User user = userIdentifier.identify(token);
+        user.setDistance(0);
+        location.setTime(new Date());
+        user.setLocation(location);
+        userService.saveUser(user);
+        return ResponseEntity.ok(user);
+    }
 
-    private Collection<User> usersWithDistances(Collection<User> users, String token) {
-        User fromUser = userIdentifier.identify(token);
-        distanceCalculator.calculateMoreDistances(fromUser, users);
-        return users;
+    /**
+     * Updates a user's settings
+     * @param setting Body object for which to update
+     * @param token gets user info from token
+     * @return updated user
+     */
+    @PutMapping("/settings")
+    @ResponseBody
+    public ResponseEntity<User> updateUserSetting(@RequestBody Setting setting, @RequestHeader("Authorization") String token) {
+        User user = userIdentifier.identify(token);
+        user.setDistance(0);
+        user.setSetting(setting);
+        userService.saveUser(user);
+        return ResponseEntity.ok(user);
     }
 
 }

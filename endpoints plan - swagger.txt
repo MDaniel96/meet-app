@@ -1,42 +1,42 @@
 
 ===> Endpoints:
 
-= = = (( Login/Logout ))
+= = = (( Login ))
 
-POST /login/facebook
+**POST /login/facebook/{accessToken}
  - logs in user after fb login (TODO)
  - if user not exists register
  - sends user token to backend
  - param: name, pass
 
 
-POST /login/test/{email}
+**POST /login/test/{email}
 
 
 = = = (( Search ))
 
-GET /user/current
+**GET /user/current
  - returns logged in user
 
-GET /user/all
+**GET /user/all
  - lists all users
 
-GET /user/search/{keyword}
+**GET /user/search/{keyword}
  - returns whose name matches the keyword
  - if no keyword, returns all users
  - friends first
 
-GET /user/{id}
+**GET /user/{id}
  - returns user by id
 
 
 = = = (( Update User ))   
 
-PUT /user/location
+**PUT /user/location
  - updates user's location
  - body: Location
 
-PUT /user/settings
+**PUT /user/settings
  - updates user's settings
  - body: Settings
 
@@ -57,6 +57,21 @@ DELETE /user/friend/{userId}
 GET /user/friendStatus/{userId}
  - checks friend status of user
  - returns: RequestStatus
+
+
+= = = (( Friend Requests ))
+
+POST /user/friendRequest/{toUser}
+ - adds new friend request
+
+GET /user/friendRequests
+ - gets all friend requests of user
+
+POST /user/acceptFriend/{friendRequestId}
+ - accepts and deletes specific friend request of user
+
+DELETE /user/cancelFriend/{friendRequestId}
+ - cancels and deletes specific friend request of user
 
 
 = = = (( Locations ))
@@ -82,20 +97,6 @@ GET /user/notifications
 DELETE /user/notification/{notificationId}
  - deletes specific 'who-is-nearby' notification
 
-
-= = = (( Friend Requests ))
-
-POST /user/friendRequest/{toUser}
- - adds new friend request
-
-GET /user/friendRequests
- - gets all friend requests of user
-
-POST /user/acceptFriend/{friendRequestId}
- - accepts and deletes specific friend request of user
-
-DELETE /user/cancelFriend/{friendRequestId}
- - cancels and deletes specific friend request of user
 
 
 = = = (( Location Requests ))

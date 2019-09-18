@@ -18,4 +18,13 @@ public class Consts {
         public static final String AUTH_ROUTE_PATTERN = "/user/**";
     }
 
+    public static class EndpointBase {
+        private EndpointBase() {}
+
+
+        public static final String LOGIN = "/login";
+        public static final String USER = "/user";
+        public static final String FRIENDS = USER + "/friend";
+    }
+
 }

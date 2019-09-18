@@ -1,5 +1,6 @@
 package com.meetupp.restmeetupp.service;
 
+import com.meetupp.restmeetupp.model.Setting;
 import com.meetupp.restmeetupp.model.User;
 import com.meetupp.restmeetupp.repository.UserRepository;
 import com.meetupp.restmeetupp.util.Consts;
@@ -39,13 +40,27 @@ public class UserService {
     }
 
     public void registerUser(User user) {
-        setUpToDefaults(user);
+        setSettingsDefaults(user);
         userRepository.save(user);
     }
 
-    private void setUpToDefaults(User user) {
-        user.setRadius(Consts.User.RADIUS);
-        user.setNotifications(Consts.User.NOTIFICATIONS);
-
+    public void saveUser(User user) {
+        userRepository.save(user);
     }
+
+    private void setSettingsDefaults(User user) {
+        user.setSetting(new Setting(Consts.User.RADIUS, Consts.User.NOTIFICATIONS));
+    }
+
+    public void deleteFriends(User u1, User u2) {
+        u1.getFriends().remove(u2);
+        u1.getUsers().remove(u2);
+
+        u2.getFriends().remove(u1);
+        u2.getUsers().remove(u1);
+
+        userRepository.save(u1);
+        userRepository.save(u2);
+    }
+
 }

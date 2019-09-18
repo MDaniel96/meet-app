@@ -5,11 +5,12 @@ import com.meetupp.restmeetupp.service.FacebookService;
 import com.meetupp.restmeetupp.service.JwtGenerator;
 import com.meetupp.restmeetupp.security.model.JwtUser;
 import com.meetupp.restmeetupp.service.UserService;
+import com.meetupp.restmeetupp.util.Consts;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/login")
+@RequestMapping(Consts.EndpointBase.LOGIN)
 public class LoginController {
 
     private JwtGenerator jwtGenerator;
