@@ -21,10 +21,16 @@ public class Consts {
     public static class EndpointBase {
         private EndpointBase() {}
 
-
         public static final String LOGIN = "/login";
         public static final String USER = "/user";
         public static final String FRIENDS = USER + "/friend";
+        public static final String LOCATIONS = USER + "/location";
+    }
+
+    public static class Timing {
+        private Timing() {}
+
+        public static final int LOCATION_PERMISSION_VALID_SEC = 15;
     }
 
 }

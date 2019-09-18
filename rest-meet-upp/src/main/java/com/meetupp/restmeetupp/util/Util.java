@@ -27,4 +27,14 @@ public class Util {
         return users;
     }
 
+    /**
+     * Decides if location permission is experied or not
+     * @param lastLocPermissionTime time when location permission was given
+     * @return location permission expired (true) or not (false)
+     */
+    public boolean isDateExpired(Date lastLocPermissionTime) {
+        long difference = (new Date()).getTime() - lastLocPermissionTime.getTime();
+        int differenceSeconds = (int)(difference / 1000);
+        return differenceSeconds > Consts.Timing.LOCATION_PERMISSION_VALID_SEC;
+    }
 }
