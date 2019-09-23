@@ -1,6 +1,7 @@
 package com.meetupp.restmeetupp.controller;
 
 import com.meetupp.restmeetupp.model.FriendRequest;
+import com.meetupp.restmeetupp.model.Locations;
 import com.meetupp.restmeetupp.model.RequestStatus;
 import com.meetupp.restmeetupp.model.User;
 import com.meetupp.restmeetupp.service.FriendRequestService;
@@ -175,5 +176,61 @@ public class FriendController {
         } else {
             return ResponseEntity.ok(RequestStatus.NOT_ACCEPTED);
         }
+    }
+
+    /**
+     * - gets user's friends
+     * - calculates their distances
+     * - deletes user's timed out location permissions
+     * - gets friends who are within radius and have no location permission with user
+     * @param token identifies user
+     * @return friends who are within radius and have no location permission with user
+     */
+    @GetMapping("/notify")
+    @ResponseBody
+    public ResponseEntity<List<User>> getNotifications(@RequestHeader("Authorization") String token) {
+        User fromUser = userIdentifier.identify(token);
+        Set<User> friends = fromUser.getAllFriends();
+
+        if (!friends.isEmpty()) {
+            List<User> friendsWithDistance = util.usersWithDistances(new ArrayList<>(friends), fromUser);
+            refreshLocationPermissions(fromUser);
+            List<User> notificationFriends = getNotificationFriends(fromUser, friendsWithDistance);
+            return ResponseEntity.ok(notificationFriends);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    /**
+     * Deletes expired location permissions of user
+     * @param fromUser user
+     */
+    private void refreshLocationPermissions(User fromUser) {
+        List<Locations> locationsToDelete = new ArrayList<>();
+        List<Locations> userLocationPermissions = userService.getLocations(fromUser);
+        for (Locations locationPermission : userLocationPermissions) {
+            if (util.isDateExpired(locationPermission.getTime())) {
+                locationsToDelete.add(locationPermission);
+            }
+        }
+        userService.deleteAllLocationPermission(locationsToDelete);
+    }
+
+    /**
+     * Returns friends who are within radius and user has location permission to them
+     * @param fromUser user
+     * @param friendsWithDistance user's friends
+     * @return friends who are within radius and user has no location permission to them
+     */
+    private List<User> getNotificationFriends(User fromUser, List<User> friendsWithDistance) {
+        List<User> notificationFriends = new ArrayList<>();
+        for (User friend : friendsWithDistance) {
+            if (friend.getDistance() <= Consts.User.RADIUS
+                    && !userService.hasLocationPermission(fromUser, friend)) {
+                notificationFriends.add(friend);
+            }
+        }
+        return notificationFriends;
     }
 }

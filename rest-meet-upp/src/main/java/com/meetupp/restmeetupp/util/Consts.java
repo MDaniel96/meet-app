@@ -30,7 +30,15 @@ public class Consts {
     public static class Timing {
         private Timing() {}
 
-        public static final int LOCATION_PERMISSION_VALID_SEC = 15;
+        public static final int LOCATION_PERMISSION_VALID_SEC = 10;
+    }
+
+    public static class TravelMode {
+        private TravelMode() {}
+
+        public static final String WALKING = "walking";
+        public static final String TRANSIT = "transit";
+        public static final String DRIVING = "driving";
     }
 
 }

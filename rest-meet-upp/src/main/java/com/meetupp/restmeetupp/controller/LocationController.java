@@ -12,7 +12,6 @@ import com.meetupp.restmeetupp.util.Util;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -86,7 +85,7 @@ public class LocationController {
             User fromUser = userService.findUserById(locationRequest.getFromUserId());
             User toUser = userService.findUserById(locationRequest.getToUserId());
 
-            userService.addLocations(fromUser, toUser);
+            userService.addLocationPermission(fromUser, toUser);
             locationRequestService.removeRequest(locationRequest);
             return ResponseEntity.ok().build();
         } else {
@@ -124,7 +123,7 @@ public class LocationController {
         User toDeleteUser = userService.findUserById(userId);
         User user = userIdentifier.identify(token);
 
-        if (userService.isLocations(user, toDeleteUser)) {
+        if (userService.hasLocationPermission(user, toDeleteUser)) {
             toDeleteUser.setDistance(0);
             userService.deleteLocations(user, toDeleteUser);
             return ResponseEntity.ok(toDeleteUser);
@@ -152,7 +151,7 @@ public class LocationController {
             return ResponseEntity.notFound().build();
         }
 
-        if (userService.isLocations(fromUser, toUser)) {
+        if (userService.hasLocationPermission(fromUser, toUser)) {
             Locations locations = userService.getLocations(fromUser, toUser);
             if (util.isDateExpired(locations.getTime())) {
                 userService.deleteLocations(fromUser, toUser);

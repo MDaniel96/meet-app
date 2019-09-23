@@ -72,7 +72,10 @@ public class UserService {
         userRepository.save(u2);
     }
 
-    public void addLocations(User u1, User u2) {
+    /**
+     * Create new location permission between two users
+     */
+    public void addLocationPermission(User u1, User u2) {
         Locations locations = new Locations();
         locations.setFromUserId(u1.getId());
         locations.setToUserId(u2.getId());
@@ -80,15 +83,24 @@ public class UserService {
         locationsRepository.save(locations);
     }
 
+    /**
+     * Returns true if two users are friends
+     */
     public boolean isFriends(User u1, User u2) {
         return u1.getFriends().contains(u2) || u1.getUsers().contains(u2);
     }
 
-    public boolean isLocations(User u1, User u2) {
+    /**
+     * Returns true if the users have location permission to each other (can see each others location)
+     */
+    public boolean hasLocationPermission(User u1, User u2) {
         return locationsRepository.findByFromUserIdAndToUserId(u1.getId(), u2.getId()) != null
                 || locationsRepository.findByFromUserIdAndToUserId(u2.getId(), u1.getId()) != null;
     }
 
+    /**
+     * Return location permission of two users
+     */
     public Locations getLocations(User u1, User u2) {
         Locations locations1 = locationsRepository.findByFromUserIdAndToUserId(u1.getId(), u2.getId());
         Locations locations2 = locationsRepository.findByFromUserIdAndToUserId(u2.getId(), u1.getId());
@@ -100,6 +112,9 @@ public class UserService {
         }
     }
 
+    /**
+     * Deletes location permission of two users
+     */
     public void deleteLocations(User u1, User u2) {
         Locations locations = locationsRepository.findByFromUserIdAndToUserId(u1.getId(), u2.getId());
         Locations locations2 = locationsRepository.findByFromUserIdAndToUserId(u2.getId(), u1.getId());
@@ -109,6 +124,17 @@ public class UserService {
         } else if (locations2 != null) {
             locationsRepository.delete(locations2);
         }
+    }
+
+    public void deleteAllLocationPermission(List<Locations> locations) {
+        locationsRepository.deleteAll(locations);
+    }
+
+    /**
+     * Returns all location permissions of user
+     */
+    public List<Locations> getLocations(User user) {
+        return locationsRepository.findAllByFromUserIdOrToUserId(user.getId(), user.getId());
     }
 
     private void setSettingsDefaults(User user) {

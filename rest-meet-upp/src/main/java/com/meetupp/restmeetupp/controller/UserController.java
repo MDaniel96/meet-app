@@ -76,7 +76,9 @@ public class UserController {
 
         if (user != null) {
             User fromUser = userIdentifier.identify(token);
-            user.setDistance(distanceCalculator.calculateDistance(fromUser, user));
+            List<User> userList = new ArrayList<>();
+            userList.add(user);
+            distanceCalculator.calculateMoreDistances(fromUser, userList);
             return ResponseEntity.ok(user);
         } else {
             return ResponseEntity.notFound().build();
