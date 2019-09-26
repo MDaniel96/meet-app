@@ -138,6 +138,7 @@ public class UserService {
     }
 
     private void setSettingsDefaults(User user) {
-        user.setSetting(new Setting(Consts.User.RADIUS, Consts.User.NOTIFICATIONS));
+        user.setSetting(new Setting(Consts.UserDefaults.RADIUS,
+                Consts.UserDefaults.NOTIFICATIONS, Consts.UserDefaults.TRAVEL_MODE));
     }
 }

@@ -4,11 +4,12 @@ public class Consts {
     private Consts() {}
 
 
-    public static class User {
-        private User() {}
+    public static class UserDefaults {
+        private UserDefaults() {}
 
         public static final boolean NOTIFICATIONS = true;
         public static final Integer RADIUS = 5000;
+        public static final String TRAVEL_MODE = "walking";
     }
 
     public static class Jwt {

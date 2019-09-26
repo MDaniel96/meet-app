@@ -55,11 +55,11 @@ public class DistanceCalculator {
      */
     public void calculateMoreDistances(User fromUser, Collection<User> toUsers) {
         for (User user : toUsers) {
-            try {
-                user.setDistance(calculateDistance(fromUser, user));
-            } catch (ApiException | InterruptedException | IOException e) {
-                e.printStackTrace();
-            }
+           // try {
+                user.setDistance(randomDistance(fromUser, user));
+           //} catch (ApiException | InterruptedException | IOException e) {
+            //    e.printStackTrace();
+            //}
         }
     }
 

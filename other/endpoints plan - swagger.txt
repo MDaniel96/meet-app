@@ -1,124 +1,115 @@
 
 ===> Endpoints:
 
-= = = (( Login/Logout ))
+= = = (( Login ))
 
-POST /login/facebook
+**POST /login/facebook/{accessToken}
  - logs in user after fb login (TODO)
  - if user not exists register
  - sends user token to backend
  - param: name, pass
 
-POST /register
- - registers user
- - body: username, fullname, email, passw
 
-POST /login
-
-POST /logout
- - logs out user
+**POST /login/test/{email}
 
 
 = = = (( Search ))
 
-GET /users/{keyword}
+**GET /user/current
+ - returns logged in user
+
+**GET /user/all
+ - lists all users
+
+**GET /user/search/{keyword}
  - returns whose name matches the keyword
  - if no keyword, returns all users
  - friends first
 
-GET /users/{id}
+**GET /user/{id}
  - returns user by id
 
 
 = = = (( Update User ))   
 
-PUT /user/location
+**PUT /user/location
  - updates user's location
  - body: Location
 
-PUT /user/settings
+**PUT /user/settings
  - updates user's settings
  - body: Settings
 
 
 = = = (( Friends ))
 
-GET /user/friends
+**GET /user/friend/all
  - returns all friends of user
  - sorted by distance
 
-GET /user/nearbyFriends
- - returns all friends of user within user's radius
- - sorted by distance
-
-DELETE /user/friend/{userId}
+**DELETE /user/friend/{userId}
  - deletes friend 
 
-GET /user/friendStatus/{userId}
+**GET /user/friend/{userId}/status
  - checks friend status of user
  - returns: RequestStatus
 
 
-= = = (( Locations ))
-
-DELETE /user/request/{userId}
- - deletes location request from user
-
-GET /user/locationStatus/{userId}
- - checks location status of user
- - returns: RequestStatus
-
-
-= = = (( Nearby Notifs ))
-
-GET /user/notifications
- - updates 'who-is-nearby' notifications (tracks who is close)
-    - adds friends who are within radius
-    - deletes friends who are not within radius
-    - deletes location-permissions if they timed out
- - if we have location permission then no notification
- - returns 'who-is-nearby' notifications
-
-DELETE /user/notification/{notificationId}
- - deletes specific 'who-is-nearby' notification
-
-
 = = = (( Friend Requests ))
 
-POST /user/friendRequest/{toUser}
+**POST /user/friend/request/{toUserId}
  - adds new friend request
 
-GET /user/friendRequests
+**GET /user/friend/request/all
  - gets all friend requests of user
 
-POST /user/acceptFriend/{friendRequestId}
+**POST /user/friend/request/accept/{friendRequestId}
  - accepts and deletes specific friend request of user
 
-DELETE /user/cancelFriend/{friendRequestId}
+**DELETE /user/friend/request/accept/{friendRequestId}
  - cancels and deletes specific friend request of user
+
+
+= = = (( Locations ))
+
+**DELETE /user/location/{userId}
+ - deletes location request from user
+
+**GET /user/location/{userId}/status
+ - checks location status of user
+    - deletes it if is timed out
+ - returns: RequestStatus
 
 
 = = = (( Location Requests ))
 
-POST /user/locationRequest/{toUser}
+**POST /user/location/request/{toUserId}/{message}
  - adds new location request
 
-GET /user/locationRequests
+**GET /user/location/request/all
  - gets all location requests of user
 
-POST /user/acceptLocation/{locationRequestId}
- - accepts and deletes specific friend request of user
+**POST /user/location/accept/{locationRequestId}
+ - accepts and deletes specific location request of user
 
-DELETE /user/cancelLocation/{locationRequestId}
- - cancels and deletes specific friend request of user
+**DELETE /user/location/cancel/{locationRequestId}
+ - cancels and deletes specific location request of user
 
 = = = 
 
 
+= = = (( Notifications == Nearby Friends))
 
-===> Updating engpoints:
+GET /user/friend/notify
+ - refreshes user's loc permissions
+ - calculates distances from user's loc
+ - returns those friends who we don't track with loc permission (or request) AND are within radius
+
+
+
+===> Updating endpoints:
 PUT /user/location
-GET /user/notifications
+GET /user/notify
 
 ===> Status codes:
 
@@ -131,25 +122,18 @@ GET /user/notifications
 ===> Entitások:
 
 *User:
- - username
- - password(TODO - fb)
- - name
  - email
+ - name
  - location
  - settings
  - image
  - ?distance
 
-*Notification:
- - name
- - time
- - toUserId
-
 *Request
- - name
+ - fromUserName
  - fromUserId
- - toUserId
  - time
+ - toUserId
 
 <-FriendRequest
 
@@ -166,9 +150,11 @@ Location:
 Settings:
  - radius
  - notifications
+ - travel_mode
+
 
 RequestStatus:
- - yes, no, on-the-way
+ - accessed, not-accessed, on-the-way
 
 
 ===> Kapcsolatok

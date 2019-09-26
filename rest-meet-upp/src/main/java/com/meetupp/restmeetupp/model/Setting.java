@@ -20,9 +20,10 @@ public class Setting {
 
     public Setting() {}
 
-    public Setting(Integer radius, boolean notifications) {
+    public Setting(Integer radius, boolean notifications, String travelMode) {
         this.radius = radius;
         this.notifications = notifications;
+        this.travelMode = travelMode;
     }
 
     public Integer getRadius() {
