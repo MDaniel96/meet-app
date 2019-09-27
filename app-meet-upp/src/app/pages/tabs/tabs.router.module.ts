@@ -33,11 +33,6 @@ const routes: Routes = [
         pathMatch: 'full'
       }
     ]
-  },
-  {
-    path: '',
-    redirectTo: '/tabs/friends',
-    pathMatch: 'full'
   }
 ];
 

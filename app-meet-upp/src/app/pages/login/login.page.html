@@ -1,0 +1,31 @@
+<ion-content>
+
+  <ion-grid>
+
+    <ion-row class="ion-justify-content-center app-name">
+      <ion-col size="6">
+        <ion-label>
+          <h1>
+            Meet Upp
+          </h1>
+        </ion-label>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-justify-content-center test-login">
+      <ion-col size="6">
+        <form (ngSubmit)="testLogin(event)">
+          <ion-item>
+            <ion-label position="stacked">Enter your email</ion-label>
+            <ion-input [(ngModel)]="email" required type="email" name="email" value="sdf"></ion-input>
+          </ion-item>
+          <div class="ion-padding">
+            <ion-button expand="block" type="submit" class="ion-no-margin">Test login</ion-button>
+          </div>
+        </form>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+
+</ion-content>

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy, Routes, RouterModule, PreloadAllModules } from '@angular/router';
+import { HttpClientModule, HTTP_INTERCEPTORS  } from '@angular/common/http';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
@@ -14,12 +15,15 @@ import { TabsPageRoutingModule } from './pages/tabs/tabs.router.module';
 import { FriendsPage } from './pages/friends/friends.page';
 import { SearchPage } from './pages/search/search.page';
 import { SettingsPage } from './pages/settings/settings.page';
-
+import { LoginPage } from './pages/login/login.page';
+import { LoginService } from './services/login.service';
+import { TokenInterceptor } from './services/tokenInterceptor';
+import { AuthService } from './services/auth.service';
 
 const routes: Routes = [
   {
     path: '',
-    component: TabsPage
+    component: LoginPage
   }
 ];
 
@@ -31,7 +35,8 @@ const routes: Routes = [
     TabsPageRoutingModule,
     BrowserModule,
     IonicModule.forRoot(),
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
+    HttpClientModule
   ],
   exports: [
     RouterModule
@@ -41,12 +46,23 @@ const routes: Routes = [
     TabsPage,
     FriendsPage,
     SearchPage,
-    SettingsPage
+    SettingsPage,
+    LoginPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { 
+      provide: RouteReuseStrategy,
+      useClass: IonicRouteStrategy 
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    },
+    LoginService,
+    AuthService
   ],
   bootstrap: [AppComponent]
 })

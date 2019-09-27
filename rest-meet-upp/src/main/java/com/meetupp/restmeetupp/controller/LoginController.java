@@ -31,7 +31,7 @@ public class LoginController {
      * @param email identifies user who logs in
      * @return Authorization token
      */
-    @PostMapping("/test/{email:.+}")
+    @PostMapping("/test/{email}/")
     @ResponseBody
     public ResponseEntity<Map<String, String>> testLogin(@PathVariable("email") String email) {
         User user = userService.findByEmail(email);
