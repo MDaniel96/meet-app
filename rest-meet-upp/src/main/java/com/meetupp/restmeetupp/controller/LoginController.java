@@ -9,6 +9,9 @@ import com.meetupp.restmeetupp.util.Consts;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 @RequestMapping(Consts.EndpointBase.LOGIN)
 public class LoginController {
@@ -28,13 +31,15 @@ public class LoginController {
      * @param email identifies user who logs in
      * @return Authorization token
      */
-    @PostMapping("/test/{email}")
+    @PostMapping("/test/{email:.+}")
     @ResponseBody
-    public ResponseEntity<String> testLogin(@PathVariable("email") String email) {
+    public ResponseEntity<Map<String, String>> testLogin(@PathVariable("email") String email) {
         User user = userService.findByEmail(email);
 
         if (user != null) {
-            return ResponseEntity.ok(generateResponseToken(user, email));
+            Map<String, String> token = new HashMap<>();
+            token.put("token", generateResponseToken(user, email));
+            return ResponseEntity.ok(token);
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -47,18 +52,21 @@ public class LoginController {
      */
     @PostMapping("/facebook/{accessToken}")
     @ResponseBody
-    public ResponseEntity<String> facebookLogin(@PathVariable("accessToken") String accessToken) {
+    public ResponseEntity<Map<String, String>> facebookLogin(@PathVariable("accessToken") String accessToken) {
         User facebookUser = facebookService.getUser(accessToken);
         if (facebookUser == null) {
             return ResponseEntity.badRequest().build();
         }
 
         User user = userService.findByEmail(facebookUser.getEmail());
+        Map<String, String> token = new HashMap<>();
         if (user != null) {
-            return ResponseEntity.ok(generateResponseToken(user, facebookUser.getEmail()));
+            token.put("token", generateResponseToken(user, facebookUser.getEmail()));
+            return ResponseEntity.ok(token);
         } else {
             userService.registerUser(facebookUser);
-            return ResponseEntity.ok(generateResponseToken(facebookUser, facebookUser.getEmail()));
+            token.put("token", generateResponseToken(facebookUser, facebookUser.getEmail()));
+            return ResponseEntity.ok(token);
         }
     }
 

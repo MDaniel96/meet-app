@@ -226,7 +226,8 @@ public class FriendController {
     private List<User> getNotificationFriends(User fromUser, List<User> friendsWithDistance) {
         List<User> notificationFriends = new ArrayList<>();
         for (User friend : friendsWithDistance) {
-            if (friend.getDistance() <= Consts.User.RADIUS
+            // todo: ez itt szar
+            if (friend.getDistance() <= fromUser.getDistance()
                     && !userService.hasLocationPermission(fromUser, friend)) {
                 notificationFriends.add(friend);
             }
