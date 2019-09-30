@@ -20,6 +20,7 @@ import { LoginPage } from './pages/login/login.page';
 import { LoginService } from './services/login.service';
 import { TokenInterceptor } from './services/tokenInterceptor';
 import { AuthService } from './services/auth.service';
+import { DistancePipe } from './pipes/distance.pipe';
 
 const routes: Routes = [
   {
@@ -48,7 +49,8 @@ const routes: Routes = [
     FriendsPage,
     SearchPage,
     SettingsPage,
-    LoginPage
+    LoginPage,
+    DistancePipe
   ],
   providers: [
     StatusBar,

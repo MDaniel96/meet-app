@@ -1,9 +1,83 @@
-<ion-header>
+<ion-header translucent>
   <ion-toolbar>
-    <ion-title>
-      Settings
-    </ion-title>
+    <ion-title>Settings</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content></ion-content>
+
+<ion-content fullscreen>
+
+  <ion-card>
+    <ion-card-header class="ion-no-padding">
+      <ion-grid>
+        <ion-row class="ion-justify-content-left">
+
+          <ion-col size="3" class="ion-no-padding">
+            <ion-item class="ion-no-padding padding-left-5" lines="none">
+              <ion-avatar>
+                <img
+                  src="https://platform-lookaside.fbsbx.com/platform/profilepic/?asid=2678787078840528&height=50&width=50&ext=1571955978&hash=AeQtM2Oa95TZLyTs">
+              </ion-avatar>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size="9">
+            <ion-card-title>Morvai Dani</ion-card-title>
+            <ion-card-content class="ion-no-padding item-footer">
+              morvai.daniel96@gmail.com
+            </ion-card-content>
+          </ion-col>
+
+        </ion-row>
+      </ion-grid>
+    </ion-card-header>
+  </ion-card>
+
+  <ion-list>
+
+    <ion-item lines="none">
+      <ion-icon class="ion-padding" name="search"></ion-icon>
+      <ion-label class="search">Search radius</ion-label>
+      <div class="text-align-right" slot="end"><b>{{ searchRadius | distance }}</b></div>
+    </ion-item>
+
+    <ion-item>
+      <ion-range [(ngModel)]="searchRadius" min="100" max="20000" step="100" color="secondary">
+        <div class="gray" slot="start">100 m</div>
+        <div class="gray" slot="end">20 km</div>
+      </ion-range>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon class="ion-padding" name="airplane"></ion-icon>
+      <ion-label>Travel mode</ion-label>
+      <ion-select interface="popover">
+        <ion-select-option value="walking">Walking</ion-select-option>
+        <ion-select-option value="car">Car</ion-select-option>
+        <ion-select-option value="transit">Public transport</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon class="ion-padding" name="locate"></ion-icon>
+      <ion-label>
+        <div>Your GPS is <b>OFF</b></div>
+        <div class="item-footer">Please turn it on at settings menu</div>
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon class="ion-padding" name="notifications"></ion-icon>
+      <ion-label>Allow notifications</ion-label>
+      <ion-toggle slot="end"></ion-toggle>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon class="ion-padding" name="log-out"></ion-icon>
+      <ion-label>Logout</ion-label>
+    </ion-item>
+
+
+  </ion-list>
+
+</ion-content>

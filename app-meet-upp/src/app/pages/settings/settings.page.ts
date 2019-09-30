@@ -7,6 +7,8 @@ import { Component } from '@angular/core';
 })
 export class SettingsPage {
 
+  searchRadius: number = 5000;
+
   constructor() {}
 
 }

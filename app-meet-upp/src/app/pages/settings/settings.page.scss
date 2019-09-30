@@ -1,1 +1,35 @@
+.item-footer {
+    font-size: 13px;
+    padding-top: 3px;
+}
+
+ion-list {
+
+    ion-item {
+        padding-top: 3.5px;
+    }
+
+    ion-label {
+        padding-bottom: 3.5px;
+    }
+
+    ion-range {
+        padding: 0px 15px 3px 15px;
+    }
+
+}
+
+.gray {
+    color: gray;
+}
+
+.text-align-right {
+    text-align: right;
+    padding-left: 3px;
+    margin-left: 3px;
+}
+
+.padding-left-5 {
+    padding-left: 10px;
+}
 
