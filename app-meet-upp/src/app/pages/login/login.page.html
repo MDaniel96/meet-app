@@ -1,9 +1,9 @@
-<ion-content>
+<ion-content ion-padding>
 
   <ion-grid>
 
     <ion-row class="ion-justify-content-center app-name">
-      <ion-col size="6">
+      <ion-col size="8">
         <ion-label>
           <h1>
             Meet Upp
@@ -13,7 +13,7 @@
     </ion-row>
 
     <ion-row class="ion-justify-content-center test-login">
-      <ion-col size="6">
+      <ion-col size="8">
         <form (ngSubmit)="testLogin(event)">
           <ion-item>
             <ion-label position="stacked">Enter your email</ion-label>
@@ -23,6 +23,12 @@
             <ion-button expand="block" type="submit" class="ion-no-margin">Test login</ion-button>
           </div>
         </form>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-justify-content-center test-login">
+      <ion-col size="8">
+          <a (click)="facebookLogin()" class="fb connect">Sign in with Facebook</a>
       </ion-col>
     </ion-row>
 

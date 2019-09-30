@@ -3,6 +3,7 @@ export class AppSettings {
     public static LOCAL: boolean = false;    
     public static INTERCEPT_PATH: string = '/user';
     public static DEFAULT_EMAIL: string = 'morvai.daniel96@gmail.com';
+    public static FACEBOOK_PERMISSIONS: string[] = ['email'];
 
     public static getBase(): string {
         if (this.LOCAL) {

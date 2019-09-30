@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
+import { User } from 'src/app/models/User';
 
 @Component({
   selector: 'app-friends',
@@ -8,6 +9,10 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class FriendsPage {
 
-  constructor(private authService: AuthService) { }
+  user: User;
+
+  constructor(private authService: AuthService) {
+    this.user = authService.loggedUser;
+   }
 
 }
