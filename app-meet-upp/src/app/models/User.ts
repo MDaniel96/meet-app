@@ -1,4 +1,4 @@
-import { Settings } from './Settings';
+import { Setting } from './Settings';
 import { Location } from './Location';
 
 
@@ -8,6 +8,6 @@ export class User {
     name: string;
     image: string;
     location: Location;
-    settings: Settings;
+    setting: Setting;
     distance: number;
 }

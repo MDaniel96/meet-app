@@ -4,12 +4,19 @@ import { Observable } from 'rxjs';
 import { Token } from '../models/Token';
 import { AppSettings } from '../config/AppSettings';
 import { User } from '../models/User';
+import { Setting } from '../models/Settings';
+import { TravelMode } from '../models/TravelMode';
 
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type':  'application/json'
+  })
+};
 
 @Injectable({
   providedIn: 'root'
 })
-export class LoginService {
+export class RestService {
 
   constructor(private http: HttpClient) { }
 
@@ -21,8 +28,12 @@ export class LoginService {
     return this.http.post<Token>(AppSettings.getBase() + `/login/facebook/${facebookToken}`, null);
   }
 
-  getCurrent(): Observable<User> {
+  getCurrentUser(): Observable<User> {
     return this.http.get<User>(AppSettings.getBase() + `/user/current`);
+  }
+
+  updateUserSettings(body: Setting): Observable<User> {
+    return this.http.put<User>(AppSettings.getBase() + `/user/settings`, body);
   }
 
 }

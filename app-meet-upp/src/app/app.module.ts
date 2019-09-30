@@ -17,7 +17,7 @@ import { FriendsPage } from './pages/friends/friends.page';
 import { SearchPage } from './pages/search/search.page';
 import { SettingsPage } from './pages/settings/settings.page';
 import { LoginPage } from './pages/login/login.page';
-import { LoginService } from './services/login.service';
+import { RestService } from './services/rest.service';
 import { TokenInterceptor } from './services/tokenInterceptor';
 import { AuthService } from './services/auth.service';
 import { DistancePipe } from './pipes/distance.pipe';
@@ -64,7 +64,7 @@ const routes: Routes = [
       useClass: TokenInterceptor,
       multi: true
     },
-    LoginService,
+    RestService,
     AuthService,
     Facebook,
   ],

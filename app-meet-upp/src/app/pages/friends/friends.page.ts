@@ -12,7 +12,7 @@ export class FriendsPage {
   user: User;
 
   constructor(private authService: AuthService) {
-    this.user = authService.loggedUser;
+    this.user = this.authService.loggedUser;
    }
 
 }

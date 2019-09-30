@@ -1,6 +1,6 @@
 import { TravelMode } from './TravelMode';
 
-export class Settings {
+export class Setting {
     radius: number;
     notifications: boolean;
     travelMode: TravelMode;

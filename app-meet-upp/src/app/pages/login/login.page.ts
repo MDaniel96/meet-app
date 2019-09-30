@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { LoginService } from 'src/app/services/login.service';
+import { RestService } from 'src/app/services/rest.service';
 import { Observable, Subscription } from 'rxjs';
 import { Token } from 'src/app/models/Token';
 import { AuthService } from 'src/app/services/auth.service';
@@ -17,7 +17,7 @@ export class LoginPage {
   email: string = AppSettings.DEFAULT_EMAIL;
   subscription: Subscription = new Subscription();
 
-  constructor(private loginService: LoginService,
+  constructor(private loginService: RestService,
     private authService: AuthService,
     private navCtrl: NavController,
     private fb: Facebook) { }
@@ -67,7 +67,7 @@ export class LoginPage {
 
       if (res.token != null) {
         this.subscription.add(
-          this.loginService.getCurrent().subscribe((user) => {
+          this.loginService.getCurrentUser().subscribe((user) => {
             console.log(user);
             this.authService.loggedUser = user;
             this.navCtrl.navigateRoot('/tabs');
