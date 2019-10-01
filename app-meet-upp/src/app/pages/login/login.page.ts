@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { RestService } from 'src/app/services/rest.service';
-import { Observable, Subscription, of } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Token } from 'src/app/models/Token';
 import { AuthService } from 'src/app/services/auth.service';
-import { NavController, Platform } from '@ionic/angular';
 import { AppSettings } from 'src/app/config/AppSettings';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
 
@@ -12,35 +11,16 @@ import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })
-export class LoginPage implements OnInit {
+export class LoginPage {
 
   email: string = AppSettings.DEFAULT_EMAIL;
   subscription: Subscription = new Subscription();
 
-  constructor(private loginService: RestService,
+  constructor(
+    private restService: RestService,
     private authService: AuthService,
-    private navCtrl: NavController,
-    private fb: Facebook,
-    private platform: Platform) { }
-
-
-  /**
-   * After platform loaded loading token from storage
-   * - if there is token leave logging in out and start 
-   *   with token processing
-   */
-  ngOnInit() {
-    this.platform.ready().then(() => {
-      this.authService.loadTokenFromStorage()
-        .then((token) => {
-          if (token !== '') {
-            this.processToken(of({ 
-              token: token 
-            }));
-          }
-        });
-    });
-  }
+    private fb: Facebook
+  ) { }
 
   /**
    * Test login with email
@@ -48,8 +28,8 @@ export class LoginPage implements OnInit {
    */
   testLogin() {
     event.preventDefault();
-    let token: Observable<Token> = this.loginService.testLogin(this.email);
-    this.processToken(token);
+    let token: Observable<Token> = this.restService.testLogin(this.email);
+    this.authService.processToken(token, this.subscription);
   }
 
   /**
@@ -63,8 +43,8 @@ export class LoginPage implements OnInit {
 
         if (res.status == "connected") {
           let fbAccessToken = res.authResponse.accessToken;
-          let token: Observable<Token> = this.loginService.facebookLogin(fbAccessToken);
-          this.processToken(token);
+          let token: Observable<Token> = this.restService.facebookLogin(fbAccessToken);
+          this.authService.processToken(token, this.subscription);
 
         } else {
           console.log("Error: Logging in to facebook.");
@@ -73,31 +53,6 @@ export class LoginPage implements OnInit {
       .catch((e) => {
         console.log('Error logging into Facebook', e);
       });
-  }
-
-  /**
-   * Gets and saves app token and logged in user
-   * - navigates to /tabs page 
-   * @param token app token
-   */
-  private processToken(token: Observable<Token>) {
-    const subscription = token.subscribe(res => {
-      console.log('Logging in...')
-      console.log('App token: ' + res.token);
-      this.authService.token = res.token;
-
-      if (res.token != null) {
-        this.subscription.add(
-          this.loginService.getCurrentUser().subscribe((user) => {
-            console.log(user);
-            this.authService.loggedUser = user;
-            this.navCtrl.navigateRoot('/tabs');
-          })
-        );
-      }
-
-    });
-    this.subscription.add(subscription);
   }
 
   ngOnDestroy() {

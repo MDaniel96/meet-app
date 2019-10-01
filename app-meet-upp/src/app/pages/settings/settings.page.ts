@@ -55,7 +55,7 @@ export class SettingsPage {
    */
   logout() {
     this.authService.token = '';
-    this.navCtrl.navigateRoot('');
+    this.navCtrl.navigateRoot('/login');
     console.log('Logging out...');
   }
 

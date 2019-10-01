@@ -25,7 +25,7 @@ import { DistancePipe } from './pipes/distance.pipe';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'login',
     component: LoginPage
   }
 ];
