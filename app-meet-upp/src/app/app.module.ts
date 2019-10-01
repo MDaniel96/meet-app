@@ -8,6 +8,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Facebook } from '@ionic-native/facebook/ngx';
 import { IonicStorageModule } from '@ionic/storage';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
 
 import { AppComponent } from './app.component';
 import { TabsPage } from './pages/tabs/tabs.page';
@@ -40,7 +41,7 @@ const routes: Routes = [
     IonicModule.forRoot(),
     RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
     HttpClientModule,
-    IonicStorageModule.forRoot()
+    IonicStorageModule.forRoot(),
   ],
   exports: [
     RouterModule
@@ -69,6 +70,7 @@ const routes: Routes = [
     RestService,
     AuthService,
     Facebook,
+    Geolocation
   ],
   bootstrap: [AppComponent]
 })

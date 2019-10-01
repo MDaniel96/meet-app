@@ -4,6 +4,8 @@ import { User } from 'src/app/models/User';
 import { RestService } from 'src/app/services/rest.service';
 import { Observable, Subscription } from 'rxjs';
 import { NavController } from '@ionic/angular';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { AppSettings } from 'src/app/config/AppSettings';
 
 
 @Component({
@@ -14,17 +16,43 @@ import { NavController } from '@ionic/angular';
 export class SettingsPage {
 
   user: User;
+  locationHeadStr: string = AppSettings.LOC_SHARING;
+  locationHeadStatus: string = AppSettings.LOC_ONDWAY;
+  locationFootStr: string = '';
   subscription: Subscription = new Subscription();
 
-  constructor(private authService: AuthService,
+  constructor(
+    private authService: AuthService,
     private restService: RestService,
-    private navCtrl: NavController) { }
+    private navCtrl: NavController,
+    private geolocation: Geolocation
+  ) { }
 
   /**
-   * When entering page loading logged in user
+   * When entering page loading logged in user, detecting location
    */
   ionViewWillEnter() {
     this.user = this.authService.loggedUser;
+    this.detectLocation();
+  }
+
+  /**
+   * Detecting and displaying location sharing status
+   */
+  private detectLocation() {
+    this.geolocation.getCurrentPosition()
+      .then((resp) => {
+        let lat = resp.coords.latitude;
+        let lon = resp.coords.longitude;
+        console.log('Location detected: ' + lat + ', ' + lon);
+        this.locationHeadStatus = AppSettings.LOC_ON;
+        this.locationFootStr = `${AppSettings.LOC_SHARING_ON_FOOT}${lat}, ${lon}`;
+      })
+      .catch((e) => {
+        console.log('location detection error: ' + e.message);
+        this.locationHeadStatus = AppSettings.LOC_OFF;
+        this.locationFootStr = AppSettings.LOC_SHARING_OFF_FOOT;
+      })
   }
 
   /**

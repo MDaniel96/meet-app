@@ -16,7 +16,7 @@ export class AppComponent {
   constructor(
     private platform: Platform,
     private statusBar: StatusBar,
-    private authService: AuthService
+    private authService: AuthService,
   ) {
     this.initializeApp();
   }
