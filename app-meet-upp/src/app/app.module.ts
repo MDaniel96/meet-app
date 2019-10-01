@@ -23,6 +23,8 @@ import { RestService } from './services/rest.service';
 import { TokenInterceptor } from './services/tokenInterceptor';
 import { AuthService } from './services/auth.service';
 import { DistancePipe } from './pipes/distance.pipe';
+import { FriendsComponent } from './components/friends/friends.component';
+import { RequestsComponent } from './components/requests/requests.component';
 
 const routes: Routes = [
   {
@@ -53,7 +55,9 @@ const routes: Routes = [
     SearchPage,
     SettingsPage,
     LoginPage,
-    DistancePipe
+    DistancePipe,
+    FriendsComponent,
+    RequestsComponent,
   ],
   providers: [
     StatusBar,

@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { AuthService } from 'src/app/services/auth.service';
-import { User } from 'src/app/models/User';
 
 @Component({
   selector: 'app-friends',
@@ -9,10 +7,7 @@ import { User } from 'src/app/models/User';
 })
 export class FriendsPage {
 
-  user: User;
+  friendsSelected: boolean = true;
 
-  constructor(private authService: AuthService) {
-    this.user = this.authService.loggedUser;
-   }
-
+  constructor() {}
 }
