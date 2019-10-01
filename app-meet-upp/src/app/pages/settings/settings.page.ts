@@ -70,9 +70,8 @@ export class SettingsPage {
   updateUser() {
     let user: Observable<User> = this.restService.updateUserSettings(this.user.setting);
 
-    console.log('Updating settings');
     const subscription = user.subscribe((user) => {
-      console.log(user);
+      console.log('Updating settings...', user);
       this.authService.loggedUser = user;
     });
     this.subscription.add(subscription);

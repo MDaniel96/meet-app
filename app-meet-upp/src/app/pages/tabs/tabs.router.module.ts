@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { TabsPage } from './tabs.page';
 import { SearchPage } from '../search/search.page';
 import { SettingsPage } from '../settings/settings.page';
-import { FriendsPage } from '../friends/friends.page';
+import { MainPage } from '../main/main.page';
 
 const routes: Routes = [
   {
@@ -15,7 +15,7 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            component: FriendsPage
+            component: MainPage
           }
         ]
       },

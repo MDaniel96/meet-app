@@ -67,14 +67,13 @@ export class AuthService {
    */
   processToken(token: Observable<Token>, subscription: Subscription) {
     const sub = token.subscribe(res => {
-      console.log('Logging in...')
-      console.log('App token: ' + res.token);
+      console.log('App token:', res.token);
       this.token = res.token;
 
       if (res.token != null && res.token !== '') {
         subscription.add(
           this.restService.getCurrentUser().subscribe((user) => {
-            console.log(user);
+            console.log('Logging in...', user);
             this.loggedUser = user;
             this.navCtrl.navigateRoot('/tabs');
           })

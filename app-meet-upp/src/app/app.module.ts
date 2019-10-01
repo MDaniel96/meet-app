@@ -15,7 +15,7 @@ import { TabsPage } from './pages/tabs/tabs.page';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TabsPageRoutingModule } from './pages/tabs/tabs.router.module';
-import { FriendsPage } from './pages/friends/friends.page';
+import { MainPage } from './pages/main/main.page';
 import { SearchPage } from './pages/search/search.page';
 import { SettingsPage } from './pages/settings/settings.page';
 import { LoginPage } from './pages/login/login.page';
@@ -51,7 +51,7 @@ const routes: Routes = [
   declarations: [
     AppComponent,
     TabsPage,
-    FriendsPage,
+    MainPage,
     SearchPage,
     SettingsPage,
     LoginPage,
