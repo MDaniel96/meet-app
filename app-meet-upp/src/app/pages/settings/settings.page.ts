@@ -3,6 +3,8 @@ import { AuthService } from 'src/app/services/auth.service';
 import { User } from 'src/app/models/User';
 import { RestService } from 'src/app/services/rest.service';
 import { Observable, Subscription } from 'rxjs';
+import { NavController } from '@ionic/angular';
+
 
 @Component({
   selector: 'app-settings',
@@ -15,17 +17,28 @@ export class SettingsPage {
   subscription: Subscription = new Subscription();
 
   constructor(private authService: AuthService,
-              private restService: RestService) {
-  }
+    private restService: RestService,
+    private navCtrl: NavController) { }
 
+  /**
+   * When entering page loading logged in user
+   */
   ionViewWillEnter() {
     this.user = this.authService.loggedUser;
   }
 
+  /**
+   * When leaving page updating user
+   */
   ionViewDidLeave() {
     this.updateUser();
   }
 
+  /**
+   * Updating user
+   * - in server
+   * - in authService (app)
+   */
   updateUser() {
     let user: Observable<User> = this.restService.updateUserSettings(this.user.setting);
 
@@ -35,6 +48,15 @@ export class SettingsPage {
       this.authService.loggedUser = user;
     });
     this.subscription.add(subscription);
+  }
+
+  /**
+   * Navigating to login and deleting token from storage
+   */
+  logout() {
+    this.authService.token = '';
+    this.navCtrl.navigateRoot('');
+    console.log('Logging out...');
   }
 
   ngOnDestroy() {

@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RestService } from 'src/app/services/rest.service';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, of } from 'rxjs';
 import { Token } from 'src/app/models/Token';
 import { AuthService } from 'src/app/services/auth.service';
-import { NavController } from '@ionic/angular';
+import { NavController, Platform } from '@ionic/angular';
 import { AppSettings } from 'src/app/config/AppSettings';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
 
@@ -12,7 +12,7 @@ import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })
-export class LoginPage {
+export class LoginPage implements OnInit {
 
   email: string = AppSettings.DEFAULT_EMAIL;
   subscription: Subscription = new Subscription();
@@ -20,7 +20,27 @@ export class LoginPage {
   constructor(private loginService: RestService,
     private authService: AuthService,
     private navCtrl: NavController,
-    private fb: Facebook) { }
+    private fb: Facebook,
+    private platform: Platform) { }
+
+
+  /**
+   * After platform loaded loading token from storage
+   * - if there is token leave logging in out and start 
+   *   with token processing
+   */
+  ngOnInit() {
+    this.platform.ready().then(() => {
+      this.authService.loadTokenFromStorage()
+        .then((token) => {
+          if (token !== '') {
+            this.processToken(of({ 
+              token: token 
+            }));
+          }
+        });
+    });
+  }
 
   /**
    * Test login with email
@@ -62,6 +82,7 @@ export class LoginPage {
    */
   private processToken(token: Observable<Token>) {
     const subscription = token.subscribe(res => {
+      console.log('Logging in...')
       console.log('App token: ' + res.token);
       this.authService.token = res.token;
 
@@ -74,7 +95,7 @@ export class LoginPage {
           })
         );
       }
-      
+
     });
     this.subscription.add(subscription);
   }

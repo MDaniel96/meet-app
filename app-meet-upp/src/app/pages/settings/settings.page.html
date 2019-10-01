@@ -1,13 +1,12 @@
-<ion-header translucent>
+<ion-header>
   <ion-toolbar>
     <ion-title>Settings</ion-title>
   </ion-toolbar>
 </ion-header>
 
 
-
 <ion-content *ngIf="user" fullscreen>
-  
+
   <ion-card>
     <ion-card-header class="ion-no-padding">
       <ion-grid>
@@ -23,7 +22,7 @@
 
           <ion-col size="9">
             <ion-card-title>{{ user.name }}</ion-card-title>
-            <ion-card-content class="ion-no-padding item-footer"> {{ user. email }} </ion-card-content>
+            <ion-card-content class="ion-no-padding item-footer"> {{ user.email }} </ion-card-content>
           </ion-col>
 
         </ion-row>
@@ -57,6 +56,12 @@
     </ion-item>
 
     <ion-item>
+      <ion-icon class="ion-padding" name="notifications"></ion-icon>
+      <ion-label>Allow notifications</ion-label>
+      <ion-toggle [(ngModel)]="user.setting.notifications" slot="end"></ion-toggle>
+    </ion-item>
+
+    <ion-item>
       <ion-icon class="ion-padding" name="locate"></ion-icon>
       <ion-label>
         <div>Your GPS is <b>OFF</b></div>
@@ -64,17 +69,10 @@
       </ion-label>
     </ion-item>
 
-    <ion-item>
-      <ion-icon class="ion-padding" name="notifications"></ion-icon>
-      <ion-label>Allow notifications</ion-label>
-      <ion-toggle [(ngModel)]="user.setting.notifications" slot="end"></ion-toggle>
-    </ion-item>
-
-    <ion-item>
+    <ion-item href="" (click)="logout()">
       <ion-icon class="ion-padding" name="log-out"></ion-icon>
       <ion-label>Logout</ion-label>
     </ion-item>
-
 
   </ion-list>
 

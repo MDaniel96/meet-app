@@ -4,6 +4,7 @@ export class AppSettings {
     public static INTERCEPT_PATH: string = '/user';
     public static DEFAULT_EMAIL: string = 'morvai.daniel96@gmail.com';
     public static FACEBOOK_PERMISSIONS: string[] = ['email'];
+    public static STORAGE_TOKEN_STR: string = 'token';
 
     public static getBase(): string {
         if (this.LOCAL) {
