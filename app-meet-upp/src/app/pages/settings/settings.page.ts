@@ -6,6 +6,7 @@ import { Observable, Subscription } from 'rxjs';
 import { NavController } from '@ionic/angular';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { AppSettings } from 'src/app/config/AppSettings';
+import { LoadingAnimationService } from 'src/app/services/loading.service';
 
 
 @Component({
@@ -25,7 +26,8 @@ export class SettingsPage {
     private authService: AuthService,
     private restService: RestService,
     private navCtrl: NavController,
-    private geolocation: Geolocation
+    private geolocation: Geolocation,
+    private loadingAnimation: LoadingAnimationService
   ) { }
 
   /**
@@ -79,11 +81,16 @@ export class SettingsPage {
 
   /**
    * Navigating to login and deleting token from storage
+   * - setting timeout for displaying loading animation
    */
   logout() {
-    this.authService.token = '';
-    this.navCtrl.navigateRoot('/login');
     console.log('Logging out...');
+    this.authService.token = '';
+    this.loadingAnimation.presentLoading('Logging out...');
+    setTimeout(() => {
+      this.loadingAnimation.dismissLoading();
+      this.navCtrl.navigateRoot('/login');
+    }, AppSettings.LOGOUT_LOADING_MILISECS);
   }
 
   ngOnDestroy() {

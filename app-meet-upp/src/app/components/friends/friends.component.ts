@@ -5,6 +5,8 @@ import { Location } from 'src/app/models/Location';
 import { Subscription } from 'rxjs';
 import { User } from 'src/app/models/User';
 import { AuthService } from 'src/app/services/auth.service';
+import { LoadingAnimationService } from 'src/app/services/loading.service';
+import { AppSettings } from 'src/app/config/AppSettings';
 
 @Component({
   selector: 'app-friends',
@@ -22,7 +24,8 @@ export class FriendsComponent implements OnInit {
   constructor(
     private restService: RestService,
     private geolocation: Geolocation,
-    private authService: AuthService
+    private authService: AuthService,
+    private loadingAnimation: LoadingAnimationService
   ) {
   }
 
@@ -66,11 +69,14 @@ export class FriendsComponent implements OnInit {
    * - get user's friends
    */
   updateFriendsList(event?: any) {
+    this.loadingAnimation.presentLoading(AppSettings.LOADING_FRIENDS);
+
     this.geolocation.getCurrentPosition()
       .then((resp) => {
         let currentLocation = new Location();
         currentLocation.lat = resp.coords.latitude;
         currentLocation.lon = resp.coords.longitude;
+        console.log('Getting current location...', currentLocation.lat + ', ' + currentLocation.lon);
 
         const subscription = this.restService.updateUserLocation(currentLocation)
           .subscribe((user) => {
@@ -82,6 +88,7 @@ export class FriendsComponent implements OnInit {
                 console.log('Getting friends...', this.friends);
                 this.getNearbyFriends();
                 this.getOtherFriends();
+                this.loadingAnimation.dismissLoading();
                 if (event) {
                   event.target.complete(); 
                 }

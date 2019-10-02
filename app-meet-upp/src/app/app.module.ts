@@ -28,6 +28,7 @@ import { RequestsComponent } from './components/requests/requests.component';
 import { FriendItemComponent } from './components/friend-item/friend-item.component';
 import { SincePipe } from './pipes/since.pipe';
 import { AvailabilityMarkerComponent } from './components/availability-marker/availability-marker.component';
+import { LoadingAnimationService } from './services/loading.service';
 
 const routes: Routes = [
   {
@@ -80,7 +81,8 @@ const routes: Routes = [
     RestService,
     AuthService,
     Facebook,
-    Geolocation
+    Geolocation,
+    LoadingAnimationService
   ],
   bootstrap: [AppComponent]
 })
