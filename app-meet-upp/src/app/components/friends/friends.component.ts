@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { RestService } from 'src/app/services/rest.service';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { Location } from 'src/app/models/Location';
@@ -21,6 +21,8 @@ export class FriendsComponent {
   nearbyFriends: User[];
   otherFriends: User[];
 
+  refreshLocationEvent: any;
+
   constructor(
     private restService: RestService,
     private geolocation: Geolocation,
@@ -30,66 +32,101 @@ export class FriendsComponent {
   }
 
   /**
-   * Refresh list and location by pulling list
+   * Ion-refresh event handle
    */
   refreshFriends(event) {
     console.log('refreshing list..');
-    this.updateLocationAndFriendsList(event);
+    this.refreshLocationEvent = event;
+    this.getFriendListWithLocationUpdate();
   }
 
   /**
    * - getting user's position
    * - sending position to server
    * - get user's friends
-   * @param refreshEvent refresh-item's event
    */
-  updateLocationAndFriendsList(refreshEvent?: any) {
+  getFriendListWithLocationUpdate() {
     this.loadingAnimation.presentLoading(AppSettings.UPDATING_LOCATION);
-    // Getting location
     this.geolocation.getCurrentPosition()
       .then((resp) => {
-        let currentLocation = new Location();
-        currentLocation.lat = resp.coords.latitude;
-        currentLocation.lon = resp.coords.longitude;
-        console.log('Getting current location...', currentLocation.lat + ', ' + currentLocation.lon);
-        // Updating location
+        let currentLocation = this.parseLocationResponse(resp);
         const subscription = this.restService.updateUserLocation(currentLocation)
           .subscribe((user) => {
             console.log('Updating current location...', user);
             this.authService.loggedUser = user;
-            // Getting friend list
-            this.getFriendLists(refreshEvent, false);
+            this.getFriendList(false);
           });
         this.subscription.add(subscription);
       })
       .catch((err) => {
-        console.log('Error sending current location:', err.message);
-        alert('Please add location sharing permission')
+        this.showNoLocPermissionMessage(err);
       });
   }
 
   /**
-   * Getting user's friends
-   * @param refreshEvent if refreshed by refreshed item
-   * @param noLocationUpdate location is updated too, or just friend list
+   * Getting user's friends with animations
+   * @param refreshEvent ion-refresher's refresh event
+   * @param withoutLocationUpdate flag whether location is updated too, or just friends
    */
-  getFriendLists(refreshEvent: any, noLocationUpdate: boolean) {
-    if (noLocationUpdate) {
-      console.log('Getting friends without loc update...');
-      this.loadingAnimation.presentLoading(AppSettings.LOADING_FRIENDS);
-    }
+  getFriendList(withoutLocationUpdate: boolean) {
+    this.startNoLocUpdateAnimation(withoutLocationUpdate);
     const subscription = this.restService.getFriendsList()
       .subscribe((friends) => {
         this.friends = friends;
         console.log('Getting friends...', this.friends);
-        this.getNearbyFriends();
-        this.getOtherFriends();
-        this.loadingAnimation.dismissLoading();
-        if (refreshEvent) {
-          refreshEvent.target.complete();
-        }
+        this.sortFriends();
+        this.stopLoadingAnimations();
       });
     this.subscription.add(subscription);
+  }
+
+
+  /**
+   * Parsing location response
+   */
+  private parseLocationResponse(resp): Location {
+    let currentLocation = new Location();
+    currentLocation.lat = resp.coords.latitude;
+    currentLocation.lon = resp.coords.longitude;
+    console.log('Getting current location...', currentLocation.lat + ', ' + currentLocation.lon);
+    return currentLocation;
+  }
+
+  /**
+   * Showing no location permission error messages
+   */
+  private showNoLocPermissionMessage(err) {
+    console.log('Error sending current location:', err.message);
+    alert('Please add location sharing permission')
+  }
+
+  /**
+   * Start no location update animation
+   */
+  private startNoLocUpdateAnimation(noLocationUpdate: boolean) {
+    if (noLocationUpdate) {
+      console.log('Getting friends without loc update...');
+      this.loadingAnimation.presentLoading(AppSettings.LOADING_FRIENDS);
+    }
+  }
+
+  /**
+   * Stop loading anim and pull refresh
+   */
+  private stopLoadingAnimations() {
+    this.loadingAnimation.dismissLoading();
+    if (this.refreshLocationEvent) {
+      this.refreshLocationEvent.target.complete();
+      this.refreshLocationEvent = null;
+    }
+  }
+
+  /**
+   * Sort friends
+   */
+  private sortFriends() {
+    this.getNearbyFriends();
+    this.getOtherFriends();
   }
 
   /**

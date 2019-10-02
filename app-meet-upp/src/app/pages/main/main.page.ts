@@ -10,10 +10,20 @@ import { Util } from 'src/app/util/Util';
 export class MainPage {
 
   @ViewChild(FriendsComponent, { static: false }) friendsComponent: FriendsComponent;
-  friendsSelected: boolean = true;
   util: Util = new Util();
+  friendsSelected: boolean = true;
 
   constructor() { }
+
+  /**
+   * When tabs change update friend list
+   */
+  tabChanged() {
+    this.friendsSelected = !this.friendsSelected;
+    if (this.friendsSelected) {
+      this.friendsComponent.getFriendList(true);
+    }
+  }
 
   /**
    * If page is just consctructed (after login) updating location too
@@ -22,9 +32,9 @@ export class MainPage {
   ionViewWillEnter() {
     if (this.friendsSelected) {
       if (this.util.isFirstTime()) {
-        this.friendsComponent.updateLocationAndFriendsList();
+        this.friendsComponent.getFriendListWithLocationUpdate();
       } else {
-        this.friendsComponent.getFriendLists(null, true);
+        this.friendsComponent.getFriendList(true);
       }
     }
   }

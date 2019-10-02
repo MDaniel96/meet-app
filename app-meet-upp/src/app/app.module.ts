@@ -64,7 +64,7 @@ const routes: Routes = [
     RequestsComponent,
     FriendItemComponent,
     SincePipe,
-    AvailabilityMarkerComponent
+    AvailabilityMarkerComponent,
   ],
   providers: [
     StatusBar,

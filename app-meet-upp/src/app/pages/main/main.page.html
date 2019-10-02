@@ -1,12 +1,12 @@
- <ion-header>
+<ion-header>
   <ion-toolbar>
     <ion-title>
       <ion-icon name="globe" size="small"></ion-icon>
       MeetUpp
     </ion-title>
   </ion-toolbar>
- <ion-toolbar>
-    <ion-segment (ionChange)="friendsSelected = !friendsSelected" value="friends">
+  <ion-toolbar>
+    <ion-segment (ionChange)="tabChanged()" value="friends">
       <ion-segment-button value="friends">
         <ion-label>Friends</ion-label>
       </ion-segment-button>
@@ -14,10 +14,10 @@
         <ion-label>Requests</ion-label>
       </ion-segment-button>
     </ion-segment>
-  </ion-toolbar> 
+  </ion-toolbar>
 </ion-header>
 
 <ion-content fullscreen>
-  <app-friends *ngIf="friendsSelected"></app-friends>
-  <app-requests *ngIf="!friendsSelected"></app-requests>
+  <app-friends [hidden]="!friendsSelected" ></app-friends>
+  <app-requests [hidden]="friendsSelected"></app-requests>
 </ion-content>
