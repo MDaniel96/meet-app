@@ -1,48 +1,20 @@
 <ion-content fullscreen>
-
-  <ion-list>
-
+  <ion-refresher slot="fixed" (ionRefresh)="refreshFriends($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <div *ngIf="friends && friends.length === 0">
+    You have no friends yet
+  </div>
+  <ion-list *ngIf="nearbyFriends && nearbyFriends.length > 0">
     <ion-list-header>
       Nearby
     </ion-list-header>
-
-    <ion-item href="">
-      <ion-avatar slot="start">
-        <img src="http://homepages.cae.wisc.edu/~ece533/images/cat.png">
-      </ion-avatar>
-      <ion-label>
-        <h2>Sanyi Nagy</h2>
-        <div>
-          <ion-icon color="success" name="pin" size="small"></ion-icon>
-          <h3>5.4 km</h3>
-        </div>
-        <p class="small-font">Now</p>
-      </ion-label>
-    </ion-item>
-
-    <ion-item href="">
-      <ion-avatar slot="start">
-        <img src="http://homepages.cae.wisc.edu/~ece533/images/arctichare.png">
-      </ion-avatar>
-      <ion-label>
-        <h2><b>Kis Pista</b></h2>
-        <div>
-          <ion-icon color="light" name="pin" size="small"></ion-icon>
-          <h3>15.4 km</h3>
-        </div>
-        <p class="small-font">3 h ago</p>
-      </ion-label>
-    </ion-item>
-
+    <app-friend-item *ngFor="let nearby of nearbyFriends" [friend]="nearby"></app-friend-item>
   </ion-list>
-
   <ion-list>
-
-    <ion-list-header>
+    <ion-list-header *ngIf="otherFriends && otherFriends.length > 0">
       Other
     </ion-list-header>
-
-
+    <app-friend-item *ngFor="let other of otherFriends" [friend]="other"></app-friend-item>
   </ion-list>
-
 </ion-content>

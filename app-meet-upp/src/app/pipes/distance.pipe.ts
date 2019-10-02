@@ -17,7 +17,7 @@ export class DistancePipe implements PipeTransform {
     } else {
       let thousands = Math.floor(value / 1000);
       let hundreds = Math.floor((value-thousands*1000) / 100);
-      return thousands + ',' + hundreds + ' km';
+      return `${thousands},${hundreds} km`;
     }
   }
 

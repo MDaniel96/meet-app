@@ -1,0 +1,13 @@
+<ion-item href="">
+  <ion-avatar slot="start">
+    <img [src]="friend.image">
+  </ion-avatar>
+  <ion-label>
+    <h2>{{ friend.name }}</h2>
+    <div>
+      <availability-marker [friend]="friend"></availability-marker>
+      <h3>{{ friend.distance | distance }}</h3>
+    </div>
+    <p class="small-font">{{ friend.location.time | since }}</p>
+  </ion-label>
+</ion-item>

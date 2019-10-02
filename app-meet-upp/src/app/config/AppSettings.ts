@@ -29,4 +29,8 @@ export class AppSettings {
     }
     // Connection base END
 
+    // Friends BEGIN
+    public static AVAILABILITY_DURATION_MIN: number = 400;
+    // Friends END
+
 }

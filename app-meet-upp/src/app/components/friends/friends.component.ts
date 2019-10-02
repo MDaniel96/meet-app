@@ -2,23 +2,62 @@ import { Component, OnInit } from '@angular/core';
 import { RestService } from 'src/app/services/rest.service';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { Location } from 'src/app/models/Location';
-import { Subscription, Observable } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { User } from 'src/app/models/User';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-friends',
   templateUrl: './friends.component.html',
   styleUrls: ['./friends.component.scss'],
 })
-export class FriendsComponent {
+export class FriendsComponent implements OnInit {
 
   subscription: Subscription = new Subscription();
-  friends: Observable<User[]>;
+
+  friends: User[];
+  nearbyFriends: User[];
+  otherFriends: User[];
 
   constructor(
     private restService: RestService,
-    private geolocation: Geolocation
-  ) { }
+    private geolocation: Geolocation,
+    private authService: AuthService
+  ) {
+  }
+
+  /**
+   * Update list when upper tab refreshes
+   */
+  ngOnInit() {
+    this.updateFriendsList();
+  }
+ 
+  /**
+   * Getting friends who are within radius
+   */
+  private getNearbyFriends() {
+    let radius = this.authService.loggedUser.setting.radius;
+    this.nearbyFriends = this.friends.filter(friend =>
+      friend.distance <= radius);
+  }
+
+  /**
+   * Getting friends who are out of radius
+   */
+  private getOtherFriends() {
+    let radius = this.authService.loggedUser.setting.radius;
+    this.otherFriends = this.friends.filter(friend =>
+      friend.distance > radius);
+  }
+
+  /**
+   * Refresh list by pulling list
+   */
+  refreshFriends(event) {
+    console.log('refreshing list..');
+    this.updateFriendsList(event);
+  }
 
 
   /**
@@ -26,7 +65,7 @@ export class FriendsComponent {
    * - sending position to server
    * - get user's friends
    */
-  updateFriendsList() {
+  updateFriendsList(event?: any) {
     this.geolocation.getCurrentPosition()
       .then((resp) => {
         let currentLocation = new Location();
@@ -37,8 +76,17 @@ export class FriendsComponent {
           .subscribe((user) => {
             console.log('Updating current location...', user);
 
-            this.friends = this.restService.getFriendsList();
-            console.log('Getting friends...', this.friends);
+            const sub = this.restService.getFriendsList()
+              .subscribe((friends) => {
+                this.friends = friends;
+                console.log('Getting friends...', this.friends);
+                this.getNearbyFriends();
+                this.getOtherFriends();
+                if (event) {
+                  event.target.complete(); 
+                }
+              });
+            this.subscription.add(sub);
 
           });
         this.subscription.add(subscription);

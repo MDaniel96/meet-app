@@ -7,6 +7,7 @@ import { FriendsComponent } from 'src/app/components/friends/friends.component';
   styleUrls: ['main.page.scss']
 })
 export class MainPage {
+  
   @ViewChild(FriendsComponent, {static: false}) friendsComponent: FriendsComponent;
   friendsSelected: boolean = true;
 

@@ -25,6 +25,9 @@ import { AuthService } from './services/auth.service';
 import { DistancePipe } from './pipes/distance.pipe';
 import { FriendsComponent } from './components/friends/friends.component';
 import { RequestsComponent } from './components/requests/requests.component';
+import { FriendItemComponent } from './components/friend-item/friend-item.component';
+import { SincePipe } from './pipes/since.pipe';
+import { AvailabilityMarkerComponent } from './components/availability-marker/availability-marker.component';
 
 const routes: Routes = [
   {
@@ -58,6 +61,9 @@ const routes: Routes = [
     DistancePipe,
     FriendsComponent,
     RequestsComponent,
+    FriendItemComponent,
+    SincePipe,
+    AvailabilityMarkerComponent
   ],
   providers: [
     StatusBar,
