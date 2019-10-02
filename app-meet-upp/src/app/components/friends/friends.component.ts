@@ -30,12 +30,76 @@ export class FriendsComponent implements OnInit {
   }
 
   /**
-   * Update list when upper tab refreshes
+   * Getting friends when tabs change
+   * (if user without location logs in an error will be thrown)
    */
   ngOnInit() {
-    this.updateFriendsList();
+    this.getFriendLists(null, true);
   }
- 
+
+  /**
+   * Refresh list and location by pulling list
+   */
+  refreshFriends(event) {
+    console.log('refreshing list..');
+    this.updateLocationAndFriendsList(event);
+  }
+
+  /**
+   * - getting user's position
+   * - sending position to server
+   * - get user's friends
+   * @param refreshEvent refresh-item's event
+   */
+  updateLocationAndFriendsList(refreshEvent?: any) {
+    this.loadingAnimation.presentLoading(AppSettings.UPDATING_LOCATION);
+    // Getting location
+    this.geolocation.getCurrentPosition()
+      .then((resp) => {
+        let currentLocation = new Location();
+        currentLocation.lat = resp.coords.latitude;
+        currentLocation.lon = resp.coords.longitude;
+        console.log('Getting current location...', currentLocation.lat + ', ' + currentLocation.lon);
+        // Updating location
+        const subscription = this.restService.updateUserLocation(currentLocation)
+          .subscribe((user) => {
+            console.log('Updating current location...', user);
+            this.authService.loggedUser = user;
+            // Getting friend list
+            this.getFriendLists(refreshEvent, false);
+          });
+        this.subscription.add(subscription);
+      })
+      .catch((err) => {
+        console.log('Error sending current location:', err.message);
+        alert('Please add location sharing permission')
+      });
+  }
+
+  /**
+   * Getting user's friends
+   * @param refreshEvent if refreshed by refreshed item
+   * @param noLocationUpdate location is updated too, or just friend list
+   */
+  getFriendLists(refreshEvent: any, noLocationUpdate: boolean) {
+    if (noLocationUpdate) {
+      console.log('Getting friends without loc update...');
+      this.loadingAnimation.presentLoading(AppSettings.LOADING_FRIENDS);
+    }
+    const subscription = this.restService.getFriendsList()
+      .subscribe((friends) => {
+        this.friends = friends;
+        console.log('Getting friends...', this.friends);
+        this.getNearbyFriends();
+        this.getOtherFriends();
+        this.loadingAnimation.dismissLoading();
+        if (refreshEvent) {
+          refreshEvent.target.complete();
+        }
+      });
+    this.subscription.add(subscription);
+  }
+
   /**
    * Getting friends who are within radius
    */
@@ -52,56 +116,6 @@ export class FriendsComponent implements OnInit {
     let radius = this.authService.loggedUser.setting.radius;
     this.otherFriends = this.friends.filter(friend =>
       friend.distance > radius);
-  }
-
-  /**
-   * Refresh list by pulling list
-   */
-  refreshFriends(event) {
-    console.log('refreshing list..');
-    this.updateFriendsList(event);
-  }
-
-
-  /**
-   * - getting user's position
-   * - sending position to server
-   * - get user's friends
-   */
-  updateFriendsList(event?: any) {
-    this.loadingAnimation.presentLoading(AppSettings.LOADING_FRIENDS);
-
-    this.geolocation.getCurrentPosition()
-      .then((resp) => {
-        let currentLocation = new Location();
-        currentLocation.lat = resp.coords.latitude;
-        currentLocation.lon = resp.coords.longitude;
-        console.log('Getting current location...', currentLocation.lat + ', ' + currentLocation.lon);
-
-        const subscription = this.restService.updateUserLocation(currentLocation)
-          .subscribe((user) => {
-            console.log('Updating current location...', user);
-
-            const sub = this.restService.getFriendsList()
-              .subscribe((friends) => {
-                this.friends = friends;
-                console.log('Getting friends...', this.friends);
-                this.getNearbyFriends();
-                this.getOtherFriends();
-                this.loadingAnimation.dismissLoading();
-                if (event) {
-                  event.target.complete(); 
-                }
-              });
-            this.subscription.add(sub);
-
-          });
-        this.subscription.add(subscription);
-      })
-      .catch((err) => {
-        console.log('Error sending current location:', err.message);
-        alert('Please add location sharing permission')
-      });
   }
 
   ngOnDestroy() {

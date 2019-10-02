@@ -1,5 +1,6 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { FriendsComponent } from 'src/app/components/friends/friends.component';
+import { Util } from 'src/app/util/Util';
 
 @Component({
   selector: 'app-main',
@@ -7,16 +8,25 @@ import { FriendsComponent } from 'src/app/components/friends/friends.component';
   styleUrls: ['main.page.scss']
 })
 export class MainPage {
-  
-  @ViewChild(FriendsComponent, {static: false}) friendsComponent: FriendsComponent;
-  friendsSelected: boolean = true;
 
-  constructor() {}
+  @ViewChild(FriendsComponent, { static: false }) friendsComponent: FriendsComponent;
+  friendsSelected: boolean = true;
+  util: Util = new Util();
+
+  constructor() { }
 
   /**
-   * Update components lists when page changes
+   * If page is just consctructed (after login) updating location too
+   * else just updating friends
    */
   ionViewWillEnter() {
-    this.friendsComponent.updateFriendsList();
+    if (this.friendsSelected) {
+      if (this.util.isFirstTime()) {
+        this.friendsComponent.updateLocationAndFriendsList();
+      } else {
+        this.friendsComponent.getFriendLists(null, true);
+      }
+    }
   }
+  
 }

@@ -48,7 +48,7 @@ export class SettingsPage {
         let lon = resp.coords.longitude;
         console.log('Location detected: ' + lat + ', ' + lon);
         this.locationHeadStatus = AppSettings.LOC_ON;
-        this.locationFootStr = `${AppSettings.LOC_SHARING_ON_FOOT}${lat}, ${lon}`;
+        this.locationFootStr = ''; //`${AppSettings.LOC_SHARING_ON_FOOT}${lat}, ${lon}`;
       })
       .catch((e) => {
         console.log('location detection error: ' + e.message);

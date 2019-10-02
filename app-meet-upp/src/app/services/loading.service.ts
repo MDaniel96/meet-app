@@ -13,6 +13,10 @@ export class LoadingAnimationService {
     private loadingCtrl: LoadingController
   ) { }
 
+  /**
+   * Present loading with message for max 10 secs
+   * @param message loading message 
+   */
   async presentLoading(message: string) {
     if (this.isLoading === false) {
       this.isLoading = true;
@@ -24,6 +28,9 @@ export class LoadingAnimationService {
     }
   }
 
+  /**
+   * Dismiss loading
+   */
   async dismissLoading() {
     this.isLoading = false;
     await this.loading.dismiss();

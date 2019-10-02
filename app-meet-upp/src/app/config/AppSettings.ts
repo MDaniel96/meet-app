@@ -30,11 +30,12 @@ export class AppSettings {
     // Connection base END
 
     // Friends BEGIN
-    public static AVAILABILITY_DURATION_MIN: number = 400;
+    public static AVAILABILITY_DURATION_MIN: number = 10;
     // Friends END
 
     // Loading BEGIN
     public static LOADING_FRIENDS: string = 'Loading friends...';
+    public static UPDATING_LOCATION: string = 'Updating location...';
     public static LOGOUT_LOADING_MILISECS: number = 400;
     // Loading END
 
