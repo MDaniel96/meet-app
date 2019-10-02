@@ -30,7 +30,7 @@ export class AppSettings {
     // Connection base END
 
     // Friends BEGIN
-    public static AVAILABILITY_DURATION_MIN: number = 10;
+    public static AVAILABILITY_DURATION_MIN: number = 5;
     // Friends END
 
     // Loading BEGIN

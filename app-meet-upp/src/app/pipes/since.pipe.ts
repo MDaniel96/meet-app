@@ -20,7 +20,7 @@ export class SincePipe implements PipeTransform {
 
     let allMinutes = minutes + hours * 60 + days * 24 * 60;
     if (allMinutes <= AppSettings.AVAILABILITY_DURATION_MIN) {
-      return 'Available'
+      return 'Available';
     }
 
     if (days !== 0) {

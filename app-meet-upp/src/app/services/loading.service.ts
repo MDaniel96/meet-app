@@ -14,14 +14,14 @@ export class LoadingAnimationService {
   ) { }
 
   /**
-   * Present loading with message for max 10 secs
+   * Present loading with message for max 20 secs
    * @param message loading message 
    */
   async presentLoading(message: string) {
     if (this.isLoading === false) {
       this.isLoading = true;
       this.loading = await this.loadingCtrl.create({
-        duration: 10000,
+        duration: 20000,
         message: message,
       });
       await this.loading.present();

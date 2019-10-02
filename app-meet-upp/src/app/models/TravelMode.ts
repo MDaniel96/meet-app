@@ -1,5 +1,6 @@
 export enum TravelMode {
     walking = 'walking',
     driving = 'driving',
-    transit = 'transit'
+    transit = 'transit',
+    byair   = 'byair'
 }

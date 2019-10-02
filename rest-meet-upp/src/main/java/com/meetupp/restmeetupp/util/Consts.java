@@ -40,6 +40,7 @@ public class Consts {
         public static final String WALKING = "walking";
         public static final String TRANSIT = "transit";
         public static final String DRIVING = "driving";
+        public static final String BYAIR = "byair";
     }
 
 }

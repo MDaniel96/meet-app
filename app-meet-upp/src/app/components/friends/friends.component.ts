@@ -13,7 +13,7 @@ import { AppSettings } from 'src/app/config/AppSettings';
   templateUrl: './friends.component.html',
   styleUrls: ['./friends.component.scss'],
 })
-export class FriendsComponent implements OnInit {
+export class FriendsComponent {
 
   subscription: Subscription = new Subscription();
 
@@ -27,14 +27,6 @@ export class FriendsComponent implements OnInit {
     private authService: AuthService,
     private loadingAnimation: LoadingAnimationService
   ) {
-  }
-
-  /**
-   * Getting friends when tabs change
-   * (if user without location logs in an error will be thrown)
-   */
-  ngOnInit() {
-    this.getFriendLists(null, true);
   }
 
   /**

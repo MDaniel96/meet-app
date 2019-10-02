@@ -11,7 +11,6 @@ import com.meetupp.restmeetupp.model.Location;
 import com.meetupp.restmeetupp.model.User;
 import com.meetupp.restmeetupp.util.Consts;
 import com.meetupp.restmeetupp.util.Keys;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -22,7 +21,9 @@ import java.util.Random;
 public class DistanceCalculator {
 
     /**
-     * Calculates distance between two users in meters (using Google's Distance Matrix API)
+     * Calculates distance between two users in meters
+     * using Google's Distance Matrix API, when travelMode: driving, walking or transit
+     * using Math formulas, when travelMode is byair
      * @param fromUser logged in user
      * @param toUser other user
      * @return returns distance between two users in meters
@@ -31,8 +32,14 @@ public class DistanceCalculator {
 
         Location fromLocation = fromUser.getLocation();
         Location toLocation = toUser.getLocation();
-        TravelMode travelMode = getTravelMode(fromUser);
 
+        if (fromUser.getSetting().getTravelMode().equals(Consts.TravelMode.BYAIR)) {
+            return byAirDistance(fromLocation, toLocation);
+        } else {
+            return randomDistance(fromLocation, toLocation);
+        }
+
+        /*TravelMode travelMode = getTravelMode(fromUser);
         GeoApiContext context = new GeoApiContext.Builder()
                 .apiKey(Keys.googleApiKey)
                 .build();
@@ -45,7 +52,7 @@ public class DistanceCalculator {
                 .language("en-US")
                 .await();
 
-        return (int) result.rows[0].elements[0].distance.inMeters;
+        return (int) result.rows[0].elements[0].distance.inMeters;*/
     }
 
     /**
@@ -55,18 +62,46 @@ public class DistanceCalculator {
      */
     public void calculateMoreDistances(User fromUser, Collection<User> toUsers) {
         for (User user : toUsers) {
-           // try {
-                user.setDistance(randomDistance(fromUser, user));
-           //} catch (ApiException | InterruptedException | IOException e) {
-            //    e.printStackTrace();
-            //}
+            try {
+                user.setDistance(calculateDistance(fromUser, user));
+            } catch (ApiException | InterruptedException | IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
     /**
-     * Returns a random distance (for testing)
+     * Returns by air distance in meters
+     * source: https://www.geeksforgeeks.org/program-distance-two-points-earth/
      */
-    private Integer randomDistance(User fromUser, User toUser) {
+    public Integer byAirDistance(Location fromLoc, Location toLoc) {
+
+        // From degrees to radians.
+        double lon1 = Math.toRadians(fromLoc.getLon());
+        double lon2 = Math.toRadians(toLoc.getLon());
+        double lat1 = Math.toRadians(fromLoc.getLat());
+        double lat2 = Math.toRadians(toLoc.getLat());
+
+        // Haversine formula
+        double dlon = lon2 - lon1;
+        double dlat = lat2 - lat1;
+        double a = Math.pow(Math.sin(dlat / 2), 2)
+                + Math.cos(lat1) * Math.cos(lat2)
+                * Math.pow(Math.sin(dlon / 2),2);
+
+        double c = 2 * Math.asin(Math.sqrt(a));
+
+        // Radius of earth in kilometers
+        double r = 6371;
+
+        // calculate the result in meters
+        return (int)(c * r * 1000);
+    }
+
+    /**
+     * Returns a random distance (for testing) in meters
+     */
+    private Integer randomDistance(Location fromLocation, Location toLocation) {
         return new Random().nextInt(10000);
     }
 
