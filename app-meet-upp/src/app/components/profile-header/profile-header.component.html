@@ -20,7 +20,7 @@
     </ion-item-divider>
   </ion-card-header>
 
-  <ion-card-content [hidden]="!buttonsNeeded" class="ion-padding">
+  <ion-card-content *ngIf="buttonsNeeded" class="ion-padding">
     <ion-grid class="ion-padding-top">
 
       <ion-row class="ion-justify-content-center">

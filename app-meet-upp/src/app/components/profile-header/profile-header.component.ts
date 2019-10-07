@@ -38,7 +38,7 @@ export class ProfileHeaderComponent implements OnInit {
         this.friendStatus.status = FriendStatuses.ON_THE_WAY;
         this.friendStatusText = AppSettings.PENDING_FRIEND;
       });
-      this.subscription.add(subscription);
+    this.subscription.add(subscription);
   }
 
   /**
@@ -58,15 +58,17 @@ export class ProfileHeaderComponent implements OnInit {
    * Set text under add-friend-button
    */
   private setFriendStatusText() {
-    if (this.friendStatus.status === FriendStatuses.ACCEPTED) {
-      this.friendStatusText = AppSettings.REMOVE_FRIEND;
-    } else
-      if (this.friendStatus.status === FriendStatuses.NOT_ACCEPTED) {
-        this.friendStatusText = AppSettings.ADD_FRIEND;
+    if (this.friendStatus) {
+      if (this.friendStatus.status === FriendStatuses.ACCEPTED) {
+        this.friendStatusText = AppSettings.REMOVE_FRIEND;
       } else
-        if (this.friendStatus.status === FriendStatuses.ON_THE_WAY) {
-          this.friendStatusText == AppSettings.PENDING_FRIEND;
-        }
+        if (this.friendStatus.status === FriendStatuses.NOT_ACCEPTED) {
+          this.friendStatusText = AppSettings.ADD_FRIEND;
+        } else
+          if (this.friendStatus.status === FriendStatuses.ON_THE_WAY) {
+            this.friendStatusText == AppSettings.PENDING_FRIEND;
+          }
+    }
   }
 
   ngOnDestroy() {
