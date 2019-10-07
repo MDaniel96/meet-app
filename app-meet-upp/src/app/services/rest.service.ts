@@ -6,6 +6,8 @@ import { AppSettings } from '../config/AppSettings';
 import { User } from '../models/User';
 import { Setting } from '../models/Settings';
 import { Location } from '../models/Location';
+import { FriendshipStatus } from '../models/FriendshipStatus';
+import { FriendRequest } from '../models/FriendRequest';
 
 @Injectable({
   providedIn: 'root'
@@ -39,6 +41,18 @@ export class RestService {
 
   getFriendsList(): Observable<User[]> {
     return this.http.get<User[]>(this.BASE + `/user/friend/all`);
+  }
+
+  getFriendshipStatus(userId: string): Observable<FriendshipStatus> {
+    return this.http.get<FriendshipStatus>(this.BASE + `/user/friend/${userId}/status`);
+  }
+
+  addFriendRequest(userId: string): Observable<FriendRequest> {
+    return this.http.post<FriendRequest>(this.BASE + `/user/friend/request/${userId}`, null);
+  }
+
+  deleteFriendship(userId: string): Observable<User> {
+    return this.http.delete<User>(this.BASE + `/user/friend/${userId}`);
   }
 
 }

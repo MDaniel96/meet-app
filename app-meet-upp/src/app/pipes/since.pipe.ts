@@ -3,16 +3,17 @@ import { AppSettings } from '../config/AppSettings';
 
 /**
  * Calculates passed time since given time and converts to string
+ * if shortversion is true it shortens return string (e.g.: hours -> h)
  */
 @Pipe({
   name: 'since'
 })
 export class SincePipe implements PipeTransform {
 
-  transform(value: number): string {
+  transform(value: number, shortVersion?: boolean): string {
     let from = new Date(value);
     let today = new Date();
-    let diff = (today.getTime() - from.getTime()) / 1000;  
+    let diff = (today.getTime() - from.getTime()) / 1000;
 
     let days = Math.floor(diff / (60 * 60 * 24));
     let hours = Math.floor(diff / (60 * 60) - days * 24);
@@ -24,11 +25,15 @@ export class SincePipe implements PipeTransform {
     }
 
     if (days !== 0) {
-      return days === 1 ? `1 day ago` : `${days} days ago`
+      return days === 1
+        ? (shortVersion ? `1 d ago` : `1 day ago`)
+        : (shortVersion ? `${days} d ago` : `${days} days ago`)
     } else if (hours !== 0) {
-      return hours > 12 ? `${hours} hours ago` : `${hours} hours, ${minutes} minutes ago`;
+      return hours > 12
+        ? (shortVersion ? `${hours} h ago` : `${hours} hours ago`)
+        : (shortVersion ? `${hours}h, ${minutes}m ago` : `${hours} hours, ${minutes} minutes ago`);
     } else {
-      return `${minutes} minutes ago`;
+      return (shortVersion ? `${minutes} m ago` : `${minutes} minutes ago`);
     }
   }
 

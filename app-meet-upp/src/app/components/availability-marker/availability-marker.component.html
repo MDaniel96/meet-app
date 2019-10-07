@@ -1,4 +1,6 @@
-<ion-icon [color]="isFriendAvailable() ? 'success' : 'light'"
+<ion-icon [color]="isFriendAvailable() 
+                    ? 'success' 
+                    : (isList ? 'light' : 'medium')"
           name="pin"
-          size="small"
+          [size]="isList ? 'small' : 'large'"
 ></ion-icon>

@@ -4,6 +4,7 @@ import { TabsPage } from './tabs.page';
 import { SearchPage } from '../search/search.page';
 import { SettingsPage } from '../settings/settings.page';
 import { MainPage } from '../main/main.page';
+import { UserDetailsPage } from '../user-details/user-details.page';
 
 const routes: Routes = [
   {
@@ -16,6 +17,10 @@ const routes: Routes = [
           {
             path: '',
             component: MainPage
+          },
+          {
+            path: ':id',
+            component: UserDetailsPage
           }
         ]
       },

@@ -1,0 +1,63 @@
+<ion-card>
+
+  <ion-card-header class="ion-no-padding">
+    <ion-item-divider>
+      <ion-grid>
+        <ion-row class="ion-justify-content-left">
+          <ion-col size="3" class="ion-no-padding">
+            <ion-item class="ion-no-padding padding-left-5" lines="none">
+              <ion-avatar>
+                <img [src]="user.image">
+              </ion-avatar>
+            </ion-item>
+          </ion-col>
+          <ion-col size="9">
+            <ion-card-title>{{ user.name }}</ion-card-title>
+            <ion-card-content class="ion-no-padding item-footer"> {{ user.email }} </ion-card-content>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item-divider>
+  </ion-card-header>
+
+  <ion-card-content [hidden]="!buttonsNeeded" class="ion-padding">
+    <ion-grid class="ion-padding-top">
+
+      <ion-row class="ion-justify-content-center">
+
+        <ion-col size="4">
+          <ion-fab-button color="light" [disabled]="friendStatus.status==='ON_THE_WAY' ? true : false">
+            <ion-icon *ngIf="friendStatus.status==='NOT_ACCEPTED' || friendStatus.status ==='ON_THE_WAY'"
+                      (click)="addFriendRequest()"
+                      name="person-add"
+                      size="large" color="primary"></ion-icon>
+            <ion-img *ngIf="friendStatus.status==='ACCEPTED'"
+                      (click)="deleteFriend()"
+                      src="assets/icon/remove-friend-icon.png"
+                      color="primary"
+                      ></ion-img>
+          </ion-fab-button>
+          <ion-card-content class="ion-no-padding item-footer">{{ friendStatusText }}</ion-card-content>
+        </ion-col>
+
+        <ion-col size="4">
+          <ion-badge mode="ios" color="primary">4</ion-badge>
+          <ion-fab-button color="light">
+            <ion-icon name="calendar" size="large" color="primary"></ion-icon>
+          </ion-fab-button>
+          <ion-card-content class="ion-no-padding item-footer">View events</ion-card-content>
+        </ion-col>
+
+        <ion-col size="3">
+          <ion-fab-button vertical="center" color="light">
+              <availability-marker [friend]="user" [isList]="false"></availability-marker>
+          </ion-fab-button>
+          <ion-card-content class="ion-no-padding item-footer">{{ user.location.time | since: true }}</ion-card-content>
+        </ion-col>
+
+      </ion-row>
+
+    </ion-grid>
+  </ion-card-content>
+
+</ion-card>

@@ -33,6 +33,12 @@ export class AppSettings {
     public static AVAILABILITY_DURATION_MIN: number = 5;
     // Friends END
 
+    // Friend detail BEGIN
+    public static ADD_FRIEND: string = 'Add friend';
+    public static REMOVE_FRIEND: string = 'Delete friend';
+    public static PENDING_FRIEND: string = 'Pending..';
+    // Friend detail END
+
     // Loading BEGIN
     public static LOADING_FRIENDS: string = 'Loading friends...';
     public static UPDATING_LOCATION: string = 'Updating location...';

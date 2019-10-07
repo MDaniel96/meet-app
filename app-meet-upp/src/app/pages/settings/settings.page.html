@@ -4,31 +4,12 @@
   </ion-toolbar>
 </ion-header>
 
-
 <ion-content *ngIf="user" fullscreen>
 
-  <ion-card>
-    <ion-card-header class="ion-no-padding">
-      <ion-grid>
-        <ion-row class="ion-justify-content-left">
-
-          <ion-col size="3" class="ion-no-padding">
-            <ion-item class="ion-no-padding padding-left-5" lines="none">
-              <ion-avatar>
-                <img [src]="user.image">
-              </ion-avatar>
-            </ion-item>
-          </ion-col>
-
-          <ion-col size="9">
-            <ion-card-title>{{ user.name }}</ion-card-title>
-            <ion-card-content class="ion-no-padding item-footer"> {{ user.email }} </ion-card-content>
-          </ion-col>
-
-        </ion-row>
-      </ion-grid>
-    </ion-card-header>
-  </ion-card>
+  <app-profile-header
+    [user]="user"
+    [buttonsNeeded]="false"
+  ></app-profile-header>
 
   <ion-list>
 

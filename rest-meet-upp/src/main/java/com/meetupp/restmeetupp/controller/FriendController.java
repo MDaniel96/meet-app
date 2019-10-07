@@ -161,7 +161,7 @@ public class FriendController {
      */
     @GetMapping("/{userId}/status")
     @ResponseBody
-    public ResponseEntity<RequestStatus> getFriendshipStatus(@PathVariable("userId") Long userId, @RequestHeader("Authorization") String token) {
+    public ResponseEntity<Map<String, String>> getFriendshipStatus(@PathVariable("userId") Long userId, @RequestHeader("Authorization") String token) {
         User user1 = userIdentifier.identify(token);
         User user2 = userService.findUserById(userId);
 
@@ -169,13 +169,15 @@ public class FriendController {
             return ResponseEntity.notFound().build();
         }
 
+        Map<String, String> friendStatus = new HashMap<>();
         if (userService.isFriends(user1, user2)) {
-            return ResponseEntity.ok(RequestStatus.ACCEPTED);
+            friendStatus.put("status", RequestStatus.ACCEPTED.toString());
         } else if (friendRequestService.isRequested(user1, user2)) {
-            return ResponseEntity.ok(RequestStatus.ON_THE_WAY);
+            friendStatus.put("status", RequestStatus.ON_THE_WAY.toString());
         } else {
-            return ResponseEntity.ok(RequestStatus.NOT_ACCEPTED);
+            friendStatus.put("status", RequestStatus.NOT_ACCEPTED.toString());
         }
+        return ResponseEntity.ok(friendStatus);
     }
 
     /**

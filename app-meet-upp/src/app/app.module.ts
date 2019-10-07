@@ -29,6 +29,9 @@ import { FriendItemComponent } from './components/friend-item/friend-item.compon
 import { SincePipe } from './pipes/since.pipe';
 import { AvailabilityMarkerComponent } from './components/availability-marker/availability-marker.component';
 import { LoadingAnimationService } from './services/loading.service';
+import { ProfileHeaderComponent } from './components/profile-header/profile-header.component';
+import { UserDetailsPage } from './pages/user-details/user-details.page';
+import { SelectedUserService } from './services/selected-user.service';
 
 const routes: Routes = [
   {
@@ -65,6 +68,8 @@ const routes: Routes = [
     FriendItemComponent,
     SincePipe,
     AvailabilityMarkerComponent,
+    ProfileHeaderComponent,
+    UserDetailsPage
   ],
   providers: [
     StatusBar,
@@ -82,7 +87,8 @@ const routes: Routes = [
     AuthService,
     Facebook,
     Geolocation,
-    LoadingAnimationService
+    LoadingAnimationService,
+    SelectedUserService
   ],
   bootstrap: [AppComponent]
 })

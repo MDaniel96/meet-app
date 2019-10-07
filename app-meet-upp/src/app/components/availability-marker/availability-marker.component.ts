@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { User } from 'src/app/models/User';
 import { AppSettings } from 'src/app/config/AppSettings';
 
@@ -9,6 +9,7 @@ import { AppSettings } from 'src/app/config/AppSettings';
 export class AvailabilityMarkerComponent {
 
   @Input() friend: User;
+  @Input() isList: boolean;
 
   constructor() { }
 

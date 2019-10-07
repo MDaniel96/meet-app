@@ -1,0 +1,15 @@
+<ion-header>
+  <ion-toolbar>
+      <ion-buttons slot="start">
+          <ion-back-button defaultHref="tabs"></ion-back-button>
+        </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+    <app-profile-header *ngIf="friendStatus"
+      [user]="user"
+      [buttonsNeeded]="true"
+      [friendStatus]="friendStatus"
+  ></app-profile-header>
+</ion-content>
