@@ -9,6 +9,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Facebook } from '@ionic-native/facebook/ngx';
 import { IonicStorageModule } from '@ionic/storage';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { GoogleMaps } from '@ionic-native/google-maps/ngx';
 
 import { AppComponent } from './app.component';
 import { TabsPage } from './pages/tabs/tabs.page';
@@ -32,6 +33,7 @@ import { LoadingAnimationService } from './services/loading.service';
 import { ProfileHeaderComponent } from './components/profile-header/profile-header.component';
 import { UserDetailsPage } from './pages/user-details/user-details.page';
 import { SelectedUserService } from './services/selected-user.service';
+import { ProfileMapComponent } from './components/profile-map/profile-map.component';
 
 const routes: Routes = [
   {
@@ -69,7 +71,8 @@ const routes: Routes = [
     SincePipe,
     AvailabilityMarkerComponent,
     ProfileHeaderComponent,
-    UserDetailsPage
+    UserDetailsPage,
+    ProfileMapComponent
   ],
   providers: [
     StatusBar,
@@ -88,7 +91,8 @@ const routes: Routes = [
     Facebook,
     Geolocation,
     LoadingAnimationService,
-    SelectedUserService
+    SelectedUserService,
+    GoogleMaps
   ],
   bootstrap: [AppComponent]
 })
