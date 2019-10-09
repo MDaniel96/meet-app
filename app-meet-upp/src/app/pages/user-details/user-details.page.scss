@@ -1,28 +1,30 @@
-ion-header {
-    //background-color: transparent;
-    background-color: rgba(255, 255, 255, 0.1);
-}
-
-ion-back-button {
-    background-color: rgba(244, 245, 248, 0.178);
-    border-radius: 50%;
-}
-
 ion-content {
     position: relative;
 }
 
+ion-back-button {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin-top: 8px;
+    margin-left: 8px;
+    z-index: 2;
+    background-color: rgba(244, 245, 248, 0.65);
+    border-radius: 50%;
+}
+
 app-profile-header {
     position: absolute;
-    top: 10;
+    top: 0;
     left: 0;
+    margin-top: 55px;
     z-index: 2;
     width: 100%;
 }
 
 app-profile-map {
     position: absolute;
-    top: 3;
+    top: 0;
     left: 0;
     z-index: 1;
     height: 95%;
