@@ -34,6 +34,7 @@ import { ProfileHeaderComponent } from './components/profile-header/profile-head
 import { UserDetailsPage } from './pages/user-details/user-details.page';
 import { SelectedUserService } from './services/selected-user.service';
 import { ProfileMapComponent } from './components/profile-map/profile-map.component';
+import { MapService } from './services/map.service';
 
 const routes: Routes = [
   {
@@ -92,7 +93,8 @@ const routes: Routes = [
     Geolocation,
     LoadingAnimationService,
     SelectedUserService,
-    GoogleMaps
+    GoogleMaps,
+    MapService
   ],
   bootstrap: [AppComponent]
 })

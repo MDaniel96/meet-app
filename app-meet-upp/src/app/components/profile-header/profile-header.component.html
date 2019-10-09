@@ -1,6 +1,6 @@
 <ion-card>
 
-  <ion-card-header class="ion-no-padding">
+  <ion-card-header (click)="headerClicked()" class="ion-no-padding background-white">
     <ion-item-divider>
       <ion-grid>
         <ion-row class="ion-justify-content-left">
@@ -20,7 +20,7 @@
     </ion-item-divider>
   </ion-card-header>
 
-  <ion-card-content *ngIf="buttonsNeeded" class="ion-padding">
+  <ion-card-content *ngIf="buttonsNeeded" class="ion-padding background-white">
     <ion-grid class="ion-padding-top">
 
       <ion-row class="ion-justify-content-center">

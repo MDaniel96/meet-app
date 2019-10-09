@@ -45,4 +45,9 @@ export class AppSettings {
     public static LOGOUT_LOADING_MILISECS: number = 400;
     // Loading END
 
+    // Map BEGIN
+    public static MAP_CANVAS_ID: string = 'map_canvas';
+    public static MAP_USER_ZOOM: number = 16;
+    // Map END
+
 }

@@ -1,9 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
 import { User } from 'src/app/models/User';
 import { FriendshipStatus, FriendStatuses } from 'src/app/models/FriendshipStatus';
 import { AppSettings } from 'src/app/config/AppSettings';
 import { Subscription } from 'rxjs';
 import { RestService } from 'src/app/services/rest.service';
+import { MapService } from 'src/app/services/map.service';
 
 @Component({
   selector: 'app-profile-header',
@@ -15,17 +16,27 @@ export class ProfileHeaderComponent implements OnInit {
   @Input() user: User;
   @Input() buttonsNeeded: boolean;
   @Input() friendStatus: FriendshipStatus;
+  @Output() buttonsNeededChanged = new EventEmitter<boolean>();
 
   friendStatusText: string;
 
   subscription: Subscription = new Subscription();
 
   constructor(
-    private restService: RestService
+    private restService: RestService,
+    private mapService: MapService
   ) { }
 
   ngOnInit() {
     this.setFriendStatusText();
+  }
+
+  /**
+   * If profile header clicked navigating back to user and displaying profile buttons
+   */
+  headerClicked() {
+    this.mapService.headerClicked();
+    this.buttonsNeededChanged.emit(true);
   }
 
   /**

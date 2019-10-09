@@ -1,17 +1,20 @@
-<ion-header>
-  <ion-toolbar>
+<ion-header no-border>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="tabs"></ion-back-button>
+      <ion-back-button fill="solid" defaultHref="tabs"></ion-back-button>
     </ion-buttons>
-  </ion-toolbar>
 </ion-header>
 
 <ion-content fullscreen>
-  <!--<app-profile-header *ngIf="friendStatus"
-      [user]="user"
-      [buttonsNeeded]="true"
-      [friendStatus]="friendStatus"
-  ></app-profile-header>-->
 
-  <app-profile-map></app-profile-map>
+  <app-profile-header *ngIf="friendStatus"
+      [user]="user"
+      [buttonsNeeded]="profileButtonsNeeded"
+      [friendStatus]="friendStatus"
+      (buttonsNeededChanged)="buttonsNeededChanged($event)"
+  ></app-profile-header>
+
+  <app-profile-map
+    [user]="user"
+  ></app-profile-map>
+
 </ion-content>

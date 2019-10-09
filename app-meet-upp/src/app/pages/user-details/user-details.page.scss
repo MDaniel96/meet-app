@@ -1,2 +1,33 @@
+ion-header {
+    //background-color: transparent;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+ion-back-button {
+    background-color: rgba(244, 245, 248, 0.178);
+    border-radius: 50%;
+}
+
+ion-content {
+    position: relative;
+}
+
+app-profile-header {
+    position: absolute;
+    top: 10;
+    left: 0;
+    z-index: 2;
+    width: 100%;
+}
+
+app-profile-map {
+    position: absolute;
+    top: 3;
+    left: 0;
+    z-index: 1;
+    height: 95%;
+    width: 100%;
+    margin-bottom: 30px;
+}
 
   
