@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { SelectedUserService } from 'src/app/services/selected-user.service';
 import { User } from 'src/app/models/User';
 import { RestService } from 'src/app/services/rest.service';
 import { FriendshipStatus } from 'src/app/models/FriendshipStatus';
 import { Subscription } from 'rxjs';
 import { MapService } from 'src/app/services/map.service';
+import { ProfileHeaderComponent } from 'src/app/components/profile-header/profile-header.component';
 
 @Component({
   selector: 'app-user-details',
@@ -13,9 +14,10 @@ import { MapService } from 'src/app/services/map.service';
 })
 export class UserDetailsPage {
 
+  @ViewChild(ProfileHeaderComponent, { static: false }) profileHeaderComponent: ProfileHeaderComponent;
+
   user: User;
   friendStatus: FriendshipStatus;
-  profileButtonsNeeded: boolean = true;
 
   subscription: Subscription = new Subscription();
 
@@ -28,18 +30,13 @@ export class UserDetailsPage {
     this.subscribeToMapDragged();
   }
 
-  buttonsNeededChanged(event) {
-    this.profileButtonsNeeded = event;
-  }
-
   /**
    * Hiding profile buttons, displaying map buttons when map is dragged 
    */
   private subscribeToMapDragged() {
     this.subscription.add(
       this.mapService.mapDragged$.subscribe(() => {
-        console.log('dragging map in page; buttonsneeded:', this.profileButtonsNeeded);
-        this.profileButtonsNeeded = false;
+        this.profileHeaderComponent.hideButtons();
       })
     );
   }

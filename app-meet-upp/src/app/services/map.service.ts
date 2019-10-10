@@ -13,6 +13,7 @@ import { AuthService } from './auth.service';
 import { AppSettings } from '../config/AppSettings';
 import { Subscription, Subject } from 'rxjs';
 
+// TODO: ez még nagyon rusnya osztály, rendbe kell tenni
 @Injectable({
   providedIn: 'root'
 })
@@ -36,7 +37,7 @@ export class MapService {
    */
   async initMapWithFriend(map: GoogleMap, friend: User, subscription: Subscription) {
     this.map = map;
-    this.friend = friend;    
+    this.friend = friend;
 
     this.setDefaultBrowserEnv();
     this.map = GoogleMaps.create(AppSettings.MAP_CANVAS_ID);
@@ -48,7 +49,7 @@ export class MapService {
       this.addMarkerToUser(this.friend);
       this.moveCameraToUser(this.friend);
     });
-    
+
   }
 
   /**
@@ -75,11 +76,8 @@ export class MapService {
       icon: {
         url: user.image,
         size: {
-          width: 40,
-          height: 40
-        },
-        styles: {
-          'border-radius': '50%',
+          width: AppSettings.MAP_ICON_SIZE,
+          height: AppSettings.MAP_ICON_SIZE
         }
       }
     };
@@ -91,11 +89,13 @@ export class MapService {
 
   private moveCameraToUser(user: User) {
     let coords: LatLng = this.getUserCoords(user);
-    let position = {
+    let animationOptions = {
       target: coords,
-      zoom: AppSettings.MAP_USER_ZOOM
+      zoom: AppSettings.MAP_USER_ZOOM,
+      duration: AppSettings.MAP_ANIMATION_SPEED_MILISEC
     };
-    this.map.animateCamera(position);
+
+    this.map.animateCamera(animationOptions);
   }
 
   /**

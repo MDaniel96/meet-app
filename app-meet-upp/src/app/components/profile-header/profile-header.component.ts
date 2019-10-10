@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, Input, OnInit, NgZone } from '@angular/core';
 import { User } from 'src/app/models/User';
 import { FriendshipStatus, FriendStatuses } from 'src/app/models/FriendshipStatus';
 import { AppSettings } from 'src/app/config/AppSettings';
@@ -16,7 +16,6 @@ export class ProfileHeaderComponent implements OnInit {
   @Input() user: User;
   @Input() buttonsNeeded: boolean;
   @Input() friendStatus: FriendshipStatus;
-  @Output() buttonsNeededChanged = new EventEmitter<boolean>();
 
   friendStatusText: string;
 
@@ -24,7 +23,8 @@ export class ProfileHeaderComponent implements OnInit {
 
   constructor(
     private restService: RestService,
-    private mapService: MapService
+    private mapService: MapService,
+    private zone: NgZone
   ) { }
 
   ngOnInit() {
@@ -33,10 +33,23 @@ export class ProfileHeaderComponent implements OnInit {
 
   /**
    * If profile header clicked navigating back to user and displaying profile buttons
+   * - detecting friend status -> if true we are at friend profile (not at user settings)
    */
   headerClicked() {
-    this.mapService.headerClicked();
-    this.buttonsNeededChanged.emit(true);
+    if (this.friendStatus) {
+      this.buttonsNeeded = true;
+      this.mapService.headerClicked();
+    }
+  }
+
+  /**
+   * Hiding buttons
+   * - calling manual change detection 
+   */
+  hideButtons() {
+    this.zone.run(() =>
+      this.buttonsNeeded = false
+    );
   }
 
   /**

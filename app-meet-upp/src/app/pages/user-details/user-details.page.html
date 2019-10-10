@@ -4,9 +4,8 @@
 
   <app-profile-header *ngIf="friendStatus"
       [user]="user"
-      [buttonsNeeded]="profileButtonsNeeded"
+      [buttonsNeeded]="true"
       [friendStatus]="friendStatus"
-      (buttonsNeededChanged)="buttonsNeededChanged($event)"
   ></app-profile-header>
 
   <app-profile-map

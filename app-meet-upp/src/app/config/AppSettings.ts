@@ -48,6 +48,8 @@ export class AppSettings {
     // Map BEGIN
     public static MAP_CANVAS_ID: string = 'map_canvas';
     public static MAP_USER_ZOOM: number = 16;
+    public static MAP_ANIMATION_SPEED_MILISEC: number = 1000;
+    public static MAP_ICON_SIZE: number = 43;
     // Map END
 
 }
