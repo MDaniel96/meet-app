@@ -2,11 +2,13 @@ import { Component, Input } from '@angular/core';
 import { User } from 'src/app/models/User';
 import { NavController } from '@ionic/angular';
 import { SelectedUserService } from 'src/app/services/selected-user.service';
+import { fadeInOutAnimation } from 'src/app/config/Animations';
 
 @Component({
   selector: 'app-friend-item',
   templateUrl: './friend-item.component.html',
   styleUrls: ['./friend-item.component.scss'],
+  animations: [ fadeInOutAnimation ]
 })
 export class FriendItemComponent {
 

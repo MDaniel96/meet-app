@@ -7,11 +7,6 @@
     padding-left: 10px;
 }
 
-ion-badge {
-    position: absolute;
-    z-index: 1;
-}
-
 ion-img {
     width: 48%;
     height: 48%;
@@ -19,4 +14,16 @@ ion-img {
 
 .background-white {
     background-color: rgba(255, 255, 255, 0.98);
+}
+
+.margin-distance{
+    margin-left: 9px;
+}
+
+.margin-meetup {
+    margin-left: 4px;
+}
+
+.margin-friend {
+    margin-left: -8px;
 }

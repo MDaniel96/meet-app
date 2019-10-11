@@ -1,11 +1,7 @@
 package com.meetupp.restmeetupp.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.google.maps.model.TravelMode;
-
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.persistence.Transient;
 
 @Embeddable
 public class Setting {
@@ -17,13 +13,16 @@ public class Setting {
     @Column(name = "travel_mode")
     private String travelMode;
 
+    @Column(name = "night_mode")
+    private boolean nightMode;
 
     public Setting() {}
 
-    public Setting(Integer radius, boolean notifications, String travelMode) {
+    public Setting(Integer radius, boolean notifications, String travelMode, boolean nightMode) {
         this.radius = radius;
         this.notifications = notifications;
         this.travelMode = travelMode;
+        this.nightMode = nightMode;
     }
 
     public Integer getRadius() {
@@ -46,6 +45,14 @@ public class Setting {
 
     public void setTravelMode(String travelMode) {
         this.travelMode = travelMode;
+    }
+
+    public boolean isNightMode() {
+        return nightMode;
+    }
+
+    public void setNightMode(boolean nightMode) {
+        this.nightMode = nightMode;
     }
 
 }

@@ -5,11 +5,13 @@ import { AppSettings } from 'src/app/config/AppSettings';
 import { Subscription } from 'rxjs';
 import { RestService } from 'src/app/services/rest.service';
 import { MapService } from 'src/app/services/map.service';
+import { foldAnimation } from 'src/app/config/Animations';
 
 @Component({
   selector: 'app-profile-header',
   templateUrl: './profile-header.component.html',
   styleUrls: ['./profile-header.component.scss'],
+  animations: [ foldAnimation ]
 })
 export class ProfileHeaderComponent implements OnInit {
 
@@ -32,19 +34,29 @@ export class ProfileHeaderComponent implements OnInit {
   }
 
   /**
-   * If profile header clicked navigating back to user and displaying profile buttons
+   * If profile header clicked
+   * - navigating back to friend
    * - detecting friend status -> if true we are at friend profile (not at user settings)
    */
   headerClicked() {
     if (this.friendStatus) {
-      this.buttonsNeeded = true;
-      this.mapService.headerClicked();
+      this.mapService.animateToFriend();
+    }
+  }
+
+  /**
+   * Displaying buttons
+   */
+  displayButtons() {
+    if (this.friendStatus) {
+      this.zone.run(() =>
+        this.buttonsNeeded = true
+      );
     }
   }
 
   /**
    * Hiding buttons
-   * - calling manual change detection 
    */
   hideButtons() {
     this.zone.run(() =>

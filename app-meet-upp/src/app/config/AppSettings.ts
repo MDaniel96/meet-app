@@ -50,6 +50,7 @@ export class AppSettings {
     public static MAP_USER_ZOOM: number = 16;
     public static MAP_ANIMATION_SPEED_MILISEC: number = 1000;
     public static MAP_ICON_SIZE: number = 43;
+    public static MAP_MY_LOCATION_ICON: string = 'http://maps.google.com/mapfiles/ms/micons/blue-dot.png';
     // Map END
 
 }

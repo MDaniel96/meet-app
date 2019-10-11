@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy, Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { HttpClientModule, HTTP_INTERCEPTORS  } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
@@ -10,6 +11,8 @@ import { Facebook } from '@ionic-native/facebook/ngx';
 import { IonicStorageModule } from '@ionic/storage';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { GoogleMaps } from '@ionic-native/google-maps/ngx';
+import { NativePageTransitions } from '@ionic-native/native-page-transitions/ngx';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 import { AppComponent } from './app.component';
 import { TabsPage } from './pages/tabs/tabs.page';
@@ -35,6 +38,7 @@ import { UserDetailsPage } from './pages/user-details/user-details.page';
 import { SelectedUserService } from './services/selected-user.service';
 import { ProfileMapComponent } from './components/profile-map/profile-map.component';
 import { MapService } from './services/map.service';
+import { ProfileMapButtonsComponent } from './components/profile-map-buttons/profile-map-buttons.component';
 
 const routes: Routes = [
   {
@@ -54,6 +58,7 @@ const routes: Routes = [
     RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
     HttpClientModule,
     IonicStorageModule.forRoot(),
+    BrowserAnimationsModule
   ],
   exports: [
     RouterModule
@@ -73,7 +78,8 @@ const routes: Routes = [
     AvailabilityMarkerComponent,
     ProfileHeaderComponent,
     UserDetailsPage,
-    ProfileMapComponent
+    ProfileMapComponent,
+    ProfileMapButtonsComponent
   ],
   providers: [
     StatusBar,
@@ -94,7 +100,9 @@ const routes: Routes = [
     LoadingAnimationService,
     SelectedUserService,
     GoogleMaps,
-    MapService
+    MapService,
+    NativePageTransitions,
+    InAppBrowser
   ],
   bootstrap: [AppComponent]
 })

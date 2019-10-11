@@ -13,6 +13,15 @@ ion-back-button {
     border-radius: 50%;
 }
 
+app-profile-map-buttons {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin-bottom: 150px;
+    margin-right: 20px;
+    z-index: 3;
+}
+
 app-profile-header {
     position: absolute;
     bottom: 0;

@@ -45,6 +45,12 @@
     </ion-item>
 
     <ion-item>
+      <ion-icon class="ion-padding" name="map"></ion-icon>
+      <ion-label>Maps in night mode</ion-label>
+      <ion-toggle [(ngModel)]="user.setting.nightMode" slot="end"></ion-toggle>
+    </ion-item>
+
+    <ion-item>
       <ion-icon class="ion-padding" name="locate"></ion-icon>
       <ion-label>
         <div>{{ locationHeadStr }} <b>{{ locationHeadStatus }}</b></div>

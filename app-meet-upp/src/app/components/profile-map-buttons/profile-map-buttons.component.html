@@ -1,0 +1,8 @@
+<div *ngIf="buttonsNeeded" [@slideInOut]>
+  <ion-fab-button (click)="myLocationClicked()" color="light">
+    <ion-icon name="locate" size="large" color="primary"></ion-icon>
+  </ion-fab-button>
+  <ion-fab-button (click)="navigationClicked()" color="primary">
+    <ion-icon name="navigate" size="large" color="light"></ion-icon>
+  </ion-fab-button>
+</div>

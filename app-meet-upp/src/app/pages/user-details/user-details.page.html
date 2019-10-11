@@ -1,6 +1,9 @@
 <ion-content fullscreen>
-
   <ion-back-button fill="solid" defaultHref="tabs"></ion-back-button>
+
+  <app-profile-map-buttons
+    [buttonsNeeded]="false"
+  ></app-profile-map-buttons>
 
   <app-profile-header *ngIf="friendStatus"
       [user]="user"

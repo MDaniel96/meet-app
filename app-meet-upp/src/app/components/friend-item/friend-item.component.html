@@ -1,6 +1,6 @@
 <ion-item (click)="selectFriend(friend)" href="">
   <ion-avatar slot="start">
-    <img [src]="friend.image">
+    <img [src]="friend.image" [@fadeInOut]>
   </ion-avatar>
   <ion-label>
     <h2>{{ friend.name }}</h2>

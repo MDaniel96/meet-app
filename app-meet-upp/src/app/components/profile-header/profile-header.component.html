@@ -20,7 +20,7 @@
     </ion-item-divider>
   </ion-card-header>
 
-  <ion-card-content *ngIf="buttonsNeeded" class="ion-padding background-white">
+  <ion-card-content *ngIf="buttonsNeeded" class="ion-padding background-white" [@fold]>
     <ion-grid class="ion-padding-top">
 
       <ion-row class="ion-justify-content-center">
@@ -37,22 +37,21 @@
                       color="primary"
                       ></ion-img>
           </ion-fab-button>
-          <ion-card-content class="ion-no-padding item-footer">{{ friendStatusText }}</ion-card-content>
+          <div class="ion-no-padding item-footer margin-friend">{{ friendStatusText }}</div>
         </ion-col>
 
         <ion-col size="4">
-          <ion-badge mode="ios" color="primary">4</ion-badge>
           <ion-fab-button color="light">
             <ion-icon name="calendar" size="large" color="primary"></ion-icon>
           </ion-fab-button>
-          <ion-card-content class="ion-no-padding item-footer">View events</ion-card-content>
+          <div class="ion-no-padding item-footer margin-meetup">Meet up</div>
         </ion-col>
 
         <ion-col size="3">
           <ion-fab-button vertical="center" color="light">
               <availability-marker [friend]="user" [isList]="false"></availability-marker>
           </ion-fab-button>
-          <ion-card-content class="ion-no-padding item-footer">{{ user.location.time | since: true }}</ion-card-content>
+          <div class="ion-no-padding item-footer margin-distance">{{ user.distance | distance }}</div>
         </ion-col>
 
       </ion-row>

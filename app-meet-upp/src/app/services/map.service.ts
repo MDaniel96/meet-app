@@ -12,6 +12,8 @@ import { User } from '../models/User';
 import { AuthService } from './auth.service';
 import { AppSettings } from '../config/AppSettings';
 import { Subscription, Subject } from 'rxjs';
+import { darkMapStyle } from '../config/DarkMapStyle';
+import { Location } from '../models/Location';
 
 // TODO: ez még nagyon rusnya osztály, rendbe kell tenni
 @Injectable({
@@ -22,8 +24,17 @@ export class MapService {
   map: GoogleMap;
   friend: User;
 
+  /**
+   * Map dragged event
+   */
   private mapDragged = new Subject<void>();
   public mapDragged$ = this.mapDragged.asObservable();
+
+  /**
+   * Friend centered event
+   */
+  private friendCentered = new Subject<void>();
+  public friendCentered$ = this.friendCentered.asObservable();
 
   constructor(
     private authService: AuthService
@@ -38,25 +49,52 @@ export class MapService {
   async initMapWithFriend(map: GoogleMap, friend: User, subscription: Subscription) {
     this.map = map;
     this.friend = friend;
-
     this.setDefaultBrowserEnv();
-    this.map = GoogleMaps.create(AppSettings.MAP_CANVAS_ID);
+
+    this.map = GoogleMaps.create(
+      AppSettings.MAP_CANVAS_ID,
+      { styles: this.getMapStyle() }
+    );
 
     this.map.one(GoogleMapsEvent.MAP_READY).then(() => {
       this.addDragEventListener(subscription);
       let user: User = this.authService.loggedUser;
-      this.addMarkerToUser(user);
-      this.addMarkerToUser(this.friend);
+      this.addMarkerToUser(user, AppSettings.MAP_MY_LOCATION_ICON);
+      this.addMarkerToUser(this.friend, this.friend.image);
       this.moveCameraToUser(this.friend);
     });
-
   }
 
   /**
-   * When profile header clicked navigating to friend
+   * Returns friends location
    */
-  headerClicked() {
+  getFriendLocation(): Location {
+    return this.friend.location;
+  }
+
+  /**
+   * Animate to friend
+   */
+  animateToFriend() {
     this.moveCameraToUser(this.friend);
+    this.friendCentered.next();
+  }
+
+  /**
+   * Animate to user
+   */
+  animateToUser() {
+    this.moveCameraToUser(this.authService.loggedUser);
+  }
+
+  /**
+   * Returns dark mode map style if dark mode is set
+   */
+  private getMapStyle() {
+    if (this.authService.loggedUser.setting.nightMode) {
+      return darkMapStyle;
+    }
+    return [];
   }
 
   /**
@@ -69,12 +107,12 @@ export class MapService {
     subscription.add(sub);
   }
 
-  private addMarkerToUser(user: User) {
+  private addMarkerToUser(user: User, url: string) {
     let coords = this.getUserCoords(user);
     let markerOptions: MarkerOptions = {
       position: coords,
       icon: {
-        url: user.image,
+        url: url,
         size: {
           width: AppSettings.MAP_ICON_SIZE,
           height: AppSettings.MAP_ICON_SIZE
@@ -87,6 +125,9 @@ export class MapService {
       });
   }
 
+  /**
+   * Animates camera to user
+   */
   private moveCameraToUser(user: User) {
     let coords: LatLng = this.getUserCoords(user);
     let animationOptions = {
