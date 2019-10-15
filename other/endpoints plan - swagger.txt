@@ -106,6 +106,37 @@ GET /user/friend/notify
  - returns those friends who we don't track with loc permission (or request) AND are within radius
 
 
+= = = (( Events ))
+
+**GET /user/event/all
+ - gets all events of logged in user
+ - ordered by date ascending
+ - delete old events
+
+**POST /user/event
+ - adds a new event given in body
+
+**POST /user/event/{eventId}/addFriends
+ - add friends to event given in body as list of users
+
+**DELETE /user/event/{eventId}
+ - deletes from user's events
+ - doesn't delete event only from user's
+
+**GET /user/event/{eventId}/users
+ - get users with comments and distances
+
+**POST /user/event/{eventId}/comment/{text}
+ - writing comment to event from logged in user
+
+**GET /user/event/search/my/{keyword}
+ - search for my events
+
+**GET /user/event/search/other/{keyword}
+ - search for other public events
+
+
+
 
 ===> Updating endpoints:
 PUT /user/location
@@ -135,6 +166,19 @@ GET /user/notify
  - time
  - toUserId
 
+*Event
+ - name
+ - time
+ - is_public
+ - Location
+ - ?count
+
+*Comment
+ - text
+ - time
+ - userId
+ - eventId
+
 <-FriendRequest
 
 <-LocationRequest
@@ -151,6 +195,7 @@ Settings:
  - radius
  - notifications
  - travel_mode
+ - night_mode
 
 
 RequestStatus:
@@ -168,5 +213,9 @@ Locations:
  - fromUserId
  - toUserId
  - time
+
+UserEvent:
+ - userId
+ - eventId
 
  

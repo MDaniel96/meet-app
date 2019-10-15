@@ -23,10 +23,12 @@ public class Consts {
     public static class EndpointBase {
         private EndpointBase() {}
 
+
         public static final String LOGIN = "/login";
         public static final String USER = "/user";
         public static final String FRIENDS = USER + "/friend";
         public static final String LOCATIONS = USER + "/location";
+        public static final String EVENT = USER + "/event";
     }
 
     public static class Timing {

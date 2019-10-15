@@ -3,6 +3,7 @@ package com.meetupp.restmeetupp.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -31,11 +32,15 @@ public class User {
         name = "friends",
         joinColumns = @JoinColumn(name = "user1Id"),
         inverseJoinColumns = @JoinColumn(name = "user2Id"))
-    private Set<User> users;
+    private Set<User> users = new HashSet<>();
 
     @JsonIgnore
     @ManyToMany(mappedBy = "users")
-    private Set<User> friends;
+    private Set<User> friends = new HashSet<>();
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "users_")
+    private Set<Event> events = new HashSet<>();
 
 
     public Long getId() {
@@ -93,6 +98,14 @@ public class User {
     public Set<User> getFriends() { return friends; }
 
     public void setFriends(Set<User> friends) { this.friends = friends; }
+
+    public Set<Event> getEvents() {
+        return events;
+    }
+
+    public void setEvents(Set<Event> events) {
+        this.events = events;
+    }
 
     @Transient
     private Integer distance;
