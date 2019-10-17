@@ -39,15 +39,11 @@ public class EventController {
         User user = userIdentifier.identify(token);
         Set<Event> events = user.getEvents();
 
-        if (!events.isEmpty()) {
-            List<Event> eventList = new ArrayList<>(events);
-            eventService.deleteOldEvents(eventList);
-            eventService.countPeople(eventList);
-            eventList.sort(Comparator.comparingLong(Event::getSecs));
-            return ResponseEntity.ok(eventList);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        List<Event> eventList = new ArrayList<>(events);
+        eventService.deleteOldEvents(eventList);
+        eventService.countPeople(eventList);
+        eventList.sort(Comparator.comparingLong(Event::getSecs));
+        return ResponseEntity.ok(eventList);
     }
 
     /**

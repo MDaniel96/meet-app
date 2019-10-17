@@ -43,12 +43,8 @@ public class FriendController {
         User fromUser = userIdentifier.identify(token);
         Set<User> friends = fromUser.getAllFriends();
 
-        if (!friends.isEmpty()) {
-            List<User> users = util.usersWithDistances(new ArrayList<>(friends), fromUser);
-            return ResponseEntity.ok(users);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        List<User> users = util.usersWithDistances(new ArrayList<>(friends), fromUser);
+        return ResponseEntity.ok(users);
     }
 
     /**
