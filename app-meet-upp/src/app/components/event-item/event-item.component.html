@@ -1,0 +1,24 @@
+<ion-item (click)="selectEvent()" href="">
+  <ion-avatar slot="start" size="large">
+    <ion-label class="month">
+      {{ event.time | date: 'MMM' | uppercase }}.
+    </ion-label>
+    <ion-label class="day">
+      {{ event.time | date: 'dd' }}
+    </ion-label>
+  </ion-avatar>
+  <ion-buttons slot="end">
+    <ion-button (click)="deleteEvent();$event.stopPropagation();">
+      <ion-icon slot="icon-only" name="close" size="small"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+  <ion-label>
+    <h2>{{ event.name }}</h2>
+    <div>
+      <ion-icon *ngIf="event.public" size="small" name="eye"></ion-icon>
+      <ion-icon *ngIf="!event.public" size="small" name="eye-off"></ion-icon>
+      <h3>{{ event.time | date: 'HH:mm' }}</h3>
+    </div>
+    <p class="small-font">{{ event.peopleCount }} going</p>
+  </ion-label>
+</ion-item>

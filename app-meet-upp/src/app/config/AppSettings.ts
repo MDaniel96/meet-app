@@ -41,6 +41,7 @@ export class AppSettings {
 
     // Loading BEGIN
     public static LOADING_FRIENDS: string = 'Loading friends...';
+    public static LOADING_EVENTS: string = 'Loading events...';
     public static UPDATING_LOCATION: string = 'Updating location...';
     public static LOGOUT_LOADING_MILISECS: number = 400;
     // Loading END

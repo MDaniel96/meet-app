@@ -39,6 +39,10 @@ import { SelectedUserService } from './services/selected-user.service';
 import { ProfileMapComponent } from './components/profile-map/profile-map.component';
 import { MapService } from './services/map.service';
 import { ProfileMapButtonsComponent } from './components/profile-map-buttons/profile-map-buttons.component';
+import { EventsPage } from './pages/events/events.page';
+import { EventItemComponent } from './components/event-item/event-item.component';
+import { EventCreatePage } from './pages/event-create/event-create.page';
+import { ModalService } from './services/modal.service';
 
 const routes: Routes = [
   {
@@ -79,7 +83,10 @@ const routes: Routes = [
     ProfileHeaderComponent,
     UserDetailsPage,
     ProfileMapComponent,
-    ProfileMapButtonsComponent
+    ProfileMapButtonsComponent,
+    EventsPage,
+    EventItemComponent,
+    EventCreatePage
   ],
   providers: [
     StatusBar,
@@ -102,8 +109,10 @@ const routes: Routes = [
     GoogleMaps,
     MapService,
     NativePageTransitions,
-    InAppBrowser
+    InAppBrowser,
+    ModalService
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [EventCreatePage]
 })
 export class AppModule {}

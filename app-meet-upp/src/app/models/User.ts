@@ -1,7 +1,6 @@
 import { Setting } from './Settings';
 import { Location } from './Location';
 
-
 export class User {
     id: string;
     email: string;

@@ -2,7 +2,7 @@
   <ion-refresher slot="fixed" (ionRefresh)="refreshFriends($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-  <div *ngIf="friends && friends.length === 0">
+  <div class="noList" *ngIf="friends && friends.length === 0">
     You have no friends yet
   </div>
   <ion-list *ngIf="nearbyFriends && nearbyFriends.length > 0">

@@ -8,6 +8,7 @@ import { Setting } from '../models/Settings';
 import { Location } from '../models/Location';
 import { FriendshipStatus } from '../models/FriendshipStatus';
 import { FriendRequest } from '../models/FriendRequest';
+import { Event } from '../models/Event';
 
 @Injectable({
   providedIn: 'root'
@@ -53,6 +54,37 @@ export class RestService {
 
   deleteFriendship(userId: string): Observable<User> {
     return this.http.delete<User>(this.BASE + `/user/friend/${userId}`);
+  }
+
+  getEventList(): Observable<Event[]> {
+    return this.http.get<Event[]>(this.BASE + `/user/event/all`);
+  }
+
+  addNewEvent(): Observable<Event> {
+
+    let date: Date = new Date();
+
+    date.setFullYear(2019);
+    date.setMonth(9);
+    date.setDate(16);
+
+    date.setHours(15);
+    date.setMinutes(55);
+
+    const body: Event = {
+      id: '1333',
+      name: 'Jövő október',
+      time: date,
+      location: null,
+      peopleCount: 9,
+      public: false
+    }
+
+    return this.http.post<Event>(this.BASE + `/user/event`, body);
+  }
+
+  deleteEvent(eventId: string): Observable<Event> {
+    return this.http.delete<Event>(this.BASE + `/user/event/${eventId}`);
   }
 
 }

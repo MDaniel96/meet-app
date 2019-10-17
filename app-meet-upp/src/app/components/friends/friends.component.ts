@@ -35,7 +35,7 @@ export class FriendsComponent {
    * Ion-refresh event handle
    */
   refreshFriends(event) {
-    console.log('refreshing list..');
+    console.log('Refreshing friends...');
     this.refreshLocationEvent = event;
     this.getFriendListWithLocationUpdate();
   }

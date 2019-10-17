@@ -1,4 +1,4 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { FriendsComponent } from 'src/app/components/friends/friends.component';
 import { Util } from 'src/app/util/Util';
 

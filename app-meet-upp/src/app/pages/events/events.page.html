@@ -1,0 +1,58 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      <ion-icon name="calendar"></ion-icon>
+      Events
+    </ion-title>
+    <ion-buttons slot="primary">
+      <ion-button (click)="addEvent()">
+        <ion-icon slot="icon-only" name="add" size="large"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+  <ion-refresher slot="fixed" (ionRefresh)="refreshEvents($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-title class="noList" *ngIf="events && events.length === 0">
+    You have no events at the moment
+  </ion-title>
+  <ion-list *ngIf="todayEvents && todayEvents.length > 0">
+    <ion-list-header>
+      Today
+    </ion-list-header>
+    <app-event-item *ngFor="let event of todayEvents"
+                    [event]="event"
+                    (deleteEventEvent)="deleteEvent($event)"
+    ></app-event-item>
+  </ion-list>
+  <ion-list *ngIf="thisMonthEvents && thisMonthEvents.length > 0">
+    <ion-list-header>
+      This month
+    </ion-list-header>
+    <app-event-item *ngFor="let event of thisMonthEvents"
+                    [event]="event"
+                    (deleteEventEvent)="deleteEvent($event)"
+    ></app-event-item>
+  </ion-list>
+  <ion-list *ngIf="futureEvents && futureEvents.length > 0">
+    <ion-list-header>
+      This year
+    </ion-list-header>
+    <app-event-item *ngFor="let event of futureEvents"
+                    [event]="event"
+                    (deleteEventEvent)="deleteEvent($event)"
+    ></app-event-item>
+  </ion-list>
+  <ion-list *ngIf="nextYearEvents && nextYearEvents.length > 0">
+    <ion-list-header>
+      Next year
+    </ion-list-header>
+    <app-event-item *ngFor="let event of nextYearEvents"
+                    [event]="event"
+                    (deleteEventEvent)="deleteEvent($event)"
+    ></app-event-item>
+  </ion-list>
+</ion-content>

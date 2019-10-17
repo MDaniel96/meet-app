@@ -5,6 +5,7 @@ import { SearchPage } from '../search/search.page';
 import { SettingsPage } from '../settings/settings.page';
 import { MainPage } from '../main/main.page';
 import { UserDetailsPage } from '../user-details/user-details.page';
+import { EventsPage } from '../events/events.page';
 
 const routes: Routes = [
   {
@@ -27,6 +28,10 @@ const routes: Routes = [
       {
         path: 'search',
         component: SearchPage
+      },
+      {
+        path: 'events',
+        component: EventsPage
       },
       {
         path: 'settings',
