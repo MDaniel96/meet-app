@@ -5,7 +5,7 @@
       Events
     </ion-title>
     <ion-buttons slot="primary">
-      <ion-button (click)="addEvent()">
+      <ion-button class="btn-rounded" (click)="addEvent()">
         <ion-icon slot="icon-only" name="add" size="large"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -16,7 +16,7 @@
   <ion-refresher slot="fixed" (ionRefresh)="refreshEvents($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-  <ion-title class="noList" *ngIf="events && events.length === 0">
+  <ion-title class="noListMessage" *ngIf="events && events.length === 0">
     You have no events at the moment
   </ion-title>
   <ion-list *ngIf="todayEvents && todayEvents.length > 0">

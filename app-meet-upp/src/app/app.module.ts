@@ -35,7 +35,7 @@ import { AvailabilityMarkerComponent } from './components/availability-marker/av
 import { LoadingAnimationService } from './services/loading.service';
 import { ProfileHeaderComponent } from './components/profile-header/profile-header.component';
 import { UserDetailsPage } from './pages/user-details/user-details.page';
-import { SelectedUserService } from './services/selected-user.service';
+import { GlobalService } from './services/selected-user.service';
 import { ProfileMapComponent } from './components/profile-map/profile-map.component';
 import { MapService } from './services/map.service';
 import { ProfileMapButtonsComponent } from './components/profile-map-buttons/profile-map-buttons.component';
@@ -105,7 +105,7 @@ const routes: Routes = [
     Facebook,
     Geolocation,
     LoadingAnimationService,
-    SelectedUserService,
+    GlobalService,
     GoogleMaps,
     MapService,
     NativePageTransitions,

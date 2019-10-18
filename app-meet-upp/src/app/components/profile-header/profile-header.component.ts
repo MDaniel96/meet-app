@@ -6,6 +6,9 @@ import { Subscription } from 'rxjs';
 import { RestService } from 'src/app/services/rest.service';
 import { MapService } from 'src/app/services/map.service';
 import { foldAnimation } from 'src/app/config/Animations';
+import { ModalService } from 'src/app/services/modal.service';
+import { EventCreatePage } from 'src/app/pages/event-create/event-create.page';
+import { ComponentProps } from '@ionic/core';
 
 @Component({
   selector: 'app-profile-header',
@@ -26,7 +29,8 @@ export class ProfileHeaderComponent implements OnInit {
   constructor(
     private restService: RestService,
     private mapService: MapService,
-    private zone: NgZone
+    private zone: NgZone,
+    private modalService: ModalService
   ) { }
 
   ngOnInit() {
@@ -88,6 +92,13 @@ export class ProfileHeaderComponent implements OnInit {
         this.setFriendStatusText();
       });
     this.subscription.add(subcription);
+  }
+
+  /**
+   * Adding event and subscribing to dismissed event
+   */
+  async addEvent() {
+    await this.modalService.presentModal(EventCreatePage, this.user);
   }
 
   /**

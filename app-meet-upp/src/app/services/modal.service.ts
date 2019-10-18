@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { ComponentRef, ComponentProps } from '@ionic/core';
+import { User } from '../models/User';
 
 @Injectable({
   providedIn: 'root'
@@ -19,10 +20,12 @@ export class ModalService {
    * @param component page to show
    * @param data params to page
    */
-  async presentModal(component: ComponentRef, data: ComponentProps) {
+  async presentModal(component: ComponentRef, friend: User) {
     this.modal = await this.modalCtrl.create({
       component: component,
-      componentProps: data,
+      componentProps: {
+        'selectedFriend': friend
+      },
       cssClass: 'addEventModal'
     });
     return await this.modal.present();

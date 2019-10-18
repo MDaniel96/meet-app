@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
+import { AppSettings } from '../config/AppSettings';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +24,7 @@ export class LoadingAnimationService {
       this.loading = await this.loadingCtrl.create({
         duration: 20000,
         message: message,
+        backdropDismiss: AppSettings.LOADING_BACKDROP_DISMISS
       });
       await this.loading.present();
     }

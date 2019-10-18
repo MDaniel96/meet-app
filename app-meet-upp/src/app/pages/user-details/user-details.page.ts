@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { SelectedUserService } from 'src/app/services/selected-user.service';
+import { GlobalService } from 'src/app/services/selected-user.service';
 import { User } from 'src/app/models/User';
 import { RestService } from 'src/app/services/rest.service';
 import { FriendshipStatus } from 'src/app/models/FriendshipStatus';
@@ -24,7 +24,7 @@ export class UserDetailsPage {
   subscription: Subscription = new Subscription();
 
   constructor(
-    private selectedUserService: SelectedUserService,
+    private globalService: GlobalService,
     private restService: RestService,
     private mapService: MapService
   ) {
@@ -72,7 +72,7 @@ export class UserDetailsPage {
    * Get clicked user and friendship status
    */
   private initUserDetails() {
-    this.user = this.selectedUserService.selectedUser;
+    this.user = this.globalService.selectedUser;
     this.subscription.add(this.restService.getFriendshipStatus(this.user.id)
       .subscribe((status) => {
         this.friendStatus = status;

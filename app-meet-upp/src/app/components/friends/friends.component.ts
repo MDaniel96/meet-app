@@ -7,6 +7,7 @@ import { User } from 'src/app/models/User';
 import { AuthService } from 'src/app/services/auth.service';
 import { LoadingAnimationService } from 'src/app/services/loading.service';
 import { AppSettings } from 'src/app/config/AppSettings';
+import { GlobalService } from 'src/app/services/selected-user.service';
 
 @Component({
   selector: 'app-friends',
@@ -27,7 +28,8 @@ export class FriendsComponent {
     private restService: RestService,
     private geolocation: Geolocation,
     private authService: AuthService,
-    private loadingAnimation: LoadingAnimationService
+    private loadingAnimation: LoadingAnimationService,
+    private globalService: GlobalService
   ) {
   }
 
@@ -73,6 +75,7 @@ export class FriendsComponent {
     const subscription = this.restService.getFriendsList()
       .subscribe((friends) => {
         this.friends = friends;
+        this.globalService.friends = friends;
         console.log('Getting friends...', this.friends);
         this.sortFriends();
         this.stopLoadingAnimations();

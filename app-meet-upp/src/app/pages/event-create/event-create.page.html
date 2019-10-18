@@ -1,6 +1,9 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>New event</ion-title>
+    <ion-title>
+      <ion-icon name="calendar"></ion-icon>
+      New meet up
+    </ion-title>
     <ion-buttons slot="primary">
       <ion-button (click)="dismiss()">
         <ion-icon slot="icon-only" name="close" size="small"></ion-icon>
@@ -9,10 +12,49 @@
   </ion-toolbar>
 </ion-header>
 
+<ion-content>
+  <form>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="event.public = !event.public">
+        <ion-icon [name]="event.public ? 'eye' : 'eye-off'" size="large"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-item>
+      <ion-label position="floating">Event's name</ion-label>
+      <ion-input type="text" [(ngModel)]="event.name" name="name"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Event's date</ion-label>
+      <ion-datetime [(ngModel)]="date" [value]="date" name="date" [min]="minimumDate" max="2022-12-31" displayFormat="MMM YYYY DD, HH:mm">
+      </ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Call friends</ion-label>
+      <ion-select [(ngModel)]="selectedFriends" multiple name="friends">
+        <ion-select-option *ngFor="let friend of friends" [value]="friend">
+          {{ friend.name }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Select location</ion-label>
+      <div>
+        <!--<img src="https://picsum.photos/300">-->
+      </div>
+    </ion-item>
+  </form>
+
+</ion-content>
+
 <ion-footer>
   <ion-toolbar>
     <ion-buttons slot="primary" class="ion-padding">
-      <ion-button (click)="dismiss()">Add</ion-button>
+      <ion-button (click)="addEvent()">Meet up!</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-footer>

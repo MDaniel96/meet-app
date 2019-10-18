@@ -38,11 +38,24 @@ export class EventsPage {
     this.getEventList();
   }
 
+  /**
+   * Adding event and subscribing to dismissed event
+   */
   async addEvent() {
     await this.modalService.presentModal(EventCreatePage, null);
     this.modalService.onDismissed().then((data) => {
-      console.log('modal dismissed', data);
-    })
+      this.modalDismissed(data);
+    });
+  }
+
+  /**
+   * Refreshing event list if new event is added
+   * @param data modal's infos
+   */
+  private modalDismissed(data) {
+    if (data.data.eventAdded) {
+      this.getEventList();
+    }
   }
 
   deleteEvent(event) {

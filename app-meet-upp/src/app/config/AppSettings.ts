@@ -42,8 +42,10 @@ export class AppSettings {
     // Loading BEGIN
     public static LOADING_FRIENDS: string = 'Loading friends...';
     public static LOADING_EVENTS: string = 'Loading events...';
+    public static CREATING_EVENT: string = 'Creating event...';
     public static UPDATING_LOCATION: string = 'Updating location...';
     public static LOGOUT_LOADING_MILISECS: number = 400;
+    public static LOADING_BACKDROP_DISMISS: boolean = true;
     // Loading END
 
     // Map BEGIN
@@ -53,5 +55,10 @@ export class AppSettings {
     public static MAP_ICON_SIZE: number = 43;
     public static MAP_MY_LOCATION_ICON: string = 'http://maps.google.com/mapfiles/ms/micons/blue-dot.png';
     // Map END
+
+    // Modal BEGIN
+    public static MODAL_DEFDATE_PLUS_HOURS: number = 3;
+    public static MODAL_VALIDATION_ALERT: string = 'Please give name and select friends to your event';
+    // Modal END
 
 }

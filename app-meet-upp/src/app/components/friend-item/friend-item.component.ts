@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { User } from 'src/app/models/User';
 import { NavController } from '@ionic/angular';
-import { SelectedUserService } from 'src/app/services/selected-user.service';
+import { GlobalService } from 'src/app/services/selected-user.service';
 import { fadeInOutAnimation } from 'src/app/config/Animations';
 
 @Component({
@@ -16,7 +16,7 @@ export class FriendItemComponent {
 
   constructor(
     private navCtrl: NavController,
-    private selectedUserService: SelectedUserService
+    private globalService: GlobalService
   ) { }
 
   /**
@@ -24,7 +24,7 @@ export class FriendItemComponent {
    * @param selectedUser clicked user
    */
   selectFriend(selectedUser: User) {
-    this.selectedUserService.selectedUser = selectedUser;
+    this.globalService.selectedUser = selectedUser;
     this.navCtrl.navigateForward(`/tabs/friends/${selectedUser.id.toString()}`);
   }
 

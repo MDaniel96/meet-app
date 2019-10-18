@@ -60,27 +60,12 @@ export class RestService {
     return this.http.get<Event[]>(this.BASE + `/user/event/all`);
   }
 
-  addNewEvent(): Observable<Event> {
+  addNewEvent(event: Event): Observable<Event> {
+    return this.http.post<Event>(this.BASE + `/user/event`, event);
+  }
 
-    let date: Date = new Date();
-
-    date.setFullYear(2019);
-    date.setMonth(9);
-    date.setDate(16);
-
-    date.setHours(15);
-    date.setMinutes(55);
-
-    const body: Event = {
-      id: '1333',
-      name: 'Jövő október',
-      time: date,
-      location: null,
-      peopleCount: 9,
-      public: false
-    }
-
-    return this.http.post<Event>(this.BASE + `/user/event`, body);
+  addFriendsToEvent(eventId: string, friends: User[]): Observable<Event> {
+    return this.http.post<Event>(this.BASE + `/user/event/${eventId}/addFriends`, friends);
   }
 
   deleteEvent(eventId: string): Observable<Event> {
