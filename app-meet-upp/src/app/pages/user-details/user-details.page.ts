@@ -1,12 +1,13 @@
 import { Component, ViewChild } from '@angular/core';
-import { GlobalService } from 'src/app/services/selected-user.service';
+import { GlobalService } from 'src/app/services/global.service';
 import { User } from 'src/app/models/User';
 import { RestService } from 'src/app/services/rest.service';
 import { FriendshipStatus } from 'src/app/models/FriendshipStatus';
 import { Subscription } from 'rxjs';
 import { MapService } from 'src/app/services/map.service';
 import { ProfileHeaderComponent } from 'src/app/components/profile-header/profile-header.component';
-import { ProfileMapButtonsComponent } from 'src/app/components/profile-map-buttons/profile-map-buttons.component';
+import { MapButtonsComponent } from 'src/app/components/map-buttons/map-buttons.component';
+import { MapComponent } from 'src/app/components/map/map.component';
 
 @Component({
   selector: 'app-user-details',
@@ -16,7 +17,8 @@ import { ProfileMapButtonsComponent } from 'src/app/components/profile-map-butto
 export class UserDetailsPage {
 
   @ViewChild(ProfileHeaderComponent, { static: false }) profileHeaderComponent: ProfileHeaderComponent;
-  @ViewChild(ProfileMapButtonsComponent, { static: false }) profileMapButtonsComponent: ProfileMapButtonsComponent;
+  @ViewChild(MapButtonsComponent, { static: false }) mapButtonsComponent: MapButtonsComponent;
+  @ViewChild(MapComponent, { static: false }) mapComponent: MapComponent;
 
   user: User;
   friendStatus: FriendshipStatus;
@@ -30,6 +32,20 @@ export class UserDetailsPage {
   ) {
     this.initUserDetails();
     this.subscribeToMapEvents();
+  }
+
+  /**
+   * When header clicked animating to friend
+   */
+  headerClicked() {
+    this.mapComponent.animateToFriend();
+  }
+
+  /**
+   * When my location center button clicked animated to logged in user
+   */
+  myLocationClicked() {
+    this.mapComponent.animateToUser();
   }
 
   /**
@@ -55,7 +71,7 @@ export class UserDetailsPage {
    */
   private showMapDraggedButtons() {
     this.profileHeaderComponent.hideButtons();
-    this.profileMapButtonsComponent.displayButtons();
+    this.mapButtonsComponent.displayButtons();
   }
 
   /**
@@ -65,7 +81,7 @@ export class UserDetailsPage {
    */
   private showFriendCenteredButtons() {
     this.profileHeaderComponent.displayButtons();
-    this.profileMapButtonsComponent.hideButtons();
+    this.mapButtonsComponent.hideButtons();
   }
 
   /**

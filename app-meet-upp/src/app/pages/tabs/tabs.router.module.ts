@@ -6,8 +6,13 @@ import { SettingsPage } from '../settings/settings.page';
 import { MainPage } from '../main/main.page';
 import { UserDetailsPage } from '../user-details/user-details.page';
 import { EventsPage } from '../events/events.page';
+import { EventCreatePage } from '../event-create/event-create.page';
 
 const routes: Routes = [
+  {
+    path: 'addEvent',
+    component: EventCreatePage
+  },
   {
     path: 'tabs',
     component: TabsPage,
@@ -50,4 +55,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class TabsPageRoutingModule {}
+export class TabsPageRoutingModule { }

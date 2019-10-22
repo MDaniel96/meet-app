@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { User } from 'src/app/models/User';
 import { NavController } from '@ionic/angular';
-import { GlobalService } from 'src/app/services/selected-user.service';
+import { GlobalService } from 'src/app/services/global.service';
 import { fadeInOutAnimation } from 'src/app/config/Animations';
 
 @Component({

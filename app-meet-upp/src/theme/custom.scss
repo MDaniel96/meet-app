@@ -3,12 +3,6 @@ ion-avatar  {
     height: 50px;
 }
 
-.addEventModal {
-    background: rgba(0, 0, 0, 0.4) !important;
-    //padding: 10% 10%  !important;
-    padding-top: 0% !important;
-}
-
 .btn-rounded {
     border-radius: 50%;
     background-color: rgba(0, 0, 0, 0.03);
@@ -16,5 +10,7 @@ ion-avatar  {
 
 .noListMessage {
     margin-top: 50%;
-    margin-left: 8%;
+    margin-left: 6%;
+    font-size: 18px;
 }   
+

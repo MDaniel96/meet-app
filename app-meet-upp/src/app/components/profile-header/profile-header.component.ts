@@ -1,14 +1,12 @@
-import { Component, Input, OnInit, NgZone } from '@angular/core';
+import { Component, Input, OnInit, NgZone, Output, EventEmitter } from '@angular/core';
 import { User } from 'src/app/models/User';
 import { FriendshipStatus, FriendStatuses } from 'src/app/models/FriendshipStatus';
 import { AppSettings } from 'src/app/config/AppSettings';
 import { Subscription } from 'rxjs';
 import { RestService } from 'src/app/services/rest.service';
-import { MapService } from 'src/app/services/map.service';
 import { foldAnimation } from 'src/app/config/Animations';
-import { ModalService } from 'src/app/services/modal.service';
-import { EventCreatePage } from 'src/app/pages/event-create/event-create.page';
-import { ComponentProps } from '@ionic/core';
+import { GlobalService } from 'src/app/services/global.service';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-profile-header',
@@ -22,15 +20,17 @@ export class ProfileHeaderComponent implements OnInit {
   @Input() buttonsNeeded: boolean;
   @Input() friendStatus: FriendshipStatus;
 
+  @Output() headerClickedEvent = new EventEmitter<void>();
+
   friendStatusText: string;
 
   subscription: Subscription = new Subscription();
 
   constructor(
     private restService: RestService,
-    private mapService: MapService,
     private zone: NgZone,
-    private modalService: ModalService
+    private globalService: GlobalService,
+    private navCtrl: NavController
   ) { }
 
   ngOnInit() {
@@ -38,13 +38,11 @@ export class ProfileHeaderComponent implements OnInit {
   }
 
   /**
-   * If profile header clicked
-   * - navigating back to friend
-   * - detecting friend status -> if true we are at friend profile (not at user settings)
+   * If profile header clicked notifying parent
    */
   headerClicked() {
     if (this.friendStatus) {
-      this.mapService.animateToFriend();
+      this.headerClickedEvent.emit();
     }
   }
 
@@ -95,10 +93,11 @@ export class ProfileHeaderComponent implements OnInit {
   }
 
   /**
-   * Adding event and subscribing to dismissed event
+   * Open create event page and preselect user
    */
-  async addEvent() {
-    await this.modalService.presentModal(EventCreatePage, this.user);
+  addEvent() {
+    this.globalService.preselectedUser = this.globalService.selectedUser;
+    this.navCtrl.navigateForward('addEvent');
   }
 
   /**

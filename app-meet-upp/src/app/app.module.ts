@@ -35,14 +35,13 @@ import { AvailabilityMarkerComponent } from './components/availability-marker/av
 import { LoadingAnimationService } from './services/loading.service';
 import { ProfileHeaderComponent } from './components/profile-header/profile-header.component';
 import { UserDetailsPage } from './pages/user-details/user-details.page';
-import { GlobalService } from './services/selected-user.service';
-import { ProfileMapComponent } from './components/profile-map/profile-map.component';
+import { GlobalService } from './services/global.service';
 import { MapService } from './services/map.service';
-import { ProfileMapButtonsComponent } from './components/profile-map-buttons/profile-map-buttons.component';
+import { MapButtonsComponent } from './components/map-buttons/map-buttons.component';
 import { EventsPage } from './pages/events/events.page';
 import { EventItemComponent } from './components/event-item/event-item.component';
 import { EventCreatePage } from './pages/event-create/event-create.page';
-import { ModalService } from './services/modal.service';
+import { MapComponent } from './components/map/map.component';
 
 const routes: Routes = [
   {
@@ -82,11 +81,11 @@ const routes: Routes = [
     AvailabilityMarkerComponent,
     ProfileHeaderComponent,
     UserDetailsPage,
-    ProfileMapComponent,
-    ProfileMapButtonsComponent,
+    MapButtonsComponent,
     EventsPage,
     EventItemComponent,
-    EventCreatePage
+    EventCreatePage,
+    MapComponent
   ],
   providers: [
     StatusBar,
@@ -109,8 +108,7 @@ const routes: Routes = [
     GoogleMaps,
     MapService,
     NativePageTransitions,
-    InAppBrowser,
-    ModalService
+    InAppBrowser
   ],
   bootstrap: [AppComponent],
   entryComponents: [EventCreatePage]

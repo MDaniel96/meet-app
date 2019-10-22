@@ -14,8 +14,8 @@ import { AppSettings } from '../config/AppSettings';
 import { Subscription, Subject } from 'rxjs';
 import { darkMapStyle } from '../config/DarkMapStyle';
 import { Location } from '../models/Location';
+import { GlobalService } from './global.service';
 
-// TODO: ez még nagyon rusnya osztály, rendbe kell tenni
 @Injectable({
   providedIn: 'root'
 })
@@ -23,6 +23,7 @@ export class MapService {
 
   map: GoogleMap;
   friend: User;
+  selectLocationMarker: Marker;
 
   /**
    * Map dragged event
@@ -36,33 +37,60 @@ export class MapService {
   private friendCentered = new Subject<void>();
   public friendCentered$ = this.friendCentered.asObservable();
 
+  /**
+   * Event location selected event
+   */
+  private locationSelected = new Subject<LatLng>();
+  public locationSelected$ = this.locationSelected.asObservable();
+
   constructor(
-    private authService: AuthService
+    private authService: AuthService,
+    private globalService: GlobalService
   ) { }
 
   /**
-   * Creating and initalizing Google Map
+   * Creating and initalizing Google Map with one friend
    * @param map GoogleMap object of the component
-   * @param friend user's friend
    * @param subscription components subscriptions
    */
-  async initMapWithFriend(map: GoogleMap, friend: User, subscription: Subscription) {
-    this.map = map;
-    this.friend = friend;
-    this.setDefaultBrowserEnv();
+  async createFriendDetailMap(subscription: Subscription) {
+    this.friend = this.globalService.selectedUser;
+    await this.createMap(AppSettings.MAP_CANVAS_FRIEND);
 
+    await this.map.one(GoogleMapsEvent.MAP_READY).then(() => {
+      this.addDragEventListener(subscription);
+      this.addMarkerToUser(this.authService.loggedUser, AppSettings.MAP_MY_LOCATION_URL);
+      this.addMarkerToUser(this.friend, this.friend.image);
+      this.moveCameraToUser(this.map, this.friend, true);
+    });
+    return this.map;
+  }
+
+  /**
+   * Creating and initalizing Google Map to select location
+   * @param map GoogleMap object of the component
+   * @param subscription components subscriptions
+   */
+  async createSelectLocationMap(subscription: Subscription) {
+    await this.createMap(AppSettings.MAP_CANVAS_SELECT);
+
+    await this.map.one(GoogleMapsEvent.MAP_READY).then(() => {
+      this.addClickEventListener(subscription);
+      this.addMarkerToUser(this.authService.loggedUser, AppSettings.MAP_MY_LOCATION_URL);
+      this.moveCameraToUser(this.map, this.authService.loggedUser);
+    });
+    return this.map;
+  }
+
+  /**
+   * Creates map
+   */
+  private async createMap(canvasId: string) {
+    this.setDefaultBrowserEnv();
     this.map = GoogleMaps.create(
-      AppSettings.MAP_CANVAS_ID,
+      canvasId,
       { styles: this.getMapStyle() }
     );
-
-    this.map.one(GoogleMapsEvent.MAP_READY).then(() => {
-      this.addDragEventListener(subscription);
-      let user: User = this.authService.loggedUser;
-      this.addMarkerToUser(user, AppSettings.MAP_MY_LOCATION_ICON);
-      this.addMarkerToUser(this.friend, this.friend.image);
-      this.moveCameraToUser(this.friend);
-    });
   }
 
   /**
@@ -73,18 +101,18 @@ export class MapService {
   }
 
   /**
-   * Animate to friend
+   * Animate to friend on given map
    */
-  animateToFriend() {
-    this.moveCameraToUser(this.friend);
+  animateToFriend(map: GoogleMap) {
+    this.moveCameraToUser(map, this.friend, true);
     this.friendCentered.next();
   }
 
   /**
-   * Animate to user
+   * Animate to user on given map
    */
-  animateToUser() {
-    this.moveCameraToUser(this.authService.loggedUser);
+  animateToUser(map: GoogleMap) {
+    this.moveCameraToUser(map, this.authService.loggedUser, true);
   }
 
   /**
@@ -107,8 +135,31 @@ export class MapService {
     subscription.add(sub);
   }
 
+  /**
+   * Adds and subscribes to event listener when clicked
+   */
+  private addClickEventListener(subscription: Subscription) {
+    const sub = this.map.on(GoogleMapsEvent.MAP_CLICK).subscribe((data: any[]) => {
+      let position: LatLng = data[0];
+      this.locationSelected.next(position);
+      this.selectLocationMarker.remove();
+      this.addMarker(position, AppSettings.MAP_EVENT_LOCATION_URL);
+    });
+    subscription.add(sub);
+  }
+
+  /**
+   * Adds marker to user with given image
+   */
   private addMarkerToUser(user: User, url: string) {
     let coords = this.getUserCoords(user);
+    this.addMarker(coords, url);
+  }
+
+  /**
+   * Add marker to given position and img
+   */
+  private addMarker(coords: LatLng, url: string) {
     let markerOptions: MarkerOptions = {
       position: coords,
       icon: {
@@ -122,21 +173,25 @@ export class MapService {
     this.map.addMarker(markerOptions)
       .then((marker: Marker) => {
         marker.showInfoWindow();
+        this.selectLocationMarker = marker;
       });
   }
 
   /**
-   * Animates camera to user
+   * Moves camera to user, animates if animate is set
    */
-  private moveCameraToUser(user: User) {
+  private moveCameraToUser(map: GoogleMap, user: User, animate?: boolean) {
     let coords: LatLng = this.getUserCoords(user);
     let animationOptions = {
       target: coords,
       zoom: AppSettings.MAP_USER_ZOOM,
       duration: AppSettings.MAP_ANIMATION_SPEED_MILISEC
     };
-
-    this.map.animateCamera(animationOptions);
+    if (animate) {
+      map.animateCamera(animationOptions);
+    } else {
+      map.moveCamera(animationOptions);
+    }
   }
 
   /**

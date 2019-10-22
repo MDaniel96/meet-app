@@ -1,14 +1,16 @@
 import { Component, Input } from '@angular/core';
-import { ModalController } from '@ionic/angular';
 import { Event } from 'src/app/models/Event';
 import { AppSettings } from 'src/app/config/AppSettings';
-import { GlobalService } from 'src/app/services/selected-user.service';
+import { GlobalService } from 'src/app/services/global.service';
 import { User } from 'src/app/models/User';
 import { Location } from 'src/app/models/Location';
 import { AuthService } from 'src/app/services/auth.service';
 import { Subscription } from 'rxjs';
 import { RestService } from 'src/app/services/rest.service';
 import { LoadingAnimationService } from 'src/app/services/loading.service';
+import { NavController } from '@ionic/angular';
+import { MapService } from 'src/app/services/map.service';
+import { LatLng } from '@ionic-native/google-maps/ngx';
 
 @Component({
   selector: 'app-event-create',
@@ -24,22 +26,22 @@ export class EventCreatePage {
   friends: User[];
   minimumDate: string;
 
-  @Input() selectedFriend: User;
+  preselectedFriend: User;
 
   subscription: Subscription = new Subscription();
 
   constructor(
-    private modalCtrl: ModalController,
     private globalService: GlobalService,
     private authService: AuthService,
     private restService: RestService,
-    private loadingAnimService: LoadingAnimationService
+    private loadingAnimService: LoadingAnimationService,
+    private navCtrl: NavController,
+    private mapService: MapService
   ) {
   }
 
   ngOnInit() {
     this.init();
-    console.log(this.selectedFriend);
   }
 
   /**
@@ -60,7 +62,22 @@ export class EventCreatePage {
     this.event = new Event();
     this.event.public = true;
     this.event.location = new Location();
-    this.event.location = this.authService.loggedUser.location;
+    this.event.location.lat = this.authService.loggedUser.location.lat;
+    this.event.location.lon = this.authService.loggedUser.location.lon;
+    this.detectLocatonChanges();
+  }
+
+  /**
+   * Detecting location changes from map, if changed, store it in created event
+   */
+  private detectLocatonChanges() {
+    this.subscription.add(
+      this.mapService.locationSelected$
+        .subscribe((coords: LatLng) => {
+          this.event.location.lat = coords.lat;
+          this.event.location.lon = coords.lng;
+        })
+    );
   }
 
   /**
@@ -85,9 +102,10 @@ export class EventCreatePage {
    * If there's friend preselected, filling up form
    */
   private initPreselectedFriend() {
-    if (this.selectedFriend) {
-      this.selectedFriends = [this.selectedFriend];
-      this.event.name = `${this.authService.loggedUser.name} meets ${this.selectedFriend.name}`;
+    this.preselectedFriend = this.globalService.preselectedUser;
+    if (this.preselectedFriend) {
+      this.selectedFriends = [this.preselectedFriend];
+      this.event.name = `${this.authService.loggedUser.name} meets ${this.preselectedFriend.name}`;
     }
   }
 
@@ -118,14 +136,24 @@ export class EventCreatePage {
               .subscribe((e) => {
                 console.log('Event added', e);
                 this.loadingAnimService.dismissLoading();
-                this.modalCtrl.dismiss({
-                  'eventAdded': true
-                });
+                this.globalService.creatingEvent();
+                this.navigateBackAfterAddEvent();
               })
           );
         }
       })
     this.subscription.add(subscription);
+  }
+
+  /**
+   * Navigating to original pages after add
+   */
+  private navigateBackAfterAddEvent() {
+    if (this.preselectedFriend) {
+      this.navCtrl.navigateBack(`/tabs/friends/${this.preselectedFriend.id}`);
+    } else {
+      this.navCtrl.navigateBack('/tabs/events');
+    }
   }
 
   /**
@@ -138,15 +166,6 @@ export class EventCreatePage {
       return true;
     }
     return false;
-  }
-
-  /**
-   * Dismissing modal without adding event
-   */
-  dismiss() {
-    this.modalCtrl.dismiss({
-      'eventAdded': false
-    });
   }
 
   ngOnDestroy() {

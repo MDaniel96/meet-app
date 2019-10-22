@@ -1,18 +1,20 @@
 <ion-content fullscreen>
   <ion-back-button fill="solid" defaultHref="tabs"></ion-back-button>
 
-  <app-profile-map-buttons
+  <app-map-buttons
     [buttonsNeeded]="false"
-  ></app-profile-map-buttons>
+    (myLocationClickedEvent)="myLocationClicked()"
+  ></app-map-buttons>
 
   <app-profile-header *ngIf="friendStatus"
       [user]="user"
       [buttonsNeeded]="true"
       [friendStatus]="friendStatus"
+      (headerClickedEvent)="headerClicked()"
   ></app-profile-header>
 
-  <app-profile-map
-    [user]="user"
-  ></app-profile-map>
+  <app-map
+    [mapType]="'friend'"
+  ></app-map>
 
 </ion-content>

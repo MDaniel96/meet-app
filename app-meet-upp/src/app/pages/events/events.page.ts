@@ -4,8 +4,8 @@ import { Event } from 'src/app/models/Event';
 import { RestService } from 'src/app/services/rest.service';
 import { LoadingAnimationService } from 'src/app/services/loading.service';
 import { AppSettings } from 'src/app/config/AppSettings';
-import { ModalService } from 'src/app/services/modal.service';
-import { EventCreatePage } from '../event-create/event-create.page';
+import { NavController } from '@ionic/angular';
+import { GlobalService } from 'src/app/services/global.service';
 
 @Component({
   selector: 'app-events',
@@ -27,37 +27,29 @@ export class EventsPage {
   constructor(
     private restService: RestService,
     private loadingAnimation: LoadingAnimationService,
-    private modalService: ModalService
+    private navCtrl: NavController,
+    private globalService: GlobalService
   ) {
+    this.detectEventCreated();
   }
 
   /**
-   * Get event list
+   * Refresh list when entering page
    */
   ionViewWillEnter() {
     this.getEventList();
   }
 
   /**
-   * Adding event and subscribing to dismissed event
+   * Navigating to event creator page
    */
-  async addEvent() {
-    await this.modalService.presentModal(EventCreatePage, null);
-    this.modalService.onDismissed().then((data) => {
-      this.modalDismissed(data);
-    });
+  addEvent() {
+    this.navCtrl.navigateForward('/addEvent');
   }
 
   /**
-   * Refreshing event list if new event is added
-   * @param data modal's infos
+   * Deleting event and refreshing list
    */
-  private modalDismissed(data) {
-    if (data.data.eventAdded) {
-      this.getEventList();
-    }
-  }
-
   deleteEvent(event) {
     const subscription = this.restService.deleteEvent(event.id)
       .subscribe((event) => {
@@ -74,6 +66,18 @@ export class EventsPage {
     console.log('Refreshing events...');
     this.refreshEventsEvent = event;
     this.getEventList();
+  }
+
+  /**
+   * Detect event created, so list can be refreshed
+   */
+  private detectEventCreated() {
+    this.subscription.add(
+      this.globalService.eventCreated$
+        .subscribe(() => {
+          this.getEventList();
+        })
+    );
   }
 
   /**

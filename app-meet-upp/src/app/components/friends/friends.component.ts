@@ -7,7 +7,7 @@ import { User } from 'src/app/models/User';
 import { AuthService } from 'src/app/services/auth.service';
 import { LoadingAnimationService } from 'src/app/services/loading.service';
 import { AppSettings } from 'src/app/config/AppSettings';
-import { GlobalService } from 'src/app/services/selected-user.service';
+import { GlobalService } from 'src/app/services/global.service';
 
 @Component({
   selector: 'app-friends',

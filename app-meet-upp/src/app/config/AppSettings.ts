@@ -49,11 +49,14 @@ export class AppSettings {
     // Loading END
 
     // Map BEGIN
-    public static MAP_CANVAS_ID: string = 'map_canvas';
+    public static MAP_CANVAS_FRIEND: string = 'map_friend';
+    public static MAP_CANVAS_SELECT: string = 'map_select';
+    public static MAP_CANVAS: string = 'map_canvas';
     public static MAP_USER_ZOOM: number = 16;
     public static MAP_ANIMATION_SPEED_MILISEC: number = 1000;
     public static MAP_ICON_SIZE: number = 43;
-    public static MAP_MY_LOCATION_ICON: string = 'http://maps.google.com/mapfiles/ms/micons/blue-dot.png';
+    public static MAP_MY_LOCATION_URL: string = 'http://maps.google.com/mapfiles/ms/micons/blue.png';
+    public static MAP_EVENT_LOCATION_URL: string = 'http://maps.google.com/mapfiles/ms/micons/green.png';
     // Map END
 
     // Modal BEGIN

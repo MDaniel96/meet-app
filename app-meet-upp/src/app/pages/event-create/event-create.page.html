@@ -5,33 +5,28 @@
       New meet up
     </ion-title>
     <ion-buttons slot="primary">
-      <ion-button (click)="dismiss()">
-        <ion-icon slot="icon-only" name="close" size="small"></ion-icon>
-      </ion-button>
+      <ion-back-button icon="close"></ion-back-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <form>
-
     <ion-buttons slot="end">
       <ion-button (click)="event.public = !event.public">
         <ion-icon [name]="event.public ? 'eye' : 'eye-off'" size="large"></ion-icon>
       </ion-button>
     </ion-buttons>
-
     <ion-item>
       <ion-label position="floating">Event's name</ion-label>
       <ion-input type="text" [(ngModel)]="event.name" name="name"></ion-input>
     </ion-item>
-
     <ion-item>
       <ion-label position="stacked">Event's date</ion-label>
-      <ion-datetime [(ngModel)]="date" [value]="date" name="date" [min]="minimumDate" max="2022-12-31" displayFormat="MMM YYYY DD, HH:mm">
+      <ion-datetime [(ngModel)]="date" [value]="date" name="date" [min]="minimumDate" max="2022-12-31"
+        displayFormat="MMM YYYY DD, HH:mm">
       </ion-datetime>
     </ion-item>
-
     <ion-item>
       <ion-label position="floating">Call friends</ion-label>
       <ion-select [(ngModel)]="selectedFriends" multiple name="friends">
@@ -40,16 +35,13 @@
         </ion-select-option>
       </ion-select>
     </ion-item>
-
-    <ion-item>
-      <ion-label position="stacked">Select location</ion-label>
-      <div>
-        <!--<img src="https://picsum.photos/300">-->
-      </div>
-    </ion-item>
+    <ion-label class="location_label">Select location</ion-label>
   </form>
-
 </ion-content>
+
+<app-map
+  [mapType]="'select'"
+></app-map>
 
 <ion-footer>
   <ion-toolbar>
