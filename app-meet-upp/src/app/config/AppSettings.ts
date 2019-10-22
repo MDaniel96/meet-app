@@ -49,8 +49,6 @@ export class AppSettings {
     // Loading END
 
     // Map BEGIN
-    public static MAP_CANVAS_FRIEND: string = 'map_friend';
-    public static MAP_CANVAS_SELECT: string = 'map_select';
     public static MAP_CANVAS: string = 'map_canvas';
     public static MAP_USER_ZOOM: number = 16;
     public static MAP_ANIMATION_SPEED_MILISEC: number = 1000;

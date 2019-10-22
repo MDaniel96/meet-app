@@ -55,7 +55,7 @@ export class MapService {
    */
   async createFriendDetailMap(subscription: Subscription) {
     this.friend = this.globalService.selectedUser;
-    await this.createMap(AppSettings.MAP_CANVAS_FRIEND);
+    await this.createMap(AppSettings.MAP_CANVAS);
 
     await this.map.one(GoogleMapsEvent.MAP_READY).then(() => {
       this.addDragEventListener(subscription);
@@ -72,7 +72,7 @@ export class MapService {
    * @param subscription components subscriptions
    */
   async createSelectLocationMap(subscription: Subscription) {
-    await this.createMap(AppSettings.MAP_CANVAS_SELECT);
+    await this.createMap(AppSettings.MAP_CANVAS);
 
     await this.map.one(GoogleMapsEvent.MAP_READY).then(() => {
       this.addClickEventListener(subscription);
