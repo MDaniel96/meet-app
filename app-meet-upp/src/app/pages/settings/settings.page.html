@@ -1,19 +1,18 @@
-<ion-header>
+<ion-header #header>
+  <ion-toolbar>
+    <img class="title-header" src="../../../assets/icon/title_header.png" />
+  </ion-toolbar>
   <ion-toolbar>
     <ion-title>
-      <ion-icon name="settings"></ion-icon>
+      <img class="icon8-icon" src="../../../assets/icon/setting-icon.png">
       Settings
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content *ngIf="user" fullscreen>
+<ion-content *ngIf="user" fullscreen hide-header [header]="header.el" [scrollEvents]="true">
 
-  <app-profile-header
-    [user]="user"
-    [buttonsNeeded]="false"
-    [friendStatus]=""
-  ></app-profile-header>
+  <app-profile-header [user]="user" [buttonsNeeded]="false" [friendStatus]=""></app-profile-header>
 
   <ion-list>
 
@@ -51,6 +50,12 @@
       <ion-icon class="ion-padding" name="map"></ion-icon>
       <ion-label>Maps in night mode</ion-label>
       <ion-toggle [(ngModel)]="user.setting.nightMode" slot="end"></ion-toggle>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon class="ion-padding" name="calendar"></ion-icon>
+      <ion-label>Synchronize events</ion-label>
+      <ion-toggle [(ngModel)]="user.setting.calendar" (ionChange)="calendarToggled()" slot="end"></ion-toggle>
     </ion-item>
 
     <ion-item>

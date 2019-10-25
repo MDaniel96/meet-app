@@ -7,10 +7,12 @@ public class Consts {
     public static class UserDefaults {
         private UserDefaults() {}
 
+
         public static final boolean NOTIFICATIONS = true;
         public static final boolean NIGHT_MODE = false;
         public static final Integer RADIUS = 5000;
         public static final String TRAVEL_MODE = "walking";
+        public static final boolean CALENDAR = false;
     }
 
     public static class Jwt {

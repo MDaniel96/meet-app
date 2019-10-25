@@ -9,6 +9,8 @@ import { Location } from '../models/Location';
 import { FriendshipStatus } from '../models/FriendshipStatus';
 import { FriendRequest } from '../models/FriendRequest';
 import { Event } from '../models/Event';
+import { UserComment } from '../models/UserComment';
+import { Comment } from '../models/Comment';
 
 @Injectable({
   providedIn: 'root'
@@ -70,6 +72,14 @@ export class RestService {
 
   deleteEvent(eventId: string): Observable<Event> {
     return this.http.delete<Event>(this.BASE + `/user/event/${eventId}`);
+  }
+
+  getEventsUserComments(eventId: string): Observable<UserComment[]> {
+    return this.http.get<UserComment[]>(this.BASE + `/user/event/${eventId}/users`);
+  }
+
+  addCommentToEvent(eventId: string, text: string): Observable<Comment> {
+    return this.http.post<Comment>(this.BASE + `/user/event/${eventId}/comment/${text}`, null);
   }
 
 }

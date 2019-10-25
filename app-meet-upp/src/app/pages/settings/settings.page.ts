@@ -7,6 +7,7 @@ import { NavController } from '@ionic/angular';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { AppSettings } from 'src/app/config/AppSettings';
 import { LoadingAnimationService } from 'src/app/services/loading.service';
+import { CalendarService } from 'src/app/services/calendar.service';
 
 
 @Component({
@@ -27,7 +28,8 @@ export class SettingsPage {
     private restService: RestService,
     private navCtrl: NavController,
     private geolocation: Geolocation,
-    private loadingAnimation: LoadingAnimationService
+    private loadingAnimation: LoadingAnimationService,
+    private calendarService: CalendarService
   ) { }
 
   /**
@@ -77,6 +79,17 @@ export class SettingsPage {
       this.authService.loggedUser = user;
     });
     this.subscription.add(subscription);
+  }
+
+  /**
+   * (Un)synchronize app events into phone calendar
+   */
+  calendarToggled() {
+    if (this.user.setting.calendar) {
+      this.calendarService.refreshAndSynchronizeEvents(this.subscription);
+    } else {
+      this.calendarService.unsynchronizeEvents();
+    }
   }
 
   /**

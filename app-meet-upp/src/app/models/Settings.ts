@@ -5,4 +5,5 @@ export class Setting {
     notifications: boolean;
     travelMode: TravelMode;
     nightMode: boolean;
+    calendar: boolean;
 }

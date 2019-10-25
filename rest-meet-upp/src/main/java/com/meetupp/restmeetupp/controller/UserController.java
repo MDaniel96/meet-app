@@ -47,21 +47,36 @@ public class UserController {
     }
 
     /**
-     * Search for users
-     * @param keyword word to look for in user's name or email
+     * Search for logged-in-users friends
+     * @param keyword word to look for in user's name
      * @return found users
      */
-    @GetMapping("/search/{keyword}")
+    @GetMapping("/search/my/{keyword}")
     @ResponseBody
-    public ResponseEntity<List<User>> searchUsers(@PathVariable("keyword") String keyword, @RequestHeader("Authorization") String token) {
+    public ResponseEntity<List<User>> searchMyFriends(@PathVariable("keyword") String keyword, @RequestHeader("Authorization") String token) {
         User fromUser = userIdentifier.identify(token);
-        Set<User> users = userService.findAllByNameOrEmail(keyword);
+        Set<User> friends = fromUser.getAllFriends();
+        friends.removeIf(f -> !f.getName().toLowerCase().contains(keyword.toLowerCase()));
+        return ResponseEntity.ok(util.usersWithDistances(new ArrayList<>(friends), fromUser));
+    }
 
-        if (!users.isEmpty()) {
-            return ResponseEntity.ok(util.usersWithDistances(new ArrayList<>(users), fromUser));
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    /**
+     * Search for other users (not friends of logged-in-user)
+     * @param keyword word to look for in user's name
+     * @return found users
+     */
+    @GetMapping("/search/other/{keyword}")
+    @ResponseBody
+    public ResponseEntity<List<User>> searchOtherFriends(@PathVariable("keyword") String keyword, @RequestHeader("Authorization") String token) {
+        User fromUser = userIdentifier.identify(token);
+        Set<User> friends = fromUser.getAllFriends();
+        List<User> allUsers = userService.listAllUsers();
+
+        allUsers.removeAll(friends);
+        allUsers.remove(fromUser);
+        allUsers.removeIf(u -> !u.getName().toLowerCase().contains(keyword.toLowerCase()));
+
+        return ResponseEntity.ok(util.usersWithDistances(allUsers, fromUser));
     }
 
     /**

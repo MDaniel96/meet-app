@@ -6,6 +6,8 @@ import { LoadingAnimationService } from 'src/app/services/loading.service';
 import { AppSettings } from 'src/app/config/AppSettings';
 import { NavController } from '@ionic/angular';
 import { GlobalService } from 'src/app/services/global.service';
+import { CalendarService } from 'src/app/services/calendar.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-events',
@@ -28,7 +30,9 @@ export class EventsPage {
     private restService: RestService,
     private loadingAnimation: LoadingAnimationService,
     private navCtrl: NavController,
-    private globalService: GlobalService
+    private globalService: GlobalService,
+    private calendarService: CalendarService,
+    private authService: AuthService
   ) {
     this.detectEventCreated();
   }
@@ -94,8 +98,18 @@ export class EventsPage {
         this.getFutureEvents();
         this.getNextYearEvents();
         this.stopLoadingAnim();
+        this.synchEvents();
       });
     this.subscription.add(subscription);
+  }
+
+  /**
+   * Synchronizing events if it is set
+   */
+  private synchEvents() {
+    if (this.authService.loggedUser.setting.calendar) {
+      this.calendarService.synchronizeEvents(this.events);
+    }
   }
 
   /**

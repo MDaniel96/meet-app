@@ -39,7 +39,13 @@ export class MapComponent implements OnInit {
           .then((map) => {
             this.map = map;
           });
-      }
+      } else
+        if (this.mapType === MapType.event) {
+          await this.mapService.createEventDetailMap(this.subscription)
+            .then((map) => {
+              this.map = map;
+            });
+        }
   }
 
   /**
@@ -47,6 +53,13 @@ export class MapComponent implements OnInit {
    */
   animateToFriend() {
     this.mapService.animateToFriend(this.map);
+  }
+
+  /**
+   * Animate camera to event
+   */
+  animateToEvent() {
+    this.mapService.animateToEvent(this.map);
   }
 
   /**

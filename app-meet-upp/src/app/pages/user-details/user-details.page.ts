@@ -65,9 +65,7 @@ export class UserDetailsPage {
   }
 
   /**
-   * When map dragged
-   * - hiding profile button
-   * - showing map buttons
+   * When map dragged displaying buttons
    */
   private showMapDraggedButtons() {
     this.profileHeaderComponent.hideButtons();
@@ -75,9 +73,7 @@ export class UserDetailsPage {
   }
 
   /**
-   * When map dragged
-   * - showing profile button
-   * - hiding map buttons
+   * When friend centered displaying buttons
    */
   private showFriendCenteredButtons() {
     this.profileHeaderComponent.displayButtons();

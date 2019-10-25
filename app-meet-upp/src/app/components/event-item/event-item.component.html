@@ -1,12 +1,7 @@
 <ion-item (click)="selectEvent()" href="">
-  <ion-avatar slot="start" size="large">
-    <ion-label class="month">
-      {{ event.time | date: 'MMM' | uppercase }}.
-    </ion-label>
-    <ion-label class="day">
-      {{ event.time | date: 'dd' }}
-    </ion-label>
-  </ion-avatar>
+  <app-date-icon class="ion-no-margin" slot="start"
+    [date]="event.time"
+  ></app-date-icon>
   <ion-buttons slot="end">
     <ion-button (click)="deleteEvent();$event.stopPropagation();">
       <ion-icon slot="icon-only" name="close" size="small"></ion-icon>

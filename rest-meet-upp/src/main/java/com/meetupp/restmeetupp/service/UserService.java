@@ -139,6 +139,6 @@ public class UserService {
 
     private void setSettingsDefaults(User user) {
         user.setSetting(new Setting(Consts.UserDefaults.RADIUS, Consts.UserDefaults.NOTIFICATIONS,
-                Consts.UserDefaults.TRAVEL_MODE, Consts.UserDefaults.NIGHT_MODE));
+                Consts.UserDefaults.TRAVEL_MODE, Consts.UserDefaults.NIGHT_MODE, Consts.UserDefaults.CALENDAR));
     }
 }

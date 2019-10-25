@@ -50,16 +50,27 @@ export class AppSettings {
 
     // Map BEGIN
     public static MAP_CANVAS: string = 'map_canvas';
-    public static MAP_USER_ZOOM: number = 16;
+    public static MAP_USER_ZOOM: number = 15.5;
+    public static MAP_EVENT_ZOOM: number = 10.6;
     public static MAP_ANIMATION_SPEED_MILISEC: number = 1000;
     public static MAP_ICON_SIZE: number = 43;
-    public static MAP_MY_LOCATION_URL: string = 'http://maps.google.com/mapfiles/ms/micons/blue.png';
-    public static MAP_EVENT_LOCATION_URL: string = 'http://maps.google.com/mapfiles/ms/micons/green.png';
+    public static MAP_MY_LOCATION_URL: string = 'https://img.icons8.com/ultraviolet/100/000000/marker.png';
+    public static MAP_EVENT_LOCATION_URL: string = 'https://img.icons8.com/dusk/64/000000/calendar.png';
+    public static MAP_SELECT_LOCATION_URL: string = 'https://img.icons8.com/plasticine/100/000000/place-marker.png';
+    public static MAP_USER_FRAME_URL: string = 'https://img.icons8.com/officel/80/000000/user-location.png';
     // Map END
 
     // Modal BEGIN
     public static MODAL_DEFDATE_PLUS_HOURS: number = 3;
     public static MODAL_VALIDATION_ALERT: string = 'Please give name and select friends to your event';
     // Modal END
+
+    // Calendar BEGIN
+    public static CALENDAR_NAME: string = 'MeetUpp events';
+    public static CALENDAR_RANGE_MINUS: number = 1;
+    public static CALENDAR_RANGE_PLUS: number = 5;
+    public static CALENDAR_EVENT_DURATION_H: number = 3;
+    public static CALENDAR_EVENT_LOCATION: string = 'MeetUpp';
+    // Calendar END
 
 }

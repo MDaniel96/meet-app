@@ -1,6 +1,6 @@
-<ion-header>
+<ion-header #header>
   <ion-toolbar>
-    <img src="../../../assets/icon/title_header.png" />
+    <img class="title-header" src="../../../assets/icon/title_header.png" />
   </ion-toolbar>
   <ion-toolbar>
     <ion-segment (ionChange)="tabChanged()" value="friends">
@@ -14,7 +14,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content fullscreen>
+<ion-content fullscreen hide-header [header]="header.el" [scrollEvents]="true">
   <app-friends [hidden]="!friendsSelected"></app-friends>
   <app-requests [hidden]="friendsSelected"></app-requests>
 </ion-content>

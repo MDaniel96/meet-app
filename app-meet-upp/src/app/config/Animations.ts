@@ -15,6 +15,16 @@ export const slideRightLeftAnimation = trigger('slideInOut', [
     )
 ]);
 
+export const slideTopBottomAnimation = trigger('slideTopBottom', [
+    transition(':enter', [
+        style({ transform: 'translateY(-100%)' }),
+        animate('350ms ease-in', style({ transform: 'translateY(0%)' }))
+    ]),
+    transition(':leave',
+        animate('350ms ease-in', style({ transform: 'translateY(-100%)' }))
+    )
+]);
+
 export const foldAnimation = trigger('fold', [
     transition(':enter', [
         style({ height: 0, overflow: 'hidden' }),
@@ -26,12 +36,20 @@ export const foldAnimation = trigger('fold', [
     ])
 ]);
 
+export const horizontalFoldAnimation = trigger('horizontalFold', [
+    transition(':enter', [
+        style({ width: 0 }),
+        animate('250ms ease-in', style({ width: '70%' }))
+    ]),
+    transition(':leave', [
+        style({ width: '70%' }),
+        animate('250ms ease-in', style({ width: 0 }))
+    ])
+]);
+
 export const fadeInOutAnimation = trigger('fadeInOut', [
     transition(':enter', [
         style({ opacity: 0 }),
         animate('200ms ease-in', style({ opacity: 1 }))
-    ]),
-    transition(':leave', [
-        animate('200ms ease-in', style({ opacity: 0 }))
     ])
 ]);

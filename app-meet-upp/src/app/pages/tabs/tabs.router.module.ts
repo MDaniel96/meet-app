@@ -7,6 +7,7 @@ import { MainPage } from '../main/main.page';
 import { UserDetailsPage } from '../user-details/user-details.page';
 import { EventsPage } from '../events/events.page';
 import { EventCreatePage } from '../event-create/event-create.page';
+import { EventDetailPage } from '../event-detail/event-detail.page';
 
 const routes: Routes = [
   {
@@ -36,7 +37,16 @@ const routes: Routes = [
       },
       {
         path: 'events',
-        component: EventsPage
+        children: [
+          {
+            path: '',
+            component: EventsPage
+          },
+          {
+            path: ':id',
+            component: EventDetailPage
+          }
+        ]
       },
       {
         path: 'settings',

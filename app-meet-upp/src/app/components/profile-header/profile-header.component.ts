@@ -12,7 +12,7 @@ import { NavController } from '@ionic/angular';
   selector: 'app-profile-header',
   templateUrl: './profile-header.component.html',
   styleUrls: ['./profile-header.component.scss'],
-  animations: [ foldAnimation ]
+  animations: [foldAnimation]
 })
 export class ProfileHeaderComponent implements OnInit {
 

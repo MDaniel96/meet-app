@@ -1,20 +1,18 @@
-<ion-content fullscreen>
-  <ion-refresher slot="fixed" (ionRefresh)="refreshFriends($event)">
-    <ion-refresher-content></ion-refresher-content>
-  </ion-refresher>
-  <ion-title class="noListMessage" *ngIf="friends && friends.length === 0">
-    You have no friends at the moment
-  </ion-title>
-  <ion-list *ngIf="nearbyFriends && nearbyFriends.length > 0">
-    <ion-list-header>
-      Nearby
-    </ion-list-header>
-    <app-friend-item *ngFor="let nearby of nearbyFriends" [friend]="nearby"></app-friend-item>
-  </ion-list>
-  <ion-list>
-    <ion-list-header *ngIf="otherFriends && otherFriends.length > 0">
-      Other
-    </ion-list-header>
-    <app-friend-item *ngFor="let other of otherFriends" [friend]="other"></app-friend-item>
-  </ion-list>
-</ion-content>
+<ion-refresher slot="fixed" (ionRefresh)="refreshFriends($event)">
+  <ion-refresher-content></ion-refresher-content>
+</ion-refresher>
+<ion-title class="noListMessage" *ngIf="friends && friends.length === 0">
+  You have no friends at the moment
+</ion-title>
+<ion-list *ngIf="nearbyFriends && nearbyFriends.length > 0">
+  <ion-list-header>
+    Nearby
+  </ion-list-header>
+  <app-friend-item *ngFor="let nearby of nearbyFriends" [friend]="nearby"></app-friend-item>
+</ion-list>
+<ion-list>
+  <ion-list-header *ngIf="otherFriends && otherFriends.length > 0">
+    Other
+  </ion-list-header>
+  <app-friend-item *ngFor="let other of otherFriends" [friend]="other"></app-friend-item>
+</ion-list>

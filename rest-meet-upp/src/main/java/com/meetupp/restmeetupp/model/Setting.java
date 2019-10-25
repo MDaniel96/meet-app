@@ -16,13 +16,16 @@ public class Setting {
     @Column(name = "night_mode")
     private boolean nightMode;
 
+    private boolean calendar;
+
     public Setting() {}
 
-    public Setting(Integer radius, boolean notifications, String travelMode, boolean nightMode) {
+    public Setting(Integer radius, boolean notifications, String travelMode, boolean nightMode, boolean calendar) {
         this.radius = radius;
         this.notifications = notifications;
         this.travelMode = travelMode;
         this.nightMode = nightMode;
+        this.calendar = calendar;
     }
 
     public Integer getRadius() {
@@ -53,6 +56,14 @@ public class Setting {
 
     public void setNightMode(boolean nightMode) {
         this.nightMode = nightMode;
+    }
+
+    public boolean isCalendar() {
+        return calendar;
+    }
+
+    public void setCalendar(boolean calendar) {
+        this.calendar = calendar;
     }
 
 }

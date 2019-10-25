@@ -1,7 +1,10 @@
-<ion-header>
+<ion-header #header>
+  <ion-toolbar>
+    <img class="title-header" src="../../../assets/icon/title_header.png" />
+  </ion-toolbar>
   <ion-toolbar>
     <ion-title>
-      <ion-icon name="calendar"></ion-icon>
+      <img class="icon8-icon" src="../../../assets/icon/calendar-icon.png">
       Events
     </ion-title>
     <ion-buttons slot="primary">
@@ -12,7 +15,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content fullscreen>
+<ion-content fullscreen hide-header [header]="header.el" [scrollEvents]="true">
   <ion-refresher slot="fixed" (ionRefresh)="refreshEvents($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>

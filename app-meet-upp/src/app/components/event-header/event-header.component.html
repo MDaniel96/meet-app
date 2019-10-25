@@ -1,0 +1,73 @@
+<ion-card class="header">
+
+    <ion-card-header (click)="headerClicked()" class="ion-no-padding background-white">
+      <ion-item-divider>
+        <ion-grid>
+          <ion-row class="ion-justify-content-left">
+            <ion-col size="3" class="ion-no-padding">
+              <ion-item class="ion-no-padding padding-left-5" lines="none">
+                <app-date-icon class="ion-no-margin" slot="start"
+                  [date]="event.time"
+                ></app-date-icon>
+              </ion-item>
+            </ion-col>
+            <ion-col size="9">
+              <ion-card-title>{{ event.name }}</ion-card-title>
+              <ion-card-content class="ion-no-padding item-footer">{{ event.time | date: 'HH:mm' }}</ion-card-content>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item-divider>
+    </ion-card-header>
+  
+    <ion-card-content *ngIf="buttonsNeeded" class="ion-padding background-white" [@fold]>
+      <ion-grid class="ion-padding-top">
+  
+        <ion-row class="ion-justify-content-center">
+
+          <ion-col size="1"></ion-col>
+
+          <ion-col size="12" *ngIf="addingComment">
+            <ion-item [@horizontalFold] class="ion-float-left">
+              <ion-input [(ngModel)]="comment" name="comment" placeholder="Write others"></ion-input>
+            </ion-item>
+            <ion-fab-button class="ion-float-left" (click)="addComment()" color="light">
+              <ion-icon name="send" size="large" color="primary"></ion-icon>
+            </ion-fab-button>
+          </ion-col>
+
+          <ion-col size="12" *ngIf="addingFriends">
+            <ion-item [@horizontalFold] class="ion-float-left">
+              <ion-select [(ngModel)]="selectedFriends" multiple name="friends" placeholder="Call friends">
+                <ion-select-option *ngFor="let friend of selectableFriends" [value]="friend">
+                  {{ friend.name }}
+                </ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ion-fab-button class="ion-float-left" (click)="addFriend()" color="light">
+              <ion-icon name="add" size="large" color="primary"></ion-icon>
+            </ion-fab-button>
+          </ion-col>
+  
+          <ion-col size="4" *ngIf="!addingComment && !addingFriends" [@fadeInOut]>
+            <ion-fab-button (click)="addingComment = true" color="light">
+              <ion-icon  name="chatbubbles" size="large" color="primary"></ion-icon>
+            </ion-fab-button>
+            <div class="ion-no-padding item-footer margin-write">Write others</div>
+          </ion-col>
+
+          <ion-col size="1"></ion-col>
+  
+          <ion-col size="4" *ngIf="!addingComment && !addingFriends">
+              <ion-fab-button (click)="addingFriends = true" color="light">
+                <ion-icon name="person-add" size="large" color="primary"></ion-icon>
+              </ion-fab-button>
+              <div class="ion-no-padding item-footer margin-call">Call friend</div>
+          </ion-col>
+  
+        </ion-row>
+  
+      </ion-grid>
+    </ion-card-content>
+  
+  </ion-card>

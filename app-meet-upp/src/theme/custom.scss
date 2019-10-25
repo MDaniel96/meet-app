@@ -14,3 +14,97 @@ ion-avatar  {
     font-size: 18px;
 }   
 
+ion-content.detail {
+    position: relative;
+
+    ion-back-button {
+        position: absolute;
+        top: 0;
+        left: 0;
+        margin-top: 8px;
+        margin-left: 8px;
+        z-index: 2;
+        background-color: rgba(0, 0, 0, 0.075);
+        border-radius: 50%;
+    }
+
+    app-map-buttons {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        margin-bottom: 150px;
+        margin-right: 20px;
+        z-index: 3;
+    }
+
+    app-profile-header.friend {
+        position: absolute;
+        bottom: 0;
+        margin-bottom: 60px;
+        z-index: 2;
+        width: 100%;
+    }
+
+    app-profile-header.event {
+        position: absolute;
+        top: 0;
+        margin-top: 50px;
+        z-index: 2;
+        width: 100%;
+    }
+
+    app-event-header {
+        position: absolute;
+        bottom: 0;
+        margin-bottom: 60px;
+        z-index: 2;
+        width: 100%;
+    }
+
+    app-map {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1;
+        height: 95%;
+        width: 100%;
+        margin-bottom: 30px;
+    }
+}
+
+ion-card.header {
+
+    .item-footer {
+        font-size: 13px;
+        padding-top: 3px;
+    }
+
+    .padding-left-5 {
+        padding-left: 10px;
+    }
+
+    ion-card-title {
+        margin-top: 5px;
+    }
+
+    ion-img {
+        width: 48%;
+        height: 48%;
+    }
+
+    .background-white {
+        background-color: rgba(255, 255, 255, 0.98);
+    }
+}
+
+.title-header {
+    height: 40px;
+    margin-left: 8px;
+}
+
+.icon8-icon {
+    width: 25px;
+    height: 25px;
+}
+  
+

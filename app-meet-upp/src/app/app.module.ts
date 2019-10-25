@@ -3,6 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy, Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { HttpClientModule, HTTP_INTERCEPTORS  } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
@@ -13,11 +15,10 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { GoogleMaps } from '@ionic-native/google-maps/ngx';
 import { NativePageTransitions } from '@ionic-native/native-page-transitions/ngx';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { Calendar } from '@ionic-native/calendar/ngx';
 
 import { AppComponent } from './app.component';
 import { TabsPage } from './pages/tabs/tabs.page';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { TabsPageRoutingModule } from './pages/tabs/tabs.router.module';
 import { MainPage } from './pages/main/main.page';
 import { SearchPage } from './pages/search/search.page';
@@ -42,6 +43,11 @@ import { EventsPage } from './pages/events/events.page';
 import { EventItemComponent } from './components/event-item/event-item.component';
 import { EventCreatePage } from './pages/event-create/event-create.page';
 import { MapComponent } from './components/map/map.component';
+import { EventDetailPage } from './pages/event-detail/event-detail.page';
+import { EventHeaderComponent } from './components/event-header/event-header.component';
+import { DateIconComponent } from './components/date-icon/date-icon.component';
+import { CalendarService } from './services/calendar.service';
+import { HideHeaderDirective } from './directives/hide-header.directive';
 
 const routes: Routes = [
   {
@@ -85,7 +91,11 @@ const routes: Routes = [
     EventsPage,
     EventItemComponent,
     EventCreatePage,
-    MapComponent
+    MapComponent,
+    EventDetailPage,
+    EventHeaderComponent,
+    DateIconComponent,
+    HideHeaderDirective
   ],
   providers: [
     StatusBar,
@@ -108,7 +118,9 @@ const routes: Routes = [
     GoogleMaps,
     MapService,
     NativePageTransitions,
-    InAppBrowser
+    InAppBrowser,
+    Calendar,
+    CalendarService
   ],
   bootstrap: [AppComponent],
   entryComponents: [EventCreatePage]
