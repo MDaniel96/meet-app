@@ -1,8 +1,7 @@
-import { Directive, Input, ElementRef, Renderer } from '@angular/core';
+import { Directive, Input, Renderer } from '@angular/core';
 
 /**
  * Hiding header when scrolling
- * https://forum.ionicframework.com/t/hide-header-and-footer-on-scrolling-with-animation/143545
  */
 @Directive({
   selector: '[hide-header]',
@@ -15,7 +14,6 @@ export class HideHeaderDirective {
   @Input("header") header: HTMLElement;
 
   constructor(
-    public element: ElementRef,
     public renderer: Renderer
   ) {
   }

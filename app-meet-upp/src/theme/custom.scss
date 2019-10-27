@@ -10,8 +10,11 @@ ion-avatar  {
 
 .noListMessage {
     margin-top: 50%;
-    margin-left: 6%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
     font-size: 18px;
+    z-index: 2;
 }   
 
 ion-content.detail {
@@ -69,6 +72,13 @@ ion-content.detail {
         height: 95%;
         width: 100%;
         margin-bottom: 30px;
+    }
+
+    .no-map-img {
+        display: block;
+        margin: auto;
+        width: 20%;
+        margin-top: 30px;
     }
 }
 

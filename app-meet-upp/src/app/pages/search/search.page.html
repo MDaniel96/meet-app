@@ -1,10 +1,54 @@
-<ion-header>
+<ion-header #header>
   <ion-toolbar>
-    <ion-title>
-      <ion-icon name="search"></ion-icon>
-      Search
-    </ion-title>
+    <img class="title-header" src="../../../assets/icon/title_header.png" />
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-card class="search" [ngClass]="focus ? 'focusedSearchBar' : 'unfocusedSearchBar'" style="box-shadow: none">
+      <ion-searchbar (ionChange)="keywordChanged()" [(ngModel)]="keyword" [placeholder]="focus ? 'Search for people or events' : 'Search'"
+        animated (ionFocus)="focus=true"></ion-searchbar>
+      <ion-chip [@foldDown] *ngIf="focus" (click)="people=true;events=false" [outline]="people ? false : true"
+        color="primary">
+        <ion-label>People</ion-label>
+      </ion-chip>
+      <ion-chip [@foldDown] *ngIf="focus" (click)="events=true;people=false" [outline]="events ? false : true"
+        color="primary">
+        <ion-label>Events</ion-label>
+      </ion-chip>
+    </ion-card>
   </ion-toolbar>
 </ion-header>
 
-<ion-content></ion-content>
+<ion-content fullscreen hide-header [header]="header.el" [scrollEvents]="true">
+  <ion-list *ngIf="((isFriends$ | async) || (isOthers$ | async)) && !events">
+    <ion-item *ngFor="let friend of friends$ | async" [@fadeInOut]>
+        <app-search-item class="fill-parent"
+          [person]="friend"
+          [event]="null"
+          [my]="true"
+        ></app-search-item>
+    </ion-item>
+    <ion-item *ngFor="let other of others$ | async" [@fadeInOut]>
+      <app-search-item class="fill-parent"
+        [person]="other"
+        [event]="null"
+        [my]="false"
+      ></app-search-item>
+    </ion-item>
+  </ion-list>
+  <ion-list *ngIf="((isMyEvents$ | async) || (isOtherEvents$ | async)) && !people">
+    <ion-item *ngFor="let event of myEvents$ | async" [@fadeInOut]>
+      <app-search-item class="fill-parent"
+        [person]="null"
+        [event]="event"
+        [my]="true"
+      ></app-search-item>
+    </ion-item>
+    <ion-item *ngFor="let event of otherEvents$ | async" [@fadeInOut]>
+      <app-search-item class="fill-parent"
+        [person]="null"
+        [event]="event"
+        [my]="false"
+      ></app-search-item>
+    </ion-item>
+  </ion-list>
+</ion-content>

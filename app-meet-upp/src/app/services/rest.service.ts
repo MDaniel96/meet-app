@@ -82,4 +82,20 @@ export class RestService {
     return this.http.post<Comment>(this.BASE + `/user/event/${eventId}/comment/${text}`, null);
   }
 
+  searchMyFriends(keyword: string): Observable<User[]> {
+    return this.http.get<User[]>(this.BASE + `/user/search/my/${keyword}`);
+  }
+
+  searchOthers(keyword: string): Observable<User[]> {
+    return this.http.get<User[]>(this.BASE + `/user/search/other/${keyword}`);
+  }
+
+  searchMyEvents(keyword: string): Observable<Event[]> {
+    return this.http.get<Event[]>(this.BASE + `/user/event/search/my/${keyword}`);
+  }
+
+  searchOtherEvents(keyword: string): Observable<Event[]> {
+    return this.http.get<Event[]>(this.BASE + `/user/event/search/other/${keyword}`);
+  }
+
 }

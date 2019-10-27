@@ -48,6 +48,7 @@ import { EventHeaderComponent } from './components/event-header/event-header.com
 import { DateIconComponent } from './components/date-icon/date-icon.component';
 import { CalendarService } from './services/calendar.service';
 import { HideHeaderDirective } from './directives/hide-header.directive';
+import { SearchItemComponent } from './components/search-item/search-item.component';
 
 const routes: Routes = [
   {
@@ -74,27 +75,28 @@ const routes: Routes = [
   ],
   declarations: [
     AppComponent,
+    SearchItemComponent,
+    EventHeaderComponent,
+    DateIconComponent,
+    EventItemComponent,
+    MapComponent,
+    FriendsComponent,
+    RequestsComponent,
+    FriendItemComponent,
+    AvailabilityMarkerComponent,
+    ProfileHeaderComponent,
+    MapButtonsComponent,
     TabsPage,
     MainPage,
     SearchPage,
     SettingsPage,
     LoginPage,
-    DistancePipe,
-    FriendsComponent,
-    RequestsComponent,
-    FriendItemComponent,
-    SincePipe,
-    AvailabilityMarkerComponent,
-    ProfileHeaderComponent,
-    UserDetailsPage,
-    MapButtonsComponent,
-    EventsPage,
-    EventItemComponent,
-    EventCreatePage,
-    MapComponent,
     EventDetailPage,
-    EventHeaderComponent,
-    DateIconComponent,
+    UserDetailsPage,
+    EventsPage,
+    EventCreatePage,
+    SincePipe,
+    DistancePipe,
     HideHeaderDirective
   ],
   providers: [

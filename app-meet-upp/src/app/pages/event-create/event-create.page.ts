@@ -160,7 +160,6 @@ export class EventCreatePage {
    * Throwing alert message if form not filled 
    */
   private validateForm(): boolean {
-    console.log(this.selectedFriends);
     if (this.event.name === undefined || this.selectedFriends === undefined) {
       alert(AppSettings.MODAL_VALIDATION_ALERT);
       return true;

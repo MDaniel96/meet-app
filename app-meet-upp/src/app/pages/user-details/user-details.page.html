@@ -14,8 +14,14 @@
       (headerClickedEvent)="headerClicked()"
   ></app-profile-header>
 
-  <app-map
+  <app-map *ngIf="friendStatus && friendStatus.status === 'ACCEPTED'"
     [mapType]="'friend'"
   ></app-map>
+
+  <ion-title class="noListMessage" *ngIf="friendStatus && friendStatus.status !== 'ACCEPTED'">
+    You can only see friends location
+  </ion-title>
+
+  <img *ngIf="friendStatus && friendStatus.status !== 'ACCEPTED'" class="no-map-img" src="../../../assets/icon/no-map.PNG">
 
 </ion-content>
