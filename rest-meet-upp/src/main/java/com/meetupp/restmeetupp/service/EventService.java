@@ -91,7 +91,7 @@ public class EventService {
      * Search for public all events by keyword
      */
     private List<Event> searchAllByKeyword(String name) {
-        List<Event> events = eventRepository.findAllByNameContains(name);
+        List<Event> events = eventRepository.findAllByNameContainsIgnoreCase(name);
         deleteOldEvents(events);
         return events;
     }

@@ -119,12 +119,7 @@ public class EventController {
                                                       @RequestHeader("Authorization") String token) {
         User user = userIdentifier.identify(token);
         List<Event> events = eventService.searchByNameForMyEvents(user, keyword);
-
-        if (events != null) {
-            return ResponseEntity.ok(events);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return ResponseEntity.ok(events);
     }
 
     /**
@@ -139,12 +134,7 @@ public class EventController {
                                                          @RequestHeader("Authorization") String token) {
         User user = userIdentifier.identify(token);
         List<Event> events = eventService.searchByNameForOtherEvents(user, keyword);
-
-        if (events != null) {
-            return ResponseEntity.ok(events);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return ResponseEntity.ok(events);
     }
 
     /**

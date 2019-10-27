@@ -9,6 +9,6 @@ public interface EventRepository extends JpaRepository<Event, Integer> {
 
     Event findById(Long id);
 
-    List<Event> findAllByNameContains(String keyword);
+    List<Event> findAllByNameContainsIgnoreCase(String keyword);
 
 }
