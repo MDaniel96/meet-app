@@ -19,6 +19,7 @@ public class FriendRequestService {
         FriendRequest friendRequest = new FriendRequest();
         friendRequest.setFromUserId(fromUser.getId());
         friendRequest.setFromUserName(fromUser.getName());
+        friendRequest.setFromUserImage(fromUser.getImage());
         friendRequest.setTime(new Date());
         friendRequest.setToUserId(toUser.getId());
 

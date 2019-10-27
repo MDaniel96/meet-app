@@ -1,3 +1,23 @@
-<p>
-  requests works!
-</p>
+<ion-list *ngIf="requests">
+  <ion-item [@fold] *ngFor="let req of requests">
+    <ion-item lines="none">
+      <ion-avatar slot="start">
+        <img [src]="req.fromUserImage">
+      </ion-avatar>
+      <ion-label lines="none">
+        <h2>{{ req.fromUserName }}</h2>
+      </ion-label>
+    </ion-item>
+    <ion-buttons slot="end">
+      <ion-button class="accept" (click)="accept(req.id)" size="small">
+        <ion-icon slot="icon-only" name="checkmark" size="large"></ion-icon>
+      </ion-button>
+      <ion-button class="decline" (click)="decline(req.id)" size="small">
+        <ion-icon slot="icon-only" name="close" size="large"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-item>
+</ion-list>
+<ion-title class="noListMessage" *ngIf="requests && requests.length === 0">
+  You have no request
+</ion-title>

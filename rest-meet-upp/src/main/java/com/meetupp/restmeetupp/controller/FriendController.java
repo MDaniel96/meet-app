@@ -98,12 +98,7 @@ public class FriendController {
     public ResponseEntity<List<FriendRequest>> listAllFriendRequests(@RequestHeader("Authorization") String token) {
         User user = userIdentifier.identify(token);
         List<FriendRequest> friendRequests = friendRequestService.listAllByToUserId(user.getId());
-
-        if (!friendRequests.isEmpty()) {
-            return ResponseEntity.ok(friendRequests);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return ResponseEntity.ok(friendRequests);
     }
 
     /**

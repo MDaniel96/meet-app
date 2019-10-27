@@ -54,6 +54,18 @@ export class RestService {
     return this.http.post<FriendRequest>(this.BASE + `/user/friend/request/${userId}`, null);
   }
 
+  getFriendRequests(): Observable<FriendRequest[]> {
+    return this.http.get<FriendRequest[]>(this.BASE + `/user/friend/request/all`);
+  }
+
+  acceptFriendRequest(requestId: string): Observable<string> {
+    return this.http.post<string>(this.BASE + `/user/friend/request/accept/${requestId}`, null);
+  }
+
+  cancelFriendRequest(requestId: string): Observable<string> {
+    return this.http.delete<string>(this.BASE + `/user/friend/request/cancel/${requestId}`);
+  }
+
   deleteFriendship(userId: string): Observable<User> {
     return this.http.delete<User>(this.BASE + `/user/friend/${userId}`);
   }

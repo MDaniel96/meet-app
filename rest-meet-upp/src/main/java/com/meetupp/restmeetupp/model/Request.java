@@ -13,6 +13,9 @@ public class Request {
     @Column(name="from_user_name")
     private String fromUserName;
 
+    @Column(name="from_user_image")
+    private String fromUserImage;
+
     @Column(name="from_user_id")
     private Long fromUserId;
 
@@ -24,9 +27,10 @@ public class Request {
 
     public Request() {}
 
-    public Request(String fromUserName, Long fromUserId, Date time, Long toUserId) {
+    public Request(String fromUserName, Long fromUserId, String fromUserImage, Date time, Long toUserId) {
         this.fromUserName = fromUserName;
         this.fromUserId = fromUserId;
+        this.fromUserImage = fromUserImage;
         this.time = time;
         this.toUserId = toUserId;
     }
@@ -69,5 +73,13 @@ public class Request {
 
     public void setToUserId(Long toUserId) {
         this.toUserId = toUserId;
+    }
+
+    public String getFromUserImage() {
+        return fromUserImage;
+    }
+
+    public void setFromUserImage(String fromUserImage) {
+        this.fromUserImage = fromUserImage;
     }
 }
