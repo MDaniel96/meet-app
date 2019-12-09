@@ -6,6 +6,7 @@ import { Token } from '../models/Token';
 import { Observable, Subscription, of } from 'rxjs';
 import { RestService } from './rest.service';
 import { NavController } from '@ionic/angular';
+import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,8 @@ export class AuthService {
   constructor(
     private storage: Storage,
     private restService: RestService,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private splashScreen: SplashScreen
   ) { }
 
   /**
@@ -69,6 +71,7 @@ export class AuthService {
     const sub = token.subscribe(res => {
       console.log('App token:', res.token);
       this.token = res.token;
+      this.splashScreen.hide();
 
       if (res.token != null && res.token !== '') {
         subscription.add(

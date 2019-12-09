@@ -2,7 +2,9 @@ import { Component } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AuthService } from './services/auth.service';
-import { Subscription, of } from 'rxjs';
+import { Subscription } from 'rxjs';
+import { NotificationService } from './services/notification.service';
+import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 
 @Component({
   selector: 'app-root',
@@ -17,6 +19,7 @@ export class AppComponent {
     private platform: Platform,
     private statusBar: StatusBar,
     private authService: AuthService,
+    private notificationService: NotificationService,
   ) {
     this.initializeApp();
   }
@@ -25,6 +28,7 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.statusBar.styleLightContent();
       this.authService.loadPreviousUserSession(this.subscription);
+      this.notificationService.start(this.subscription);
     });
   }
 

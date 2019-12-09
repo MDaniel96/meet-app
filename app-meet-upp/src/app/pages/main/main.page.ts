@@ -23,7 +23,7 @@ export class MainPage {
   subscription: Subscription = new Subscription();
 
   constructor(
-    private restService: RestService,
+    private restService: RestService
   ) {
   }
 

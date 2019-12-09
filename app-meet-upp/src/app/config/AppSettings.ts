@@ -73,4 +73,9 @@ export class AppSettings {
     public static CALENDAR_EVENT_LOCATION: string = 'MeetUpp';
     // Calendar END
 
+    // Notif BEGIN
+    public static NOTIF_TEXT: string = 'Touch to view where your friends are';
+    public static NOTIF_UPDATE_MILISEC: number = 20000;
+    // Notif BEGIN
+
 }

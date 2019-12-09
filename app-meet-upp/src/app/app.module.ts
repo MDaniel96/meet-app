@@ -16,6 +16,8 @@ import { GoogleMaps } from '@ionic-native/google-maps/ngx';
 import { NativePageTransitions } from '@ionic-native/native-page-transitions/ngx';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { Calendar } from '@ionic-native/calendar/ngx';
+import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
+import { BackgroundMode } from '@ionic-native/background-mode/ngx';
 
 import { AppComponent } from './app.component';
 import { TabsPage } from './pages/tabs/tabs.page';
@@ -49,6 +51,7 @@ import { DateIconComponent } from './components/date-icon/date-icon.component';
 import { CalendarService } from './services/calendar.service';
 import { HideHeaderDirective } from './directives/hide-header.directive';
 import { SearchItemComponent } from './components/search-item/search-item.component';
+import { NotificationService } from './services/notification.service';
 
 const routes: Routes = [
   {
@@ -122,7 +125,10 @@ const routes: Routes = [
     NativePageTransitions,
     InAppBrowser,
     Calendar,
-    CalendarService
+    CalendarService,
+    LocalNotifications,
+    NotificationService,
+    BackgroundMode
   ],
   bootstrap: [AppComponent],
   entryComponents: [EventCreatePage]
